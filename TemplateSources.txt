@@ -1,0 +1,34 @@
+Dashboard Templates
+===================
+DashboardSBAdmin: 
+DashboardSBAdmin2: https://startbootstrap.com/template-overviews/sb-admin-2/
+DashboardBasic: https://www.creative-tim.com/product/light-bootstrap-dashboard#
+DashboardBasic2: https://www.creative-tim.com/product/paper-dashboard#
+DashboardBasic3: https://www.creative-tim.com/product/material-dashboard#
+DashboardReact: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
+DashboardReact2: https://www.creative-tim.com/product/material-dashboard-react
+DashboardAngular: https://www.creative-tim.com/product/paper-dashboard-angular#
+DashboardAngular2: https://www.creative-tim.com/product/light-bootstrap-dashboard-angular2
+DashboardAngular3: https://www.creative-tim.com/product/material-dashboard-angular2#
+DashboardVue: https://www.creative-tim.com/product/vue-paper-dashboard#
+DashboardVue2: https://www.creative-tim.com/product/vue-light-bootstrap-dashboard#
+
+Functional Toolkits
+===================
+ToolCalendar: https://www.creative-tim.com/product/full-calendar#
+
+Wizards
+=======
+WizardCreateAcc: https://www.creative-tim.com/product/bootstrap-wizard#
+WizardBasic: https://www.creative-tim.com/product/paper-bootstrap-wizard
+
+Element Toolkits
+================
+BasicElements: https://www.creative-tim.com/product/paper-kit
+BasicElements2: https://www.creative-tim.com/product/paper-kit-2#
+BasicElements3: https://www.creative-tim.com/product/now-ui-kit#
+BasicSidebar: https://startbootstrap.com/template-overviews/simple-sidebar/
+
+Website Templates
+=================
+WebAppleStyle: https://www.creative-tim.com/product/awesome-landing-page#
