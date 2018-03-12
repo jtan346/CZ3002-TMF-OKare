@@ -1,0 +1,572 @@
+{% extends 'base.html' %}
+{% block page_stylesheets %}
+<style type="text/css">
+    body {
+      background-color: #ff5b5b;
+    }
+
+</style>
+{% endblock page_stylesheets %}
+
+{% block page_javascripts %}
+{% endblock page_javascripts %}
+
+{% block sidebar %}
+{% include 'administrator/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+{% include 'administrator/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Dashboard</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-comments fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">26</div>
+                        <div>Active Nurses</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-tasks fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">12</div>
+                        <div>New Tasks!</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-shopping-cart fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">124</div>
+                        <div>New Orders!</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-support fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">13</div>
+                        <div>Support Tickets!</div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="#">Action</a>
+                            </li>
+                            <li><a href="#">Another action</a>
+                            </li>
+                            <li><a href="#">Something else here</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div id="morris-area-chart" style="position: relative;"><svg height="347" version="1.1" width="598" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; top: -0.200012px;"><desc>Created with Raphaël 2.2.0</desc><defs></defs><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="53.5" y="313" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">0</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M66,313H573" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="53.5" y="241" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">7,500</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M66,241H573" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="53.5" y="169" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">15,000</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M66,169H573" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="53.5" y="97.00000000000003" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4.000000000000028">22,500</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M66,97.00000000000003H573" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="53.5" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">30,000</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M66,25H573" stroke-width="0.5"></path><text style="text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="479.36208991494533" y="325.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4">2012</tspan></text><text style="text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="254.5078979343864" y="325.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4">2011</tspan></text><path style="fill-opacity: 1;" fill="#7cb57c" stroke="none" d="M66,261.9952C80.16889428918591,256.7152,108.50668286755771,245.758,122.67557715674363,240.8752C136.84447144592954,235.9924,165.18226002430134,229.61712786885246,179.35115431348726,222.93280000000001C193.36603888213853,216.32112786885247,221.39580801944106,189.66403977900552,235.41069258809233,187.6912C249.27156743620895,185.74003977900554,276.99331713244226,205.80194285714288,290.8541919805589,207.23680000000002C305.0230862697448,208.70354285714288,333.3608748481166,198.32080000000002,347.52976913730254,199.29760000000002C361.69866342648845,200.2744,390.0364520048602,232.39063606557374,404.20534629404614,215.0512C418.2202308626974,197.90023606557375,446.25,69.70240000000001,460.26488456865127,61.33600000000001C474.27976913730254,52.969600000000014,502.3095382746051,135.85260327868855,516.3244228432563,148.12C530.4933171324423,160.52220327868855,558.8311057108141,157.04080000000002,573,160.01440000000002L573,313L66,313Z" fill-opacity="1"></path><path style="" fill="none" stroke="#4da74d" d="M66,261.9952C80.16889428918591,256.7152,108.50668286755771,245.758,122.67557715674363,240.8752C136.84447144592954,235.9924,165.18226002430134,229.61712786885246,179.35115431348726,222.93280000000001C193.36603888213853,216.32112786885247,221.39580801944106,189.66403977900552,235.41069258809233,187.6912C249.27156743620895,185.74003977900554,276.99331713244226,205.80194285714288,290.8541919805589,207.23680000000002C305.0230862697448,208.70354285714288,333.3608748481166,198.32080000000002,347.52976913730254,199.29760000000002C361.69866342648845,200.2744,390.0364520048602,232.39063606557374,404.20534629404614,215.0512C418.2202308626974,197.90023606557375,446.25,69.70240000000001,460.26488456865127,61.33600000000001C474.27976913730254,52.969600000000014,502.3095382746051,135.85260327868855,516.3244228432563,148.12C530.4933171324423,160.52220327868855,558.8311057108141,157.04080000000002,573,160.01440000000002" stroke-width="3"></path><circle cx="66" cy="261.9952" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="122.67557715674363" cy="240.8752" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="179.35115431348726" cy="222.93280000000001" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="235.41069258809233" cy="187.6912" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="290.8541919805589" cy="207.23680000000002" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="347.52976913730254" cy="199.29760000000002" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="404.20534629404614" cy="215.0512" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="460.26488456865127" cy="61.33600000000001" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="516.3244228432563" cy="148.12" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="573" cy="160.01440000000002" r="2" fill="#4da74d" stroke="#ffffff" style="" stroke-width="1"></circle><path style="fill-opacity: 1;" fill="#a8b4bd" stroke="none" d="M66,287.4064C80.16889428918591,281.632,108.50668286755771,269.3668,122.67557715674363,264.3088C136.84447144592954,259.2508,165.18226002430134,249.70782950819674,179.35115431348726,246.94240000000002C193.36603888213853,244.20702950819674,221.39580801944106,244.5294187845304,235.41069258809233,242.30560000000003C249.27156743620895,240.1062187845304,276.99331713244226,232.33412747252746,290.8541919805589,229.2496C305.0230862697448,226.09652747252747,333.3608748481166,217.22440000000003,347.52976913730254,217.35520000000002C361.69866342648845,217.48600000000002,390.0364520048602,243.66103606557377,404.20534629404614,230.296C418.2202308626974,217.07623606557377,446.25,118.85440000000003,460.26488456865127,111.01600000000002C474.27976913730254,103.17760000000003,502.3095382746051,159.36001311475414,516.3244228432563,167.58880000000002C530.4933171324423,175.9080131147541,558.8311057108141,174.8032,573,177.208L573,313L66,313Z" fill-opacity="1"></path><path style="" fill="none" stroke="#7a92a3" d="M66,287.4064C80.16889428918591,281.632,108.50668286755771,269.3668,122.67557715674363,264.3088C136.84447144592954,259.2508,165.18226002430134,249.70782950819674,179.35115431348726,246.94240000000002C193.36603888213853,244.20702950819674,221.39580801944106,244.5294187845304,235.41069258809233,242.30560000000003C249.27156743620895,240.1062187845304,276.99331713244226,232.33412747252746,290.8541919805589,229.2496C305.0230862697448,226.09652747252747,333.3608748481166,217.22440000000003,347.52976913730254,217.35520000000002C361.69866342648845,217.48600000000002,390.0364520048602,243.66103606557377,404.20534629404614,230.296C418.2202308626974,217.07623606557377,446.25,118.85440000000003,460.26488456865127,111.01600000000002C474.27976913730254,103.17760000000003,502.3095382746051,159.36001311475414,516.3244228432563,167.58880000000002C530.4933171324423,175.9080131147541,558.8311057108141,174.8032,573,177.208" stroke-width="3"></path><circle cx="66" cy="287.4064" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="122.67557715674363" cy="264.3088" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="179.35115431348726" cy="246.94240000000002" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="235.41069258809233" cy="242.30560000000003" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="290.8541919805589" cy="229.2496" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="347.52976913730254" cy="217.35520000000002" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="404.20534629404614" cy="230.296" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="460.26488456865127" cy="111.01600000000002" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="516.3244228432563" cy="167.58880000000002" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="573" cy="177.208" r="2" fill="#7a92a3" stroke="#ffffff" style="" stroke-width="1"></circle><path style="fill-opacity: 1;" fill="#2677b5" stroke="none" d="M66,287.4064C80.16889428918591,287.1376,108.50668286755771,289.0264,122.67557715674363,286.3312C136.84447144592954,283.636,165.18226002430134,267.03808524590164,179.35115431348726,265.8448C193.36603888213853,264.66448524590163,221.39580801944106,279.1269834254143,235.41069258809233,276.8368C249.27156743620895,274.57178342541437,276.99331713244226,249.88250549450552,290.8541919805589,247.62400000000002C305.0230862697448,245.3153054945055,333.3608748481166,256.18,347.52976913730254,258.568C361.69866342648845,260.95599999999996,390.0364520048602,278.0732590163934,404.20534629404614,266.728C418.2202308626974,255.50605901639344,446.25,175.33960000000002,460.26488456865127,168.2992C474.27976913730254,161.2588,502.3095382746051,202.47914754098363,516.3244228432563,210.40480000000002C530.4933171324423,218.41754754098363,558.8311057108141,226.6408,573,232.0528L573,313L66,313Z" fill-opacity="1"></path><path style="" fill="none" stroke="#0b62a4" d="M66,287.4064C80.16889428918591,287.1376,108.50668286755771,289.0264,122.67557715674363,286.3312C136.84447144592954,283.636,165.18226002430134,267.03808524590164,179.35115431348726,265.8448C193.36603888213853,264.66448524590163,221.39580801944106,279.1269834254143,235.41069258809233,276.8368C249.27156743620895,274.57178342541437,276.99331713244226,249.88250549450552,290.8541919805589,247.62400000000002C305.0230862697448,245.3153054945055,333.3608748481166,256.18,347.52976913730254,258.568C361.69866342648845,260.95599999999996,390.0364520048602,278.0732590163934,404.20534629404614,266.728C418.2202308626974,255.50605901639344,446.25,175.33960000000002,460.26488456865127,168.2992C474.27976913730254,161.2588,502.3095382746051,202.47914754098363,516.3244228432563,210.40480000000002C530.4933171324423,218.41754754098363,558.8311057108141,226.6408,573,232.0528" stroke-width="3"></path><circle cx="66" cy="287.4064" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="122.67557715674363" cy="286.3312" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="179.35115431348726" cy="265.8448" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="235.41069258809233" cy="276.8368" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="290.8541919805589" cy="247.62400000000002" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="347.52976913730254" cy="258.568" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="404.20534629404614" cy="266.728" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="460.26488456865127" cy="168.2992" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="516.3244228432563" cy="210.40480000000002" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle><circle cx="573" cy="232.0528" r="2" fill="#0b62a4" stroke="#ffffff" style="" stroke-width="1"></circle></svg><div class="morris-hover morris-default-style" style="left: 233.854px; top: 139px; display: none;"><div class="morris-hover-row-label">2011 Q1</div><div class="morris-hover-point" style="color: #0b62a4">
+                    iPhone:
+                    6,810
+                </div><div class="morris-hover-point" style="color: #7A92A3">
+                    iPad:
+                    1,914
+                </div><div class="morris-hover-point" style="color: #4da74d">
+                    iPod Touch:
+                    2,293
+                </div></div></div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            Actions
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" role="menu">
+                            <li><a href="#">Action</a>
+                            </li>
+                            <li><a href="#">Another action</a>
+                            </li>
+                            <li><a href="#">Something else here</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>3326</td>
+                                    <td>10/21/2013</td>
+                                    <td>3:29 PM</td>
+                                    <td>$321.33</td>
+                                </tr>
+                                <tr>
+                                    <td>3325</td>
+                                    <td>10/21/2013</td>
+                                    <td>3:20 PM</td>
+                                    <td>$234.34</td>
+                                </tr>
+                                <tr>
+                                    <td>3324</td>
+                                    <td>10/21/2013</td>
+                                    <td>3:03 PM</td>
+                                    <td>$724.17</td>
+                                </tr>
+                                <tr>
+                                    <td>3323</td>
+                                    <td>10/21/2013</td>
+                                    <td>3:00 PM</td>
+                                    <td>$23.71</td>
+                                </tr>
+                                <tr>
+                                    <td>3322</td>
+                                    <td>10/21/2013</td>
+                                    <td>2:49 PM</td>
+                                    <td>$8345.23</td>
+                                </tr>
+                                <tr>
+                                    <td>3321</td>
+                                    <td>10/21/2013</td>
+                                    <td>2:23 PM</td>
+                                    <td>$245.12</td>
+                                </tr>
+                                <tr>
+                                    <td>3320</td>
+                                    <td>10/21/2013</td>
+                                    <td>2:15 PM</td>
+                                    <td>$5663.54</td>
+                                </tr>
+                                <tr>
+                                    <td>3319</td>
+                                    <td>10/21/2013</td>
+                                    <td>2:13 PM</td>
+                                    <td>$943.45</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.col-lg-4 (nested) -->
+                    <div class="col-lg-8">
+                        <div id="morris-bar-chart" style="position: relative;"><svg height="347" version="1.1" width="598" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; top: -0.199951px;"><desc>Created with Raphaël 2.2.0</desc><defs></defs><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="36.5" y="313" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">0</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M49,313H573" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="36.5" y="241" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">25</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M49,241H573" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="36.5" y="169" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">50</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M49,169H573" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="36.5" y="97" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">75</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M49,97H573" stroke-width="0.5"></path><text style="text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="36.5" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal"><tspan dy="4">100</tspan></text><path style="" fill="none" stroke="#aaaaaa" d="M49,25H573" stroke-width="0.5"></path><text style="text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="535.5714285714286" y="325.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4">2012</tspan></text><text style="text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="385.85714285714283" y="325.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4">2010</tspan></text><text style="text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="236.14285714285714" y="325.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4">2008</tspan></text><text style="text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" x="86.42857142857143" y="325.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4">2006</tspan></text><rect x="58.35714285714286" y="25" width="26.571428571428573" height="288" rx="0" ry="0" fill="#0b62a4" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="87.92857142857143" y="53.80000000000001" width="26.571428571428573" height="259.2" rx="0" ry="0" fill="#7a92a3" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="133.21428571428572" y="97" width="26.571428571428573" height="216" rx="0" ry="0" fill="#0b62a4" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="162.7857142857143" y="125.80000000000001" width="26.571428571428573" height="187.2" rx="0" ry="0" fill="#7a92a3" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="208.07142857142858" y="169" width="26.571428571428573" height="144" rx="0" ry="0" fill="#0b62a4" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="237.64285714285717" y="197.8" width="26.571428571428573" height="115.19999999999999" rx="0" ry="0" fill="#7a92a3" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="282.9285714285714" y="97" width="26.571428571428573" height="216" rx="0" ry="0" fill="#0b62a4" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="312.49999999999994" y="125.80000000000001" width="26.571428571428573" height="187.2" rx="0" ry="0" fill="#7a92a3" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="357.7857142857143" y="169" width="26.571428571428573" height="144" rx="0" ry="0" fill="#0b62a4" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="387.35714285714283" y="197.8" width="26.571428571428573" height="115.19999999999999" rx="0" ry="0" fill="#7a92a3" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="432.64285714285717" y="97" width="26.571428571428573" height="216" rx="0" ry="0" fill="#0b62a4" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="462.2142857142857" y="125.80000000000001" width="26.571428571428573" height="187.2" rx="0" ry="0" fill="#7a92a3" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="507.5" y="25" width="26.571428571428573" height="288" rx="0" ry="0" fill="#0b62a4" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect><rect x="537.0714285714286" y="53.80000000000001" width="26.571428571428573" height="259.2" rx="0" ry="0" fill="#7a92a3" stroke="none" style="fill-opacity: 1;" fill-opacity="1"></rect></svg><div class="morris-hover morris-default-style" style="left: 419.214px; top: 135px; display: none;"><div class="morris-hover-row-label">2011</div><div class="morris-hover-point" style="color: #0b62a4">
+                            Series A:
+                            75
+                        </div><div class="morris-hover-point" style="color: #7a92a3">
+                            Series B:
+                            65
+                        </div></div></div>
+                    </div>
+                    <!-- /.col-lg-8 (nested) -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <ul class="timeline">
+                    <li>
+                        <div class="timeline-badge"><i class="fa fa-check"></i>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
+                                </p>
+                            </div>
+                            <div class="timeline-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas suscipit facere rem dicta, debitis.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge warning"><i class="fa fa-credit-card"></i>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolorem quibusdam, tenetur commodi provident cumque magni voluptatem libero, quis rerum. Fugiat esse debitis optio, tempore. Animi officiis alias, officia repellendus.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium maiores odit qui est tempora eos, nostrum provident explicabo dignissimos debitis vel! Adipisci eius voluptates, ad aut recusandae minus eaque facere.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-badge danger"><i class="fa fa-bomb"></i>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus numquam facilis enim eaque, tenetur nam id qui vel velit similique nihil iure molestias aliquam, voluptatem totam quaerat, magni commodi quisquam.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates est quaerat asperiores sapiente, eligendi, nihil. Itaque quos, alias sapiente rerum quas odit! Aperiam officiis quidem delectus libero, omnis ut debitis!</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-badge info"><i class="fa fa-save"></i>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est molestiae excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla qui! Laborum, atque.</p>
+                                <hr>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-gear"></i> <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Action</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi fuga odio quibusdam. Iure expedita, incidunt unde quis nam! Quod, quisquam. Officia quam qui adipisci quas consequuntur nostrum sequi. Consequuntur, commodi.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-badge success"><i class="fa fa-graduation-cap"></i>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia voluptas debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim incidunt quisquam maxime neque eaque.</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-8 -->
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bell fa-fw"></i> Notifications Panel
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-comment fa-fw"></i> New Comment
+                        <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                                    </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                        <span class="pull-right text-muted small"><em>12 minutes ago</em>
+                                    </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-envelope fa-fw"></i> Message Sent
+                        <span class="pull-right text-muted small"><em>27 minutes ago</em>
+                                    </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-tasks fa-fw"></i> New Task
+                        <span class="pull-right text-muted small"><em>43 minutes ago</em>
+                                    </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                        <span class="pull-right text-muted small"><em>11:32 AM</em>
+                                    </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+                        <span class="pull-right text-muted small"><em>11:13 AM</em>
+                                    </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-warning fa-fw"></i> Server Not Responding
+                        <span class="pull-right text-muted small"><em>10:57 AM</em>
+                                    </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+                        <span class="pull-right text-muted small"><em>9:49 AM</em>
+                                    </span>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-money fa-fw"></i> Payment Received
+                        <span class="pull-right text-muted small"><em>Yesterday</em>
+                                    </span>
+                    </a>
+                </div>
+                <!-- /.list-group -->
+                <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
+            </div>
+            <div class="panel-body">
+                <div id="morris-donut-chart"><svg height="347" version="1.1" width="598" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; top: -0.799805px;"><desc>Created with Raphaël 2.2.0</desc><defs></defs><path style="opacity: 0;" fill="none" stroke="#0b62a4" d="M299,286.6666666666667A110.66666666666667,110.66666666666667,0,0,0,403.48523596313163,212.46843260739092" stroke-width="2" opacity="0"></path><path style="" fill="#0b62a4" stroke="#ffffff" d="M299,289.6666666666667A113.66666666666667,113.66666666666667,0,0,0,406.3176670585177,213.45703469614548L451.0071354523873,229.05497876316207A161,161,0,0,1,299,337Z" stroke-width="3"></path><path style="opacity: 1;" fill="none" stroke="#3980b5" d="M403.48523596313163,212.46843260739092A110.66666666666667,110.66666666666667,0,0,0,199.7245062356979,127.09716318080183" stroke-width="2" opacity="1"></path><path style="" fill="#3980b5" stroke="#ffffff" d="M406.3176670585177,213.45703469614548A113.66666666666667,113.66666666666667,0,0,0,197.03330309148487,125.77148386943801L150.08675935354682,102.64574477120273A166,166,0,0,1,455.7278539446975,230.70264891108636Z" stroke-width="3"></path><path style="opacity: 0;" fill="none" stroke="#679dc6" d="M199.7245062356979,127.09716318080183A110.66666666666667,110.66666666666667,0,0,0,298.96523304187207,286.66666120548564" stroke-width="2" opacity="0"></path><path style="" fill="#679dc6" stroke="#ffffff" d="M197.03330309148487,125.77148386943801A113.66666666666667,113.66666666666667,0,0,0,298.9642905640915,289.66666105744156L298.94942035910907,336.9999920549685A161,161,0,0,1,154.57209792723518,104.85521029014241Z" stroke-width="3"></path><text style="text-anchor: middle; font-family: &quot;Arial&quot;; font-size: 15px; font-weight: 800;" x="299" y="166" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="15px" stroke="none" fill="#000000" font-weight="800" transform="matrix(1.6739,0,0,1.6739,-201.8479,-117.9412)" stroke-width="0.5973895582329317"><tspan dy="5">In-Store Sales</tspan></text><text style="text-anchor: middle; font-family: &quot;Arial&quot;; font-size: 14px;" x="299" y="186" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" transform="matrix(2.3056,0,0,2.3056,-391.0139,-232.3889)" stroke-width="0.4337349397590361"><tspan dy="5">30</tspan></text></svg></div>
+                <a href="#" class="btn btn-default btn-block">View Details</a>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+        <div class="chat-panel panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-comments fa-fw"></i> Chat
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu slidedown">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-refresh fa-fw"></i> Refresh
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-check-circle fa-fw"></i> Available
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-times fa-fw"></i> Busy
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-clock-o fa-fw"></i> Away
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-sign-out fa-fw"></i> Sign Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <ul class="chat">
+                    <li class="left clearfix">
+                                    <span class="chat-img pull-left">
+                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle">
+                                    </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">Jack Sparrow</strong>
+                                <small class="pull-right text-muted">
+                                    <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
+                                </small>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="right clearfix">
+                                    <span class="chat-img pull-right">
+                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle">
+                                    </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class=" text-muted">
+                                    <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
+                                <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="left clearfix">
+                                    <span class="chat-img pull-left">
+                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle">
+                                    </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">Jack Sparrow</strong>
+                                <small class="pull-right text-muted">
+                                    <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                    <li class="right clearfix">
+                                    <span class="chat-img pull-right">
+                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle">
+                                    </span>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <small class=" text-muted">
+                                    <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
+                                <strong class="pull-right primary-font">Bhaumik Patel</strong>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.panel-body -->
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input id="btn-input" class="form-control input-sm" placeholder="Type your message here..." type="text">
+                    <span class="input-group-btn">
+                                    <button class="btn btn-warning btn-sm" id="btn-chat">
+                                        Send
+                                    </button>
+                                </span>
+                </div>
+            </div>
+            <!-- /.panel-footer -->
+        </div>
+        <!-- /.panel .chat-panel -->
+    </div>
+    <!-- /.col-lg-4 -->
+</div>
+<!-- /.row -->
+
+
+{% endblock content %}
