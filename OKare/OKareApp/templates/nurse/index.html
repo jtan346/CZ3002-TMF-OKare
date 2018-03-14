@@ -7,14 +7,51 @@
         .input-group-addon {
             min-width: 100px;
         }
-        .textarea-message {
-            width: 100%;
-            resize: vertical;
-        }
     </style>
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
+    <script>
+        var editing = false;
+
+        function enableEditing() {
+            editing = true;
+
+            $('input').each(function() {
+                if ($(this).attr('disabled')) {
+                    $(this).removeAttr('disabled');
+                }
+                else {
+                    $(this).attr({
+                        'disabled': 'disabled'
+                    });
+                }
+            });
+
+            var x = document.getElementById("SaveDiscard");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+
+            var y = document.getElementById("btnEdit");
+            if (y.style.display === "none") {
+                y.style.display = "block";
+            } else {
+                y.style.display = "none";
+            }
+        }
+
+        function discard() {
+            if (confirm('Are you sure you want to discard all changes?')) {
+                enableEditing();
+                window.location.reload();
+            } else {
+
+            }
+        }
+    </script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
@@ -27,7 +64,6 @@
 
 {% block content %}
 
-    {#    <div class="container" style="padding-top:80px">#}
     <div class="row">
         <div class="col-md-12">
             <h1>Nurse Name</h1>
@@ -36,63 +72,91 @@
 
     <div class="row">
         <div class="col-md-2 hidden-xs hidden-sm">
-            <img src="img\profile_picture.svg" alt="profile_picture" class="img-square">
+            <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
         </div>
 
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">First Name</span>
-                        <input id="firstName" name="First Name" class="form-control" placeholder="" type="email">
+        <form action="" method="post">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">First Name</span>
+                            <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Last Name</span>
+                            <input id="lastName" name="Last Name" class="form-control" placeholder="" type="text" disabled>
+                        </div>
                     </div>
-                    <br>
-                    <div class="input-group">
-                        <span class="input-group-addon">Last Name</span>
-                        <input id="lastName" name="Last Name" class="form-control" placeholder="" type="email">
+
+                    <div class="hidden-md hidden-lg"><br></div>
+
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Nric</span>
+                            <input id="nric" name="Nric" class="form-control" placeholder="" type="text" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Mobile no.</span>
+                            <input id="mobileNo" name="Mobile no." class="form-control" placeholder="" type="text" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Date of Birth</span>
+                            <input id="dateOfBirth" name="Date of Birth" class="form-control" placeholder="" type="email" disabled>
+                        </div>
                     </div>
                 </div>
 
-                <div class="hidden-md hidden-lg"></br></div>
+                <hr>
 
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-addon">Mobile no.</span>
-                        <input id="mobileNo" name="Mobile no." class="form-control" placeholder="" type="email">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Street</span>
+                            <input id="street" name="Street" class="form-control" placeholder="" type="text" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">City</span>
+                            <input id="city" name="City" class="form-control" placeholder="" type="text" disabled>
+                        </div>
+                        <br>
                     </div>
-                    <br>
-                    <div class="input-group">
-                        <span class="input-group-addon">Date of Birth</span>
-                        <input id="dateOfBirth" name="Date of Birth" class="form-control" placeholder="" type="email">
+
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">State</span>
+                            <input id="state" name="State" class="form-control" placeholder="" type="text" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Zip code</span>
+                            <input id="zipCode" name="Zip code" class="form-control" placeholder="" type="text" disabled>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <br>
-                    <label>Address</label>
-                    <textarea id="address" name="address" class="form-control textarea-message" rows="3"></textarea>
-                </div>
+            <div class="hidden-md hidden-lg"><br></div>
+
+            <div class="col-md-1">
+                <button id="btnEdit" class="btn btn-default" type="button" onclick="enableEditing()">Edit</button>
             </div>
-        </div>
-
-        <div class="hidden-md hidden-lg"></br></div>
-
-        <div class="col-md-1">
-            <button class="btn btn-default" type="button">Edit</button>
-        </div>
+        </form>
     </div>
 
     <br>
 
-    <div class="row">
+    <div id="SaveDiscard" class="row" style="display: none;">
         <div class="col-md-2 col-md-offset-7">
             <button type="button" class="btn btn-success btn-block">Save</button>
         </div>
-        <div class="hidden-md hidden-lg"></br></div>
+        <div class="hidden-md hidden-lg"><br></div>
         <div class="col-md-2">
-            <button type="button" class="btn btn-danger btn-block">Discard</button>
+            <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
         </div>
         <div class="col-md-1">
         </div>
@@ -100,8 +164,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h2>Peformance</h2>
+            <h2>Performance</h2>
         </div>
     </div>
-    {#    </div>#}
 {% endblock content %}
