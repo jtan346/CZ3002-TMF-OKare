@@ -2,3 +2,4 @@
 .idea
 OKare/db.sqlite3
 OKare/OKareApp/__pycache__
+__pycache__
