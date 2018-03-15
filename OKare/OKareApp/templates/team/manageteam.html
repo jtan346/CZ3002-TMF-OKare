@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block page_stylesheets %}
+<style>
+
+    #summaryCards{
+        padding-top:10px;
+    }
+
+    #team-row{
+        padding-top:30px;
+    }
+
+    #add_team_icon{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 21%;
+    }
+
+
+
+</style>
+
+{% endblock page_stylesheets %}
+
+{% block page_javascripts %}
+
+
+    <script src="/static/vendor/jquery/jquery.js" type="text/javascript"></script>
+    <script>
+
+
+        $(document).ready(function(){
+
+            $('#exampleModalCenter').on('show.bs.modal', function (event) {
+                //var button = $(event.relatedTarget) // Button that triggered the modal
+                //var recipient = "Rubbish" // Extract info from data-* attributes
+                //If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                //Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                //var modal = $(this)
+                //modal.find('.modal-title').text('New message to ' + recipient)
+                //modal.find('.modal-body input').val(recipient)
+                var temp = "123";
+                $.ajax({
+                type: "POST",
+                url: "path/to/url/",
+                data: { name: "John"},
+                success: function(data) {
+                  alert("HI");
+                }
+                });
+            })
+        });
+
+
+
+    </script>
+{% endblock page_javascripts %}
+
+
+{% block sidebar %}
+    {% include 'nurse/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+    {% include 'nurse/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+
+{% block content %}
+
+<div id="summaryCards" class="row page-header">
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-user-md fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">26</div>
+                        <div>Active Nurses</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-user fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">12</div>
+                        <div>Patients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-users fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">124</div>
+                        <div>Teams</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+     <div class="col-md-3">
+     </div>
+     <div class="col-md-3">
+     </div>
+     <div class="col-md-3">
+     </div>
+     <div class="col-md-3">
+         <div id="dataTables-example_filter" class="dataTables_filter">
+             <label>
+                 Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example">
+             </label>
+         </div>
+     </div>
+</div>
+
+<div class="row" id="team-row">
+    {% for team in teams %}
+        <div class="col-md-3 col-md-6">
+            <div class="panel panel-default">
+                <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-outline btn-success btn-block" id="{{team.name}}">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-users fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class=test_to_search">{{team.name}}</div>
+                            <div class=test_to_search">Ward Number {{team.ward}}</div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+
+     <div class="col-md-3 col-md-6">
+            <div class="panel panel-default">
+                <!--<div class="panel-heading">
+                data-toggle="modal" data-target="#exampleModalCenter"
+                </div> -->
+
+                <button type="button" id="hi" class="btnTeam btn btn-outline btn-success btn-block">
+                    <i class="fa fa-plus-circle fa-3x" id="add_team_icon"></i>
+                </button>
+
+            </div>
+     </div>
+
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
