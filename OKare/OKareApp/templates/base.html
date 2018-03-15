@@ -66,15 +66,15 @@
             {% endblock sidebar %}
             <!-- /.navbar-static-side -->
         </nav>
-
+            <ol class="breadcrumb"    style="margin: 0 0 0 250px;">
+		        {% block breadcrumb %}
+		        {% endblock breadcrumb %}
+	        </ol>
         <!-- Start of Page Container/Wrapper -->
         <div id="page-wrapper">
 
 	        <!-- Page Breadcrumb (Hierarchy) Here -->
-	        <ol class="breadcrumb">
-		        {% block breadcrumb %}
-		        {% endblock breadcrumb %}
-	        </ol>
+
 
 	        <!-- Page Content Here -->
             {% block content %}

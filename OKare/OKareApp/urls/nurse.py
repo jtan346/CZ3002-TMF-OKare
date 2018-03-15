@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from OKareApp.views import Nurse
+
 urlpatterns = [
     #SC/Joey - Nurse Homepage
     url(r'^$', Nurse.index, name="Nurse_Index"),
