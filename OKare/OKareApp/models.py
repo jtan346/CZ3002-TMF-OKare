@@ -8,8 +8,8 @@ class Teams(models.Model):
     name = models.CharField(max_length=30)
     ward = models.CharField(max_length=15)
 
-
 class Account(models.Model):
+    nric = models.CharField(max_length=9, primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     TYPES = (
         ('Nurse', 'Nurse'),
@@ -61,15 +61,27 @@ class Task(models.Model):
         ('Sunday', 'Sunday'),
     )
 
+    CATTYPE = (
+        ('Hygiene','Hygiene'),
+        ('Medical_Care','Medical Care'),
+        ('Therapy','Therapy'),
+        ('Food','Food'),
+        ('Misc','Miscallenous')
+    )
+
     title = models.CharField(max_length=200)
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
     recur_type = models.CharField(max_length=100, choices=RECURTYPE, null=True)
-    #start_time of
+
+    category = models.CharField(max_length = 100, choices=CATTYPE, null=False, default='Misc')
+
+    #all tasks have a start_time, the day of the start time, and date
     start_time = models.TimeField(auto_now=False, editable=True, null=False)
+    #only recurring tasks have duration and day
     duration = models.DurationField(editable=True, null=False)
-    #Date is specifically for tasks that are not recuring
-    date = models.DateField(editable=True,null=True, auto_now=False)
     day = models.CharField(max_length=20, choices=DAY)
+    #Date is specifically for tasks that are not recurring
+    date = models.DateField(editable=True,null=True, auto_now=False)
 
 
 class DailyTriage(models.Model):
