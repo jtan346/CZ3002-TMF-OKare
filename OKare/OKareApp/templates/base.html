@@ -24,6 +24,7 @@
 
             <!-- Custom CSS -->
             <link href="/static/dist/css/sb-admin-2.css" rel="stylesheet">
+            <link href="/static/tmf_custom.css" rel="stylesheet">
 
             <!-- Custom Fonts -->
             <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -33,18 +34,30 @@
             <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<<<<<<< Updated upstream
             <![endif]-->
         {% endblock vendor_stylesheets %}
     <script src="/static/js/OKare.js"></script>
         {% block page_stylesheets %}
         {% endblock page_stylesheets %}
+=======
+        <![endif]-->
+
+        {% endblock vendor_stylesheets %}
+
+        {% block page_stylesheets %}
+        {% endblock page_stylesheets %}
+        {% block page_javascripts %}
+        {% endblock page_javascripts %}
+>>>>>>> Stashed changes
     {% endblock head %}
+
+
 </head>
 
 <body>
 {% block body %}
     <div id="wrapper">
-
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -66,12 +79,35 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <!-- Page Content -->
+        <!-- Start of Page Container/Wrapper -->
         <div id="page-wrapper">
+
+	        <!-- Page Breadcrumb (Hierarchy) Here -->
+	        <ol class="breadcrumb">
+			    <li class="breadcrumb-item">
+			    <a href="../../home">Home</a>
+			    </li>
+		        {% block breadcrumb %}
+		        {% endblock breadcrumb %}
+	        </ol>
+
+	        <!-- Page Content Here -->
             {% block content %}
             {% endblock content %}
+
+			<!-- /#Page Footer -->
+		    <footer class="sticky-footer">
+		        <div class="container">
+		            <div class="text-center">
+		                <small>OKare 2017 - The Most Fantasic!</small>
+		            </div>
+		        </div>
+		    </footer>
         </div>
         <!-- /#page-wrapper -->
+
+
+
 
     </div>
     <!-- /#wrapper -->

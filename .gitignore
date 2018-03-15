@@ -1,5 +1,5 @@
 #ignore the following files
-.idea
+.idea/
 
 OKare/db.sqlite3
 
