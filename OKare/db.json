@@ -1,0 +1,2134 @@
+[
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$36000$3yZLRqGbFIX5$Lnyps0ojt7jTxfkOcI9O4LoFE9mAekQ1xfOdgBrnbck=",
+        "last_login": "2018-03-15T09:02:10Z",
+        "is_superuser": true,
+        "username": "superuser",
+        "first_name": "",
+        "last_name": "",
+        "email": "nice@email.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-03-15T08:22:40Z",
+        "groups": [],
+        "user_permissions": [
+            [
+                "add_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "change_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "delete_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "add_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "change_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "delete_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "add_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "change_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "delete_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "add_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "change_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "delete_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "add_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "change_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "delete_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "add_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "change_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "delete_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "add_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "change_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "delete_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "change_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "add_group",
+                "auth",
+                "group"
+            ],
+            [
+                "change_group",
+                "auth",
+                "group"
+            ],
+            [
+                "delete_group",
+                "auth",
+                "group"
+            ],
+            [
+                "add_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "change_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "delete_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "add_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "change_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "delete_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "add_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "change_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "delete_session",
+                "sessions",
+                "session"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$36000$EBARdkCnVdEY$3X4toeKPS566hMkHvDerbAxoq3PBIbZHJE2IVpF0Bm0=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "admin1",
+        "first_name": "Hello",
+        "last_name": "From",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-03-15T08:41:24Z",
+        "groups": [],
+        "user_permissions": [
+            [
+                "add_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "change_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "delete_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "add_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "change_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "delete_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "add_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "change_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "delete_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "add_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "change_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "delete_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "add_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "change_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "delete_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "add_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "change_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "delete_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "add_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "change_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "delete_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "change_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "add_group",
+                "auth",
+                "group"
+            ],
+            [
+                "change_group",
+                "auth",
+                "group"
+            ],
+            [
+                "delete_group",
+                "auth",
+                "group"
+            ],
+            [
+                "add_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "change_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "delete_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "add_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "change_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "delete_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "add_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "change_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "delete_session",
+                "sessions",
+                "session"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$36000$155FR488hxbq$Mwm9AUJKau08TStkCdXx4qrNfgzAAZ2CABOSDfUBjp4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "admin2",
+        "first_name": "Nice",
+        "last_name": "Lee",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-03-15T08:41:39Z",
+        "groups": [],
+        "user_permissions": [
+            [
+                "add_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "change_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "delete_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "add_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "change_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "delete_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "add_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "change_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "delete_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "add_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "change_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "delete_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "add_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "change_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "delete_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "add_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "change_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "delete_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "add_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "change_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "delete_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "change_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "add_group",
+                "auth",
+                "group"
+            ],
+            [
+                "change_group",
+                "auth",
+                "group"
+            ],
+            [
+                "delete_group",
+                "auth",
+                "group"
+            ],
+            [
+                "add_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "change_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "delete_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "add_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "change_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "delete_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "add_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "change_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "delete_session",
+                "sessions",
+                "session"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$36000$qla6f3efG6Rp$v32FsnRArWuB2TNz9pocV1AJIYarIEZMfbY5ZPaGkuU=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nurse1",
+        "first_name": "Serious",
+        "last_name": "Lee",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-03-15T08:41:55Z",
+        "groups": [],
+        "user_permissions": [
+            [
+                "add_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "change_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "delete_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "add_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "change_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "delete_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "add_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "change_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "delete_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "add_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "change_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "delete_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "add_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "change_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "delete_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "add_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "change_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "delete_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "add_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "change_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "delete_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "change_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "add_group",
+                "auth",
+                "group"
+            ],
+            [
+                "change_group",
+                "auth",
+                "group"
+            ],
+            [
+                "delete_group",
+                "auth",
+                "group"
+            ],
+            [
+                "add_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "change_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "delete_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "add_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "change_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "delete_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "add_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "change_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "delete_session",
+                "sessions",
+                "session"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$36000$oeskJ2rxq7KZ$8sVaogWD8TnU6fnBaCahqZAUAUosOPGY8mxX/7U2J38=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nurse2",
+        "first_name": "Happy",
+        "last_name": "Lee",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-03-15T08:42:18Z",
+        "groups": [],
+        "user_permissions": [
+            [
+                "add_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "change_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "delete_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "add_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "change_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "delete_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "add_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "change_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "delete_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "add_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "change_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "delete_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "add_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "change_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "delete_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "add_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "change_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "delete_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "add_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "change_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "delete_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "change_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "add_group",
+                "auth",
+                "group"
+            ],
+            [
+                "change_group",
+                "auth",
+                "group"
+            ],
+            [
+                "delete_group",
+                "auth",
+                "group"
+            ],
+            [
+                "add_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "change_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "delete_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "add_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "change_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "delete_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "add_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "change_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "delete_session",
+                "sessions",
+                "session"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$36000$L40v7GznUrtc$jfiFPzcYKfVdXTfplaEPZc59XG1l/goVoEybptDKeok=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nurse3",
+        "first_name": "Sad",
+        "last_name": "Lee",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-03-15T08:42:34Z",
+        "groups": [],
+        "user_permissions": [
+            [
+                "add_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "change_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "delete_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "add_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "change_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "delete_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "add_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "change_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "delete_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "add_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "change_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "delete_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "add_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "change_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "delete_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "add_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "change_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "delete_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "add_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "change_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "delete_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "change_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "add_group",
+                "auth",
+                "group"
+            ],
+            [
+                "change_group",
+                "auth",
+                "group"
+            ],
+            [
+                "delete_group",
+                "auth",
+                "group"
+            ],
+            [
+                "add_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "change_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "delete_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "add_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "change_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "delete_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "add_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "change_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "delete_session",
+                "sessions",
+                "session"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$36000$k2Rg9LHcIQmF$dpAWSoSAi69taF29my5zAroO0P/zOnIj7nMnYJDwkDU=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nurse4",
+        "first_name": "Quiet",
+        "last_name": "Lee",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-03-15T08:42:50Z",
+        "groups": [],
+        "user_permissions": [
+            [
+                "add_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "change_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "delete_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "add_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "change_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "delete_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "add_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "change_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "delete_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "add_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "change_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "delete_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "add_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "change_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "delete_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "add_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "change_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "delete_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "add_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "change_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "delete_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "change_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "add_group",
+                "auth",
+                "group"
+            ],
+            [
+                "change_group",
+                "auth",
+                "group"
+            ],
+            [
+                "delete_group",
+                "auth",
+                "group"
+            ],
+            [
+                "add_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "change_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "delete_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "add_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "change_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "delete_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "add_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "change_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "delete_session",
+                "sessions",
+                "session"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$36000$SwN8MtoA9Xct$i9M4AiOpC9mmR7FKUmf6TCJJ/4/fQdatVNtU0QMNjWI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nurse5",
+        "first_name": "Another",
+        "last_name": "Lee",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-03-15T08:43:18Z",
+        "groups": [],
+        "user_permissions": [
+            [
+                "add_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "change_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "delete_account",
+                "OKareApp",
+                "account"
+            ],
+            [
+                "add_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "change_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "delete_completedtask",
+                "OKareApp",
+                "completedtask"
+            ],
+            [
+                "add_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "change_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "delete_dailytriage",
+                "OKareApp",
+                "dailytriage"
+            ],
+            [
+                "add_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "change_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "delete_nursestats",
+                "OKareApp",
+                "nursestats"
+            ],
+            [
+                "add_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "change_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "delete_patient",
+                "OKareApp",
+                "patient"
+            ],
+            [
+                "add_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "change_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "delete_task",
+                "OKareApp",
+                "task"
+            ],
+            [
+                "add_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "change_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "delete_teams",
+                "OKareApp",
+                "teams"
+            ],
+            [
+                "add_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "change_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "delete_logentry",
+                "admin",
+                "logentry"
+            ],
+            [
+                "add_group",
+                "auth",
+                "group"
+            ],
+            [
+                "change_group",
+                "auth",
+                "group"
+            ],
+            [
+                "delete_group",
+                "auth",
+                "group"
+            ],
+            [
+                "add_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "change_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "delete_permission",
+                "auth",
+                "permission"
+            ],
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "add_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "change_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "delete_contenttype",
+                "contenttypes",
+                "contenttype"
+            ],
+            [
+                "add_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "change_session",
+                "sessions",
+                "session"
+            ],
+            [
+                "delete_session",
+                "sessions",
+                "session"
+            ]
+        ]
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "2qw75xz8x8pj0cnlguemqn489vpncs61",
+    "fields": {
+        "session_data": "YWJmZWJiN2VlNDE3NDRmNmMwOTM5YTY1NDgyM2VjNDkxYmIwZjVjZDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzZjcwZTg1ZjVjZGQyNWZmMzE3ODBhYTk2ZmMyZjMyZDUwZjI4NTBlIn0=",
+        "expire_date": "2018-03-29T08:27:43.980Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "potlnelbe8n9cwlu4jpvc084z22qer5j",
+    "fields": {
+        "session_data": "YWJmZWJiN2VlNDE3NDRmNmMwOTM5YTY1NDgyM2VjNDkxYmIwZjVjZDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzZjcwZTg1ZjVjZGQyNWZmMzE3ODBhYTk2ZmMyZjMyZDUwZjI4NTBlIn0=",
+        "expire_date": "2018-03-29T09:02:10.413Z"
+    }
+},
+{
+    "model": "OKareApp.teams",
+    "pk": 1,
+    "fields": {
+        "name": "Nice",
+        "ward": "12"
+    }
+},
+{
+    "model": "OKareApp.teams",
+    "pk": 2,
+    "fields": {
+        "name": "SERIOUS LEE",
+        "ward": "123"
+    }
+},
+{
+    "model": "OKareApp.teams",
+    "pk": 3,
+    "fields": {
+        "name": "LEE WARRIORS",
+        "ward": "maybe 1"
+    }
+},
+{
+    "model": "OKareApp.teams",
+    "pk": 4,
+    "fields": {
+        "name": "LEE SLAVES",
+        "ward": "ALL"
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S9223432G",
+    "fields": {
+        "user": [
+            "admin1"
+        ],
+        "date_of_birth": null,
+        "street": "STREET",
+        "city": "Singapore",
+        "state": "Singapore",
+        "zip_code": "912032",
+        "phoneNo": "97612302",
+        "type": "Admin",
+        "team": null
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S9232342G",
+    "fields": {
+        "user": [
+            "nurse3"
+        ],
+        "date_of_birth": null,
+        "street": "THIS",
+        "city": "Singapore",
+        "state": "Singapore",
+        "zip_code": "672030",
+        "phoneNo": "91273752",
+        "type": "Nurse",
+        "team": 4
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S9234232G",
+    "fields": {
+        "user": [
+            "nurse4"
+        ],
+        "date_of_birth": null,
+        "street": "SHIT",
+        "city": "Singapore",
+        "state": "Singapore",
+        "zip_code": "672030",
+        "phoneNo": "90123234",
+        "type": "Nurse",
+        "team": 2
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S9673132G",
+    "fields": {
+        "user": [
+            "superuser"
+        ],
+        "date_of_birth": null,
+        "street": "UR MOM",
+        "city": "Singapore",
+        "state": "Singapore",
+        "zip_code": "912032",
+        "phoneNo": "81230123",
+        "type": "Admin",
+        "team": null
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S9765453G",
+    "fields": {
+        "user": [
+            "nurse1"
+        ],
+        "date_of_birth": null,
+        "street": "DONT",
+        "city": "Singapore",
+        "state": "Singapore",
+        "zip_code": "676239",
+        "phoneNo": "90234791",
+        "type": "Nurse",
+        "team": 2
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S9845624G",
+    "fields": {
+        "user": [
+            "nurse2"
+        ],
+        "date_of_birth": null,
+        "street": "CARE",
+        "city": "Singapore",
+        "state": "Singapore",
+        "zip_code": "672030",
+        "phoneNo": "86712332",
+        "type": "Nurse",
+        "team": 3
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S9898898G",
+    "fields": {
+        "user": [
+            "admin2"
+        ],
+        "date_of_birth": null,
+        "street": "I",
+        "city": "Singapore",
+        "state": "Singapore",
+        "zip_code": "876238",
+        "phoneNo": "85623123",
+        "type": "Nurse",
+        "team": 1
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S1231234G",
+    "fields": {
+        "first_name": "SERIOUS",
+        "last_name": "LEE GIRLFRIEND",
+        "ward": "1",
+        "bed": 2,
+        "team": 1
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S2956234G",
+    "fields": {
+        "first_name": "SERIOUS",
+        "last_name": "LEE GIRLFRIEND",
+        "ward": "1",
+        "bed": 2,
+        "team": 3
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S3232334G",
+    "fields": {
+        "first_name": "SERIOUS",
+        "last_name": "LEE GIRLFRIEND",
+        "ward": "1",
+        "bed": 3,
+        "team": 1
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S4234234G",
+    "fields": {
+        "first_name": "HAPPY",
+        "last_name": "LEE GIRLFRIEND",
+        "ward": "1",
+        "bed": 5,
+        "team": 2
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S5562334G",
+    "fields": {
+        "first_name": "HAPPY",
+        "last_name": "LEE GIRLFRIEND",
+        "ward": "1",
+        "bed": 4,
+        "team": 3
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S6731234G",
+    "fields": {
+        "first_name": "HAPPY",
+        "last_name": "LEE GIRLFRIEND",
+        "ward": "1",
+        "bed": 3,
+        "team": 2
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S7831234G",
+    "fields": {
+        "first_name": "HAPPY",
+        "last_name": "LEE GIRLFRIEND",
+        "ward": "1",
+        "bed": 2,
+        "team": 4
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S8456234G",
+    "fields": {
+        "first_name": "SERIOUS",
+        "last_name": "LEE GIRLFRIEND",
+        "ward": "1",
+        "bed": 2,
+        "team": 4
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S9678234G",
+    "fields": {
+        "first_name": "HAPPY",
+        "last_name": "LEE GIRLFRIEND",
+        "ward": "1",
+        "bed": 3,
+        "team": 2
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2018-03-15T09:23:05.756Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "2",
+        "object_repr": "admin1",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2018-03-15T09:23:11.917Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "3",
+        "object_repr": "admin2",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2018-03-15T09:23:17.790Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "4",
+        "object_repr": "nurse1",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2018-03-15T09:23:24.531Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "5",
+        "object_repr": "nurse2",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2018-03-15T09:23:29.832Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "7",
+        "object_repr": "nurse4",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2018-03-15T09:23:34.949Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "8",
+        "object_repr": "nurse5",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2018-03-15T09:23:40.602Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "1",
+        "object_repr": "superuser",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2018-03-15T09:23:46.339Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "6",
+        "object_repr": "nurse3",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2018-03-15T09:23:51.333Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "4",
+        "object_repr": "nurse1",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+}
+]
