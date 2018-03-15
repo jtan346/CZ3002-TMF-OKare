@@ -2,6 +2,7 @@ from django.shortcuts import render
 from OKareApp.models import Teams
 from django.core import serializers
 from django.http import HttpResponse
+from django.db.models import Count, Avg, Sum
 import json
 # Create your views here.
 def index(Request):
@@ -12,7 +13,7 @@ def index(Request):
     }
 
     #return HttpResponse(leads_as_json, content_type='json')
-    return render(Request, 'team/manageteam.html', context)
+    return render(Request, 'manageteam.html', context)
     pass
 
 
@@ -24,5 +25,5 @@ def returnTeamInfo(Request):
     #    response_data['agency'] = getAgency.external_agencies
     #else:
     #    response_data['agency'] = '';
-    reponse_data['name'] = crisis_id;
+    response_data['name'] = crisis_id;
     return JsonResponse(response_data)

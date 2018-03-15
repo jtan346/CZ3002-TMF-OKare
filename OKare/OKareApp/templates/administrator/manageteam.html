@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
+
 {% block page_stylesheets %}
 <style>
+    .nav, .navbar, body {
+        background-color: #ff5b5b;
+        color:#333;
+    }
+    .active{
+        color: #333;
+    }
+    .nav a {
+        font-size:16px;
+        color:white;
+    }
+    .sidebar-nav{
+        color: white;
+    }
 
+    .panel-heading {
+        text-align: right;
+    }
+    .medium{
+        font-size: 18px;
+    }
     #summaryCards{
         padding-top:10px;
     }
@@ -59,11 +80,11 @@
 
 
 {% block sidebar %}
-    {% include 'nurse/ui_components/sidebar.html' %}
+    {% include 'administrator/ui_components/sidebar.html' %}
 {% endblock sidebar %}
 
 {% block topmenu %}
-    {% include 'nurse/ui_components/top-menu.html' %}
+    {% include 'administrator/ui_components/top-menu.html' %}
 {% endblock topmenu %}
 
 
