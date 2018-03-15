@@ -72,7 +72,7 @@ class Task(models.Model):
     title = models.CharField(max_length=200)
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
     recur_type = models.CharField(max_length=100, choices=RECURTYPE, null=True)
-    category = models.CharField(max_length = 100, choices=CATTYPE, null=False )
+    category = models.CharField(max_length = 100, choices=CATTYPE, null=False)
     #all tasks have a start_time, the day of the start time, and date
     start_time = models.TimeField(auto_now=False, editable=True, null=False)
     #only recurring tasks have duration and day

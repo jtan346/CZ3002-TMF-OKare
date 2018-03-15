@@ -4,14 +4,12 @@ from django.shortcuts import get_object_or_404, render
 from django.http import Http404
 from django.urls import reverse
 from django.views import generic
-
-from OKareApp.models import Account,Task, CompletedTasks, DailyTriage,Patient,NurseStats
+from OKareApp.models import Account,Task, CompletedTask, DailyTriage,Patient,NurseStats
 
 def index(request):
     nurse_id = 1
     #nurse = get_object_or_404(Nurses, pk=nurse_id)
     context = {'nurse': nurse_id}
-    return render(request, 'nurse/index.html', context)
 
 def listNurses(request):
     template = loader.get_template('nurse/list_nurse.html')
