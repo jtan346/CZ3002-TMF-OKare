@@ -15,6 +15,7 @@ class Account(models.Model):
         ('Nurse', 'Nurse'),
         ('Admin', 'Admin')
     )
+    phoneNo = models.DecimalField(null=True,max_digits=8,decimal_places=0)
     type = models.CharField(max_length=100, choices=TYPES)
     team = models.OneToOneField(Teams, on_delete=models.SET_NULL, null=True)
 
