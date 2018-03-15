@@ -1,5 +1,13 @@
 #ignore the following files
 .idea
+
 OKare/db.sqlite3
+
 OKare/OKareApp/__pycache__
-*__pycache__
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+*.pyc
