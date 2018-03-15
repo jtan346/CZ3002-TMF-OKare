@@ -5,7 +5,7 @@ from django.http import Http404
 from django.urls import reverse
 from django.views import generic
 
-from OKareApp.models import Nurses
+from OKareApp.models import Account,Task, CompletedTasks, DailyTriage,Patient,NurseStats
 
 def index(request):
     nurse_id = 1
@@ -53,3 +53,7 @@ def viewPatientProfile(request, patient_id):
                 'patient_name': patient_name,
                }
     return HttpResponse(template.render(context, request))
+
+def team_tasklist(request):
+    context = {}
+    return render(request,'nurse/team_tasklist.html',context)
