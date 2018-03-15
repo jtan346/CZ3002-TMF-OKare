@@ -8,7 +8,6 @@ class Teams(models.Model):
     name = models.CharField(max_length=30)
     ward = models.CharField(max_length=15)
 
-
 class Account(models.Model):
     nric = models.CharField(max_length=9, primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -66,13 +65,14 @@ class Task(models.Model):
         ('Hygiene','Hygiene'),
         ('Medical_Care','Medical Care'),
         ('Therapy','Therapy'),
-        ('Food','Food')
+        ('Food','Food'),
+        ('Misc','Miscallenous')
     )
 
     title = models.CharField(max_length=200)
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
     recur_type = models.CharField(max_length=100, choices=RECURTYPE, null=True)
-    category = models.CharField(max_length = 100, choices=CATTYPE, null=False )
+    category = models.CharField(max_length = 100, choices=CATTYPE, null=False, default='Misc')
     #all tasks have a start_time, the day of the start time, and date
     start_time = models.TimeField(auto_now=False, editable=True, null=False)
     #only recurring tasks have duration and day
