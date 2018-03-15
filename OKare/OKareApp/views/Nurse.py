@@ -1,14 +1,18 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.template import loader
+from django.shortcuts import get_object_or_404, render
+from django.http import Http404
 from django.urls import reverse
+from django.views import generic
 
-# from ..models import Nurse
+from OKareApp.models import Nurses
 
-def index(Request):
-    #Id will get from session once login completed
-    id = 1
-    context = {'id': id}
-    return render(Request, 'nurse/index.html', context)
+
+def index(request):
+    nurse_id = 1
+    nurse = get_object_or_404(Nurses, pk=nurse_id)
+    context = {'nurse': nurse}
+    return render(request, 'nurse/index.html', context)
     pass
 
 # def vote(request, question_id):

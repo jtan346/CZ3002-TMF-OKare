@@ -80,6 +80,20 @@ class CompletedTask(models.Model):
     duration = models.DurationField(editable=True, null=False)
     date = models.DateField(editable=True, null=False)
 
+
+class Nurses(models.Model):
+    nurse_id = models.AutoField(primary_key=True, default=0)
+    nric = models.CharField(max_length=9)
+    first_name = models.CharField(max_length=30, default='First Name')
+    last_name = models.CharField(max_length=30, default='Last Name')
+    mobile_no = models.IntegerField(default=0)
+    date_of_birth = models.DateTimeField(auto_now=True)
+    street = models.CharField(max_length=128, default='Street')
+    city = models.CharField(max_length=64, default='City')
+    state = models.CharField(max_length=32, default='State')
+    zip_code = models.CharField(max_length=10, default='Zip Code')
+
+
     #make sure to test this Later when DB up (if dont work change back to .aggregate
     def average_duration(self,start_date=datetime.now()-timedelta(days=7)):
         return CompletedTask.Objects.filter(id= self.task.id, date__gte = start_date).Avg('duration')
@@ -89,15 +103,3 @@ class CompletedTask(models.Model):
 
     def total_time_spent(self, nurse_search, start_date=datetime.now()-timedelta(days=7)):
         return CompletedTask.Objects.filter(nurse = nurse_search,date__gte = start_date).Sum('duration')
-
-
-class Nurse(models.Model):
-    nric = models.CharField(max_length=9, primary_key=True)
-    first_name = models.CharField(max_length=30, default='First Name')
-    last_name = models.CharField(max_length=30, default='Last Name')
-    mobile_no = models.IntegerField(default=0)
-    date_of_birth = models.DateTimeField(auto_now=True)
-    street = models.CharField(max_length=128, default='Street')
-    city = models.CharField(max_length=64, default='City')
-    state = models.CharField(max_length=32, default='State')
-    zip_code = models.CharField(max_length=10, default='Zip Code')
