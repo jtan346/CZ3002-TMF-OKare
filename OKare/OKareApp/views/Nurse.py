@@ -5,30 +5,55 @@ from django.http import Http404
 from django.urls import reverse
 from django.views import generic
 
-from OKareApp.models import Nurses
-
+from OKareApp.models import Account,Task, CompletedTasks, DailyTriage,Patient,NurseStats
 
 def index(request):
     nurse_id = 1
-    nurse = get_object_or_404(Nurses, pk=nurse_id)
-    context = {'nurse': nurse}
+    #nurse = get_object_or_404(Nurses, pk=nurse_id)
+    context = {'nurse': nurse_id}
     return render(request, 'nurse/index.html', context)
-    pass
 
-# def vote(request, question_id):
-#     question = get_object_or_404(Nurse, pk=question_id)
-#     try:
-#         selected_choice = question.choice_set.get(pk=request.POST['choice'])
-#     except (KeyError, Choice.DoesNotExist):
-#         # Redisplay the question voting form.
-#         return render(request, 'polls/detail.html', {
-#             'question': question,
-#             'error_message': "You didn't select a choice.",
-#         })
-#     else:
-#         selected_choice.votes += 1
-#         selected_choice.save()
-#         # Always return an HttpResponseRedirect after successfully dealing
-#         # with POST data. This prevents data from being posted twice if a
-#         # user hits the Back button.
-#         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+def listNurses(request):
+    template = loader.get_template('nurse/list_nurse.html')
+    page_name = 'View Nurse'    #Fill in here
+
+    context = {
+        'page_name': page_name,
+    }
+    return HttpResponse(template.render(context, request))
+
+def viewNurseProfile(request, nurse_id):
+    template = loader.get_template('nurse/view_nurse.html')
+    page_name = 'View Nurses'    #Fill in here
+    nurse_name = 'Nurse Joy'    # From Models
+
+    context = {
+        'page_name': page_name,
+        'nurse_id': nurse_id,
+        'nurse_name': nurse_name,
+    }
+    return HttpResponse(template.render(context, request))
+
+def listPatients(request):
+    template = loader.get_template('nurse/list_patient.html')
+    page_name = 'View Patients'    #Fill in here
+
+    context = {
+        'page_name': page_name,
+    }
+    return HttpResponse(template.render(context, request))
+
+def viewPatientProfile(request, patient_id):
+    template = loader.get_template('nurse/view_patient.html')
+    page_name = 'View Patient'
+    patient_name = 'Benjamin' #From Models
+    context = {
+                'page_name': page_name,
+                'patient_id': patient_id,
+                'patient_name': patient_name,
+               }
+    return HttpResponse(template.render(context, request))
+
+def team_tasklist(request):
+    context = {}
+    return render(request,'nurse/team_tasklist.html',context)
