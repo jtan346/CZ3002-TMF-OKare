@@ -5,12 +5,12 @@ from django.http import Http404
 from django.urls import reverse
 from django.views import generic
 
-from OKareApp.models import Nurses
+from OKareApp.models import Account
 
 
 def index(request):
     nurse_id = 1
-    nurse = get_object_or_404(Nurses, pk=nurse_id)
+    nurse = get_object_or_404(Account, pk=nurse_id)
     context = {'nurse': nurse}
     return render(request, 'nurse/index.html', context)
     pass
