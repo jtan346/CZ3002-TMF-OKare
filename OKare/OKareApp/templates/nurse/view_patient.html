@@ -30,7 +30,7 @@
 <!-- Add the page hierarchy here -->
 {% block breadcrumb %}
 	<li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
-    <li class="breadcrumb-item"><a href="/Nurse/view_patient">View Patients</a></li>
+    <li class="breadcrumb-item"><a href="/Nurse/view_patient">{{ page_name }}</a></li>
     <li class="breadcrumb-item active">{{ patient_id }}: {{ patient.first_name|title }} {{ patient.last_name|title }}</li>
 {% endblock breadcrumb %}
 

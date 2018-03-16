@@ -64,13 +64,13 @@ def viewPatientProfile(request, patient_id):
 
 def generateProductivityReport(request, nurse_id):
     template = loader.get_template('nurse/productivity_report.html')
-    nurse_name = 'Saklani' #From Models
-    page_name = 'Generate Productivity Report: ' + nurse_id + " (" + nurse_name + ")"
+    nurse = Account.objects.filter(user_id=nurse_id).get() #From Models
+    page_name = 'Generate Productivity Report: ' + nurse_id + " (" + nurse.user.first_name + ")"
 
     context = {
                 'page_name': page_name,
                 'nurse_id': nurse_id,
-                'nurse_name': nurse_name,
+                'nurse': nurse,
                }
     return HttpResponse(template.render(context, request))
 

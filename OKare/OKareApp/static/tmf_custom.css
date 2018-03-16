@@ -26,7 +26,11 @@ footer.sticky-footer {
     height:100%;
     width:100%;
     padding-top:15px;
-    padding-bottom:36px;
+    margin-bottom:36px;
+}
+
+.input-group {
+    margin-bottom:21px;
 }
 
 
