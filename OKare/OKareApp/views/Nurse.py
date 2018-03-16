@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView
 from django.http import Http404
 from django.urls import reverse
 from django.views import generic
@@ -63,6 +64,7 @@ def viewPatientProfile(request, patient_id):
                }
     return HttpResponse(template.render(context, request))
 
+
 def generateProductivityReport(request, nurse_id):
     template = loader.get_template('nurse/productivity_report.html')
     nurse_name = 'Saklani' #From Models
@@ -75,7 +77,21 @@ def generateProductivityReport(request, nurse_id):
                }
     return HttpResponse(template.render(context, request))
 
-def team_tasklist(request):
-    team_tasks = Tasks.objects.filter(patient)
-    context = {}
+
+def view_team_tasklist(request):
+    #team is from nurse's team, retrieved from user, awaiting completion of login
+    team = 1
+    team_tasks = Task.object.fliter(patient__team__in=team)
+    context = { "team_tasks": team_tasks }
     return render(request,'nurse/team_tasklist.html',context)
+
+#ListView
+class TeamTaskList(ListView):
+    context_object_name="team_tasks"
+    template_name = 'nurse/team_tasklist.html'
+    #model=
+    #queryset=
+    def get_queryset(self):
+        return Task.objects.filter(patient__team__in=[1])
+#       user = self.request.
+#       return Tasks.object.filter(patient__team__in=self.)
