@@ -16,7 +16,7 @@ def index(request):
 
 def listNurses(request):
     template = loader.get_template('nurse/list_nurse.html')
-    page_name = 'View Nurse'    #Fill in here
+    page_name = 'View Nurses'    #Fill in here
 
     nurses = Account.objects.filter(type="Nurse")
 
@@ -28,11 +28,10 @@ def listNurses(request):
 
 def viewNurseProfile(request, nurse_id):
     template = loader.get_template('nurse/view_nurse.html')
-    page_name = 'View Nurses'    #Fill in here
-    nurse_name = 'Nurse Joy'    # From Models
-
     nurse = Account.objects.filter(user_id=nurse_id).get()
+    nurse_name = nurse.user.first_name + " " + nurse.user.last_name    # From Models
 
+    page_name = str(nurse.user_id) + ": " + nurse_name  # Fill in here
     context = {
         'page_name': page_name,
         'nurse': nurse,
@@ -53,10 +52,8 @@ def listPatients(request):
 
 def viewPatientProfile(request, patient_id):
     template = loader.get_template('nurse/view_patient.html')
-    page_name = 'View Patient'
-
     patient = Patient.objects.filter(nric=patient_id).get()
-
+    page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
     context = {
                 'page_name': page_name,
                 'patient_id': patient_id,
