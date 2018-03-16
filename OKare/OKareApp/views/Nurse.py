@@ -6,8 +6,13 @@ from django.http import Http404
 from django.urls import reverse
 from django.views import generic
 from django.db.models import Q
-from datetime import datetime
 from OKareApp.models import *
+import datetime
+import time
+from datetime import timedelta, date
+import calendar
+import json
+from django.core import serializers
 
 def index(request):
     nurse_id = 1
@@ -66,14 +71,96 @@ def viewPatientProfile(request, patient_id):
 
 def generateProductivityReport(request, nurse_id):
     template = loader.get_template('nurse/productivity_report.html')
-    nurse = Account.objects.filter(user_id=nurse_id).get() #From Models
-    page_name = 'Generate Productivity Report: ' + nurse_id + " (" + nurse.user.first_name + ")"
 
+    nurse = Account.objects.filter(user_id=nurse_id).get()
+    tasks = CompletedTask.objects.filter(nurse_id=nurse.nric)
+
+    allNurses = Account.objects.filter(team_id=nurse.team_id)
+    allTasks = CompletedTask.objects.filter(nurse_id__in=allNurses).exclude(nurse_id=nurse.nric)
+
+    numNurses = 0
+    for b in allNurses:
+        numNurses += 1
+
+    #Compute values for graph here:
+
+    #1. Tasks/month for a quarter (4 mths)
+
+    today = datetime.datetime.today()
+    graph1data = []
+    graph2data = []
+
+    # ONE WEEK
+    for i in range(0,7):
+        curDate = today-timedelta(days=i)
+
+        complTasks = 0
+        totalDur = datetime.timedelta(0,0,0)
+
+        allComplTasks = 0
+        avg_tasks_today = 0
+
+        allTotalDur = datetime.timedelta(0,0,0)
+
+        #Average Tasks: (Tasks not done by THIS NURSE / Nurses in the team -1)
+        for a in allTasks:
+            if a.date == curDate.date():
+                allTotalDur += a.duration
+                allComplTasks += 1
+
+        if numNurses-1 > 0:
+            avg_tasks_today = allComplTasks/(numNurses-1)
+        else:
+            avg_tasks_today = 0
+
+        if allComplTasks > 0:
+            avg_duration_today = allTotalDur/allComplTasks
+        else:
+            avg_duration_today = datetime.timedelta(0,0,0)
+
+        #Get number of tasks completed by THIS NURSE in the current month
+        for t in tasks:
+            if t.date == curDate.date():
+                totalDur += t.duration
+                #print(tDur)
+                #print(testDur)
+                complTasks += 1
+
+        if complTasks > 0:
+            avgDur = totalDur/complTasks
+        else:
+            avgDur = 0
+
+        graph1dataObj = {
+            "date": str(curDate.date()),
+            "tasks_completed": complTasks,
+            "avg_tasks_completed": avg_tasks_today
+        }
+
+        graph2DataObj = {
+            "date": str(curDate.date()),
+            "avg_duration": str(avgDur),
+            "team_avg_duration": str(avg_duration_today)
+        }
+
+        graph2data.append(graph2DataObj)
+
+        #2. Graph 2 - Average Duration/Task (Accumulated over time) over 7 days
+        graph1data.append(graph1dataObj)
+
+        print("end for loop here")
+
+    #3. Graph 3 - Helps against average in team
+
+    allHelps = NurseStats.objects.all() #Lol whatswith this model where de fkey
+
+    page_name = 'Generate Productivity Report: ' + nurse_id + " (" + nurse.user.first_name + ")"
     context = {
-                'page_name': page_name,
-                'nurse_id': nurse_id,
-                'nurse': nurse,
-               }
+        'page_name': page_name,
+        'nurse_id': nurse_id,
+        'nurse': nurse,
+        'graph1data': json.dumps(graph1data),
+    }
     return HttpResponse(template.render(context, request))
 
 

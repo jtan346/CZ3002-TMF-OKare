@@ -3,6 +3,10 @@
 {% block page_stylesheets %}
 {% endblock page_stylesheets %}
 {% block page_javascripts %}
+<script>
+	console.log({{ graph1data|safe }});
+</script>
+<script src="/static/js/Chart.bundle.min.js" type="javascript"></script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
@@ -27,7 +31,6 @@
     </div>
 
 	<div class="form-row col-md-12">
-
 		<div class="form-row col-md-2" style="margin-bottom:15px;">
 			<div class="col-md-12 hidden-xs hidden-sm" style="border:1px; border-style:solid;">
                 <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
@@ -77,7 +80,7 @@
 			<div class="form-row col-md-12">
 				<div class="input-group">
                     <span class="input-group-addon">Address</span>
-                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.state }} {{ nurse.street }} {{ nurse.zip_code }}" disabled>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.street }} {{ nurse.city }} {{ nurse.state }} {{ nurse.zip_code }}" disabled>
                 </div>
 		    </div>
 
@@ -90,10 +93,19 @@
 
 	<div class="form-row col-md-12" style="height: 300px; margin-bottom:15px" >
 		<div class="form-row col-md-6" style="height: 300px; border-style:solid; border-width:1px;">
-			Graph 1 - Average Tasks (Tasks / Day) against Team median
+			Graph 1 - Average Tasks (Tasks / Month) against Team median
+			<br>
+			{% if graph1data %}
+				Graph1data has data
+				{% for i in graph1data %}
+					{{ i }}
+				{% endfor %}
+			{% endif %}
 	    </div>
 		<div class="form-row col-md-6" style="height: 300px; border-style:solid; border-width:1px;">
 			Graph 2 - Help Response Rate against Team median
+			<canvas id="graph2" width="100%" height="100%" style="border-style:solid; border-width:1px;">
+			</canvas>
 	    </div>
 	</div>
 
