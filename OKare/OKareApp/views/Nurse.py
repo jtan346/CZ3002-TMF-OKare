@@ -95,17 +95,25 @@ def generateProductivityReport(request, nurse_id):
         curDate = today-timedelta(days=i)
 
         complTasks = 0
-        totalDur = datetime.timedelta(0,0,0)
+        #totalDur = datetime.timedelta(0,0,0)
+        totalDur = 0 #in Mins
 
         allComplTasks = 0
         avg_tasks_today = 0
 
-        allTotalDur = datetime.timedelta(0,0,0)
+        #allTotalDur = datetime.timedelta(0,0,0)
+        allTotalDur = 0 #in Mins
 
         #Average Tasks: (Tasks not done by THIS NURSE / Nurses in the team -1)
         for a in allTasks:
             if a.date == curDate.date():
-                allTotalDur += a.duration
+
+                #days = a.duration.days
+                #hours = a.duration.seconds // 3600
+                mins = a.duration.seconds % 3600 / 60.0
+
+                #print(days, hours, mins)
+                allTotalDur += mins
                 allComplTasks += 1
 
         if numNurses-1 > 0:
@@ -121,9 +129,18 @@ def generateProductivityReport(request, nurse_id):
         #Get number of tasks completed by THIS NURSE in the current month
         for t in tasks:
             if t.date == curDate.date():
-                totalDur += t.duration
+                #totalDur += t.duration
                 #print(tDur)
                 #print(testDur)
+
+                #days = t.duration.days
+                #hours = t.duration.seconds // 3600.0
+                mins2 = t.duration.seconds % 3600 / 60.0
+
+                #print(days, hours, mins)
+
+                totalDur += mins2
+
                 complTasks += 1
 
         if complTasks > 0:
@@ -159,7 +176,9 @@ def generateProductivityReport(request, nurse_id):
         'page_name': page_name,
         'nurse_id': nurse_id,
         'nurse': nurse,
-        'graph1data': json.dumps(graph1data),
+        'tasks': tasks,
+        'graph1data': json.dumps(graph1data), #For Tasks Completed vs Team avg
+        'graph2data': json.dumps(graph2data), #For Task Duration vs Team avg
     }
     return HttpResponse(template.render(context, request))
 

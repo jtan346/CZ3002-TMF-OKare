@@ -3,10 +3,136 @@
 {% block page_stylesheets %}
 {% endblock page_stylesheets %}
 {% block page_javascripts %}
-<script>
-	console.log({{ graph1data|safe }});
-</script>
-<script src="/static/js/Chart.bundle.min.js" type="javascript"></script>
+	<script src="/static/js/Chart.bundle.min.js"></script>
+	<script>
+
+		var graph1_raw = {{ graph1data|safe }};
+		//console.log(graph1_raw);
+		graph1_labels = [];
+		graph1_tasksCompleted = [];
+		graph1_avgTasksCompleted = [];
+		for(var i = graph1_raw.length-1; i >= 0; i--){
+		    graph1_labels.push(graph1_raw[i].date);
+		    graph1_tasksCompleted.push(graph1_raw[i].tasks_completed+1);
+		    graph1_avgTasksCompleted.push(graph1_raw[i].avg_tasks_completed+1);
+		}
+
+		var data1 = {
+		    labels: graph1_labels,
+			datasets: [
+                {
+                    label: "{{ nurse.user.first_name }}" + " " + "{{ nurse.user.last_name }}",
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+	                borderColor: 'rgba(255,99,132,1)',
+	                borderWidth: 1,
+                    data: graph1_tasksCompleted
+                }, {
+                    label: "Team {{ nurse.team_id }} Average",
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+					borderColor: 'rgba(54, 162, 235, 1)',
+					borderWidth: 1,
+                    data: graph1_avgTasksCompleted
+                }
+			]
+		};
+
+		var graph2_raw = {{ graph2data|safe }};
+		console.log(graph2_raw);
+		graph2_labels = [];
+		graph2_taskDur = [];
+		graph2_avgTeamDur = [];
+		graph2_avgAllDur = [];
+		for(var i = graph2_raw.length-1; i >= 0; i--){
+		    graph2_labels.push(graph2_raw[i].date);
+		    graph2_taskDur.push(graph2_raw[i].avg_duration);
+		    graph2_avgTeamDur.push(graph2_raw[i].team_avg_duration);
+		    graph2_avgAllDur.push(graph2_raw[i].team_avg_duration);
+		}
+
+		console.log(graph2_taskDur,graph2_avgTeamDur, graph2_avgAllDur);
+
+		var data2 = {
+			    labels: graph2_labels,
+				datasets: [
+	                {
+	                    label: "{{ nurse.user.first_name }}" + " " + "{{ nurse.user.last_name }}",
+	                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+		                borderColor: 'rgba(255,99,132,1)',
+		                borderWidth: 1,
+	                    data: graph2_taskDur
+	                }, {
+	                    label: "Team {{ nurse.team_id }} Avg. Duration",
+	                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+						borderColor: 'rgba(54, 162, 235, 1)',
+						borderWidth: 1,
+	                    data: graph2_avgTeamDur
+	                }, {
+	                    label: "Overall Avg. Duration",
+	                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+						borderColor: 'rgba(75, 192, 192, 1)',
+						borderWidth: 1,
+	                    data: graph2_avgAllDur
+	                }
+				]
+			};
+
+		$( document ).ready(function() {
+			var ctx1 = document.getElementById("graph1").getContext('2d');
+			var myChart = new Chart(ctx1, {
+			    type: 'bar',
+			    data: data1,
+			    options: {
+			        title: {
+			            display: true,
+				        text: "Avg. Tasks Completed against Team Avg."
+			        },
+				    legend: {
+			            labels: {
+			                fontSize: 10,
+			            },
+				    },
+			        barValueSpacing: 20,
+						scales: {
+							yAxes: [{
+								ticks: {
+									min: 0,
+									stepSize:2,
+								}
+							}]
+						}
+			    }
+			});
+
+			var ctx2 = document.getElementById("graph2").getContext('2d');
+			var myChart = new Chart(ctx2, {
+			    type: 'bar',
+			    data: data2,
+			    options: {
+			        title: {
+			            display: true,
+				        text: "Avg. Task Duration (in Mins.) against Team & Overall Avg."
+			        },
+				    legend: {
+			            labels: {
+			                fontSize: 10,
+			            },
+				    },
+			        barValueSpacing: 20,
+						scales: {
+							yAxes: [{
+								ticks: {
+									min: 0,
+
+								}
+							}]
+						}
+			    }
+			});
+		});
+
+
+	</script>
+
 {% endblock page_javascripts %}
 
 {% block sidebar %}
@@ -92,19 +218,12 @@
     </div>
 
 	<div class="form-row col-md-12" style="height: 300px; margin-bottom:15px" >
-		<div class="form-row col-md-6" style="height: 300px; border-style:solid; border-width:1px;">
-			Graph 1 - Average Tasks (Tasks / Month) against Team median
-			<br>
-			{% if graph1data %}
-				Graph1data has data
-				{% for i in graph1data %}
-					{{ i }}
-				{% endfor %}
-			{% endif %}
+		<div class="form-row col-md-6" style="height: 300px;">
+			<canvas id="graph1" style="height:100%; width:100%;">
+			</canvas>
 	    </div>
-		<div class="form-row col-md-6" style="height: 300px; border-style:solid; border-width:1px;">
-			Graph 2 - Help Response Rate against Team median
-			<canvas id="graph2" width="100%" height="100%" style="border-style:solid; border-width:1px;">
+		<div class="form-row col-md-6" style="height: 300px;">
+			<canvas id="graph2" style="height:100%; width:100%;">
 			</canvas>
 	    </div>
 	</div>
@@ -137,14 +256,14 @@
 	                {% if tasks %}
 		                {% for t in tasks %}
 		                <tr>
-			                <td><a href = "#">Task ID</a></td>
-			                <td><a href = "#">Task Title</a></td>
-			                <td><a href = "#">Patient ID</a></td>
-			                <td><a href = "#">Patient Name</a></td>
-			                <td>Category</td>
-			                <td>Start Time</td>
-			                <td>Duration</td>
-			                <td><a href = "#">Assisted</a></td>
+			                <td><a href = "#">{{ t.task_id }}</a></td>
+			                <td><a href = "#">{{ t.task.title }}</a></td>
+			                <td><a href = "#">{{ t.task.patient.nric }}</a></td>
+			                <td><a href = "#">{{ t.task.patient.first_name }} {{ t.task.patient.last_name }}</a></td>
+			                <td>{{ t.task.category }}</td>
+			                <td>{{ t.task.start_time }}</td>
+			                <td>{{ t.task.duration }}</td>
+			                <td><a href = "#">Assisted??</a></td>
 		                </tr>
 		                {% endfor %}
 	                {% else %}
