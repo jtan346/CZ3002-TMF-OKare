@@ -18,5 +18,17 @@
     <li class="breadcrumb-item active"><a href="/Nurse/view_nurse/{{ nurse_id }}">{{ nurse_id }}: {{ nurse_name }}</a></li>
     <li class="breadcrumb-item">Productivity Report</li>
 {% endblock breadcrumb %}
+
 {% block content %}
+	<div class="row col-md-12" style="margin-bottom:20px;">
+            <h1>Productivity Report</h1>
+    </div>
+
+	<div class="row">
+        <div class="col-md-1 hidden-xs hidden-sm">
+            <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square" style="border:1px; border-style:solid;">
+        </div>
+
+
+	</div>
 {% endblock content %}
