@@ -11,3 +11,4 @@ __pycache__/
 *.py[cod]
 
 *.pyc
+OKare/OKareApp/migrations/0001_initial.py

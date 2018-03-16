@@ -44,6 +44,9 @@ class Patient(models.Model):
     bed = models.IntegerField()
     team = models.ForeignKey(Teams, on_delete=None)
 
+    def total_patients(self):
+        return Patient.objects.all.Count()
+
 
 class Task(models.Model):
     RECURTYPE = (
@@ -70,7 +73,7 @@ class Task(models.Model):
     )
 
     title = models.CharField(max_length=200)
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     recur_type = models.CharField(max_length=100, choices=RECURTYPE, null=True)
 
     category = models.CharField(max_length = 100, choices=CATTYPE, null=False, default='Misc')
@@ -82,6 +85,15 @@ class Task(models.Model):
     day = models.CharField(max_length=20, choices=DAY)
     #Date is specifically for tasks that are not recurring
     date = models.DateField(editable=True,null=True, auto_now=False)
+
+    #Test when added Tasks
+    def total_remaining_tasks_for_day(self):
+        return Task.objects.filter(start_time__gte = datetime.now).exclude(id = CompletedTask.task.id).exclude(id=OngoingTask.task.id).Count()
+
+
+class OngoingTask(models.Model):
+    task = models.OneToOneField(Task, on_delete=models.CASCADE)
+    nurse = models.OneToOneField(Account, limit_choices_to={'type': 'Nurse'}, on_delete=models.CASCADE)
 
 
 class DailyTriage(models.Model):
