@@ -5,6 +5,8 @@ from django.views.generic import ListView
 from django.http import Http404
 from django.urls import reverse
 from django.views import generic
+from django.db.models import Q
+from datetime import datetime
 from OKareApp.models import *
 
 def index(request):
@@ -89,6 +91,6 @@ class TeamTaskList(ListView):
     #model=
     #queryset=
     def get_queryset(self):
-        return Task.objects.filter(patient__team__in=[1])
+        return Task.objects.filter(patient__team__in=[1],date=datetime.now()).exclude(id__in=CompletedTask.objects.all())
 #       user = self.request.
 #       return Tasks.object.filter(patient__team__in=self.)

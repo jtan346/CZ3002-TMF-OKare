@@ -9,8 +9,7 @@
             min-width: 100px;
         }
     </style>
-
-	<link href="/static/js/bootstrap-datatables2.css" rel="stylesheet">
+	<link href="/static/css/bootstrap-datatables.css" rel="stylesheet">
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
@@ -30,7 +29,7 @@
 <!-- Add the page hierarchy here -->
 {% block breadcrumb %}
 	<li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
-    <li class="breadcrumb-item active">{{ page_name }}</li>
+    <li class="breadcrumb-item active"><a href='{% url 'view_team_tasklist' %}' >Team Tasks</a></li>
 {% endblock breadcrumb %}
 
 {% block content %}
