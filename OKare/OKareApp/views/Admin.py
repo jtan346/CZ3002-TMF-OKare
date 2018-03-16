@@ -23,7 +23,6 @@ def index(Request):
         5: "Saturday",
         6: "Sunday"
     }
-    print(dayOfWeek[today.weekday()])
 
     remaining = Task.objects.filter(start_time__gte = datetime.now()).exclude(recur_type = "Monthly", date__day__lt = today.day, date__day__gt = today.day).exclude(recur_type = "Weekly", day__iexact = dayOfWeek[today.weekday()]).exclude(id__in = OngoingTask.objects.all().values_list('task__id', flat=True)).count()
 
