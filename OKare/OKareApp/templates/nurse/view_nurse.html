@@ -101,12 +101,12 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon">First Name</span>
-                            <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.first_name }}" disabled>
+                            <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user.first_name }}" disabled>
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon">Last Name</span>
-                            <input id="lastName" name="Last Name" class="form-control" placeholder="" type="text" value="{{ nurse.last_name }}" disabled>
+                            <input id="lastName" name="Last Name" class="form-control" placeholder="" type="text" value="{{ nurse.user.last_name }}" disabled>
                         </div>
                     </div>
 
@@ -115,12 +115,12 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon">Nric</span>
-                            <input id="nric" name="Nric" class="form-control" placeholder="" type="text" value="{{ nurse.nric }}" disabled>
+                            <input id="nric" name="Nric" class="form-control" placeholder="" type="text" value="{{ nurse.user_id }}" disabled>
                         </div>
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon">Mobile no.</span>
-                            <input id="mobileNo" name="Mobile no." class="form-control" placeholder="" type="text" value="{{ nurse.mobile_no }}" disabled>
+                            <input id="mobileNo" name="Mobile no." class="form-control" placeholder="" type="text" value="{{ nurse.phoneNo }}" disabled>
                         </div>
                         <br>
                         <div class="input-group">

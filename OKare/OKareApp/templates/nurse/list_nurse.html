@@ -51,14 +51,16 @@
 			        </thead>
 
 		            <tbody>
-		                <tr role="row">
-		                    <td><a href = "#">hello</a></td>
-		                    <td>2</td>
-		                    <td>3</td>
-		                    <td>4</td>
-		                    <td>5</td>
-		                    <td>5</td>
+		                {% for n in nurses %}
+		                <tr>
+			                <td><a href = "/Nurse/view_nurse/{{ n.user_id }}">Picture Here</a></td>
+			                <td><a href = "/Nurse/view_nurse/{{ n.user_id }}">{{ n.user_id }}</a></td>
+			                <td><a href = "/Nurse/view_nurse/{{ n.user_id }}">{{ n.user.first_name}} {{ n.user.last_name }}</a></td>
+			                <td>{{ n.type }}</td>
+			                <td><a href = "#">{{ n.team_id }}</a></td>
+			                <td><a href = "#">Test</a></td>
 		                </tr>
+		                {% endfor %}
 		            </tbody>
 		        </table>
             </div>

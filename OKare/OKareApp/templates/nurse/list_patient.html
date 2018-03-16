@@ -42,7 +42,7 @@
 		            <thead>
 			            <tr role="row">
 				            <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient Picture</th>
-				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient ID</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">NRIC No.</th>
 				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient Name</th>
 				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Admission Date</th>
 				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Est. Discharge Date</th>
@@ -54,28 +54,19 @@
 			        </thead>
 
 		            <tbody>
-		                <tr role="row">
-		                    <td>[InsertPicHere]</td>
-                            <td>S1234567A</td>
-                            <td>Lee Seng Cheong</td>
-                            <td>15/03/18 12:30pm</td>
-                            <td>17/03/18 12:30pm</td>
-                            <td>12</td>
-                            <td>34</td>
-                            <td>Team 12</td>
-                            <td>Discharged</td>
+		                {% for p in patients %}
+		                <tr>
+			                <td><a href = "/Nurse/view_patient/{{ p.nric }}">Picture Here</a></td>
+		                    <td><a href = "/Nurse/view_patient/{{ p.nric }}">{{ p.nric }}</a></td>
+		                    <td><a href = "/Nurse/view_patient/{{ p.nric }}">{{ p.first_name}} {{ p.last_name }}</a></td>
+		                    <td>Ad Date</td>
+		                    <td>Disc Date</td>
+		                    <td>{{ p.ward }}</td>
+		                    <td>{{ p.bed }}</td>
+		                    <td><a href = "#">{{ p.team_id }}</a></td> <!--Link to Team Page? -->
+		                    <td>Status</td>
 		                </tr>
-		                <tr role="row">
-		                    <td>[InsertPicHere]</td>
-                            <td>S1234567A</td>
-                            <td>Lee See Cheong</td>
-                            <td>15/03/18 12:30pm</td>
-                            <td>17/03/18 12:30pm</td>
-                            <td>12</td>
-                            <td>34</td>
-                            <td>Team 12</td>
-                            <td>Discharged</td>
-		                </tr>
+		                {% endfor %}
 		            </tbody>
 		        </table>
             </div>

@@ -17,8 +17,11 @@ def listNurses(request):
     template = loader.get_template('nurse/list_nurse.html')
     page_name = 'View Nurse'    #Fill in here
 
+    nurses = Account.objects.filter(type="Nurse")
+
     context = {
         'page_name': page_name,
+        'nurses': nurses,
     }
     return HttpResponse(template.render(context, request))
 
@@ -27,10 +30,11 @@ def viewNurseProfile(request, nurse_id):
     page_name = 'View Nurses'    #Fill in here
     nurse_name = 'Nurse Joy'    # From Models
 
+    nurse = Account.objects.filter(user_id=nurse_id).get()
+
     context = {
         'page_name': page_name,
-        'nurse_id': nurse_id,
-        'nurse_name': nurse_name,
+        'nurse': nurse,
     }
     return HttpResponse(template.render(context, request))
 
@@ -38,19 +42,24 @@ def listPatients(request):
     template = loader.get_template('nurse/list_patient.html')
     page_name = 'View Patients'    #Fill in here
 
+    patients = Patient.objects.all()
+
     context = {
         'page_name': page_name,
+        'patients': patients,
     }
     return HttpResponse(template.render(context, request))
 
 def viewPatientProfile(request, patient_id):
     template = loader.get_template('nurse/view_patient.html')
     page_name = 'View Patient'
-    patient_name = 'Benjamin' #From Models
+
+    patient = Patient.objects.filter(nric=patient_id).get()
+
     context = {
                 'page_name': page_name,
                 'patient_id': patient_id,
-                'patient_name': patient_name,
+                'patient': patient,
                }
     return HttpResponse(template.render(context, request))
 
