@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}{{ page_name }}{% endblock title %}
+
+{% block page_stylesheets %}
+    <style type="text/css">
+        body {
+            background-color: #f8f8f8;
+        }
+        .input-group-addon {
+            min-width: 100px;
+        }
+        .textarea-message {
+            width: 100%;
+            resize: vertical;
+        }
+    </style>
+{% endblock page_stylesheets %}
+
+{% block page_javascripts %}
+    <script type="text/javascript">
+        var link = document.createElement('link');
+        link.href = "/static/dist/css/admin.css";
+        link.rel = "stylesheet";
+        document.getElementsByTagName("head")[0].appendChild(link)
+    </script>
+{% endblock page_javascripts %}
+
+{% block sidebar %}
+    {% include 'administrator/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+    {% include 'administrator/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+<!-- Add the page hierarchy here -->
+{% block breadcrumb %}
+	<li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
+    <li class="breadcrumb-item"><a href="/Nurse/view_patient">{{ page_name }}</a></li>
+    <li class="breadcrumb-item active">{{ patient_id }}: {{ patient.first_name|title }} {{ patient.last_name|title }}</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+	<div class="row">
+        <div class="col-md-12">
+            <h1>Patient Name</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 hidden-xs hidden-sm">
+            <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
+        </div>
+
+        <form action="" method="post">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">First Name</span>
+                            <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ patient.first_name }}" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Last Name</span>
+                            <input id="lastName" name="Last Name" class="form-control" placeholder="" type="text" value="{{ patient.user.last_name }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="hidden-md hidden-lg"><br></div>
+
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Nric</span>
+                            <input id="nric" name="Nric" class="form-control" placeholder="" type="text" value="{{ patient.nric }}" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Mobile no.</span>
+                            <input id="mobileNo" name="Mobile no." class="form-control" placeholder="" type="text" value="{{ patient.phoneNo }}" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Date of Birth</span>
+                            <input id="dateOfBirth" name="Date of Birth" class="form-control" placeholder="" type="text" value="{{ patient.date_of_birth }}" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Street</span>
+                            <input id="street" name="Street" class="form-control" placeholder="" type="text" value="{{ patient.street }}" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">City</span>
+                            <input id="city" name="City" class="form-control" placeholder="" type="text" value="{{ patient.city }}" disabled>
+                        </div>
+                        <br>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">State</span>
+                            <input id="state" name="State" class="form-control" placeholder="" type="text" value="{{ patient.state }}" disabled>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Zip code</span>
+                            <input id="zipCode" name="Zip code" class="form-control" placeholder="" type="text" value="{{ patient.zip_code }}" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden-md hidden-lg"><br></div>
+
+            <div class="col-md-1">
+                <button id="btnEdit" class="btn btn-default" type="button" onclick="enableEditing()">Edit</button>
+            </div>
+        </form>
+    </div>
+
+    <br>
+
+    <div id="SaveDiscard" class="row" style="display: none;">
+        <div class="col-md-2 col-md-offset-7">
+            <button type="button" class="btn btn-success btn-block">Save</button>
+        </div>
+        <div class="hidden-md hidden-lg"><br></div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+
+{% endblock content %}
