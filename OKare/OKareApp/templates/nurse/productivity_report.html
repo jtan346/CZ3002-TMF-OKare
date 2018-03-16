@@ -22,7 +22,7 @@
 
 {% block content %}
 <div class="BenContainer" style="overflow:auto;">
-	<div class="form-row col-md-12" style="margin-bottom:15px; border:1px; border-style:solid;">
+	<div class="form-row col-md-12" style="margin-bottom:15px;">
         <h1>Nurse Details</h1>
     </div>
 
@@ -35,55 +35,69 @@
 		</div>
 
 		<div class="form-row col-md-10">
-			<div class="form-row col-md-6" style="border:1px; border-style:solid;">
+			<div class="form-row col-md-6"">
 				<div class="input-group">
                     <span class="input-group-addon">First Name</span>
-                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ patient.first_name }}" disabled>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user.first_name }}" disabled>
                 </div>
 		    </div>
-			<div class="form-row col-md-6" style="border:1px; border-style:solid;">
+			<div class="form-row col-md-6">
 				<div class="input-group">
-                    <span class="input-group-addon">First Name</span>
-                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ patient.first_name }}" disabled>
+                    <span class="input-group-addon">NRIC</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.nric }}" disabled>
                 </div>
 		    </div>
 
-			<div class="form-row col-md-12" style="border:1px; border-style:solid;">
+			<div class="form-row col-md-6">
 				<div class="input-group">
-                    <span class="input-group-addon">First Name</span>
-                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ patient.first_name }}" disabled>
+                    <span class="input-group-addon">Last Name</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user.last_name }}" disabled>
                 </div>
-			</div>
+		    </div>
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">Contact No.</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.phoneNo }}" disabled>
+                </div>
+		    </div>
 
-			<div class="form-row col-md-6" style="border:1px; border-style:solid;">
+			<div class="form-row col-md-6">
 				<div class="input-group">
-                    <span class="input-group-addon">First Name</span>
-                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ patient.first_name }}" disabled>
+                    <span class="input-group-addon">Nurse ID</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user_id }}" disabled>
                 </div>
 		    </div>
-			<div class="form-row col-md-6" style="border:1px; border-style:solid;">
+			<div class="form-row col-md-6">
 				<div class="input-group">
-                    <span class="input-group-addon">First Name</span>
-                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ patient.first_name }}" disabled>
+                    <span class="input-group-addon">Team ID</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.team_id }}" disabled>
                 </div>
 		    </div>
+
+			<div class="form-row col-md-12">
+				<div class="input-group">
+                    <span class="input-group-addon">Address</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.state }} {{ nurse.street }} {{ nurse.zip_code }}" disabled>
+                </div>
+		    </div>
+
 		</div>
 	</div>
 
-	<div class="form-row col-md-12" style="margin-bottom:15px; border:1px; border-style:solid;">
+	<div class="form-row col-md-12" style="margin-bottom:15px; margin-top:15px;">
         <h1>Productivity Statistics</h1>
     </div>
 
-	<div class="form-row col-md-12" style="border:1px; border-style:solid; height: 300px; margin-bottom:15px" >
-		<div class="form-row col-md-6" style="border:1px; border-style:solid; height: 300px;">
+	<div class="form-row col-md-12" style="height: 300px; margin-bottom:15px" >
+		<div class="form-row col-md-6" style="height: 300px; border-style:solid; border-width:1px;">
 			Graph 1 - Average Tasks (Tasks / Day) against Team median
 	    </div>
-		<div class="form-row col-md-6" style="border:1px; border-style:solid; height: 300px;">
+		<div class="form-row col-md-6" style="height: 300px; border-style:solid; border-width:1px;">
 			Graph 2 - Help Response Rate against Team median
 	    </div>
 	</div>
 
-	<div class="form-row col-md-12" style="margin-bottom:15px; border:1px; border-style:solid;">
+	<div class="form-row col-md-12" style="margin-bottom:15px;">
         <h1>Tasks Completed</h1>
     </div>
 
