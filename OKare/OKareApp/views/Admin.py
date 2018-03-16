@@ -12,8 +12,21 @@ def index(Request):
     activeNurses = Account.objects.filter(type="Nurse").count()
     patients = Patient.objects.count()
     completed = CompletedTask.objects.filter(date = datetime.now().date()).count()
-    today = datetime.date.today
-    remaining = Task.objects.filter(start_time__gte = datetime.now()).exclude(recur_type = "Monthly", date__day_lt = today.day, date__day_gt = today.day).exclude().exclude(id__in = OngoingTask.objects.all().values_list('task__id', flat=True)).count()
+    today = datetime.now.date
+
+    dayOfWeek ={
+        0: "Monday",
+        1: "Tuesday",
+        2: "Wednesday",
+        3: "Thursday",
+        4: "Friday",
+        5: "Saturday",
+        6: "Sunday"
+    }
+    print(dayOfWeek[0])
+
+
+    remaining = 0#Task.objects.filter(start_time__gte = datetime.now()).exclude(recur_type = "Monthly", date__day_lt = today.day, date__day_gt = today.day).exclude(recur_type = "Weekly", day__iexact = dayOfWeek[today.weekday()], date__day_gt = today.week).exclude(id__in = OngoingTask.objects.all().values_list('task__id', flat=True)).count()
 
     ongoingTasks = OngoingTask.objects.all
     context = {
