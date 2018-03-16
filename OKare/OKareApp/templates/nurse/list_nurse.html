@@ -8,9 +8,12 @@
             min-width: 100px;
         }
     </style>
+	<link href="/static/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
+	<script src="/static/js/jquery.dataTables.min.js"></script>
+	<script src="/static/js/nurse.js"></script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
@@ -28,5 +31,38 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-    List Nurses Here!
+<div class="BenContainer">
+	<div class="card mb-2" style="padding-right:0px;padding-left:0px;">
+        <div class="card-header">
+            Nurse Listing
+        </div>
+        <div class="card-body col-md-12">
+            <div class="table-responsive">
+		        <table width="100%" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="nurse_table" role="grid" aria-describedby="dataTables-example_info" style="width: 100%;">
+		            <thead>
+			            <tr role="row">
+				            <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Profile Picture</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Nurse ID</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Full Name</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Appointment</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Team Number</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Status</th>
+			            </tr>
+			        </thead>
+
+		            <tbody>
+		                <tr role="row">
+		                    <td><a href = "#">hello</a></td>
+		                    <td>2</td>
+		                    <td>3</td>
+		                    <td>4</td>
+		                    <td>5</td>
+		                    <td>5</td>
+		                </tr>
+		            </tbody>
+		        </table>
+            </div>
+        </div>
+	</div>
+</div>
 {% endblock content %}

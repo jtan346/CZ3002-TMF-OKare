@@ -8,9 +8,12 @@
             min-width: 100px;
         }
     </style>
+	<link href="/static/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
+	<script src="/static/js/jquery.dataTables.min.js"></script>
+	<script src="/static/js/nurse.js"></script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
@@ -28,7 +31,60 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-    <div>
-        Hello
-    </div>
+<div class="BenContainer">
+	<div class="card mb-2" style="padding-right:0px;padding-left:0px;">
+        <div class="card-header">
+            Patient Listing
+        </div>
+        <div class="card-body col-md-12">
+            <div class="table-responsive">
+		        <table width="100%" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="patient_table" role="grid" aria-describedby="dataTables-example_info" style="width: 100%;">
+		            <thead>
+			            <tr role="row">
+				            <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient Picture</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient ID</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient Name</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Admission Date</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Est. Discharge Date</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Ward No.</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Bed No.</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Team No.</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Status</th>
+			            </tr>
+			        </thead>
+
+		            <tbody>
+		                <tr role="row">
+		                    <td>[InsertPicHere]</td>
+                            <td>S1234567A</td>
+                            <td>Lee Seng Cheong</td>
+                            <td>15/03/18 12:30pm</td>
+                            <td>17/03/18 12:30pm</td>
+                            <td>12</td>
+                            <td>34</td>
+                            <td>Team 12</td>
+                            <td>Discharged</td>
+		                </tr>
+		                <tr role="row">
+		                    <td>[InsertPicHere]</td>
+                            <td>S1234567A</td>
+                            <td>Lee See Cheong</td>
+                            <td>15/03/18 12:30pm</td>
+                            <td>17/03/18 12:30pm</td>
+                            <td>12</td>
+                            <td>34</td>
+                            <td>Team 12</td>
+                            <td>Discharged</td>
+		                </tr>
+		            </tbody>
+		        </table>
+            </div>
+        </div>
+        <div class="card-footer small text-muted">
+            Updated: {{ updateTime }}
+        </div>
+	</div>
+</div>
 {% endblock content %}
+
+
