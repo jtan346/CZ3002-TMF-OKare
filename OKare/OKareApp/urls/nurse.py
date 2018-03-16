@@ -13,4 +13,7 @@ urlpatterns = [
     url(r'^view_patient/$', Nurse.listPatients, name="list_nurse"),
     url(r'^view_patient/(?P<patient_id>[\w-]+)', Nurse.viewPatientProfile, name="view_nurse"),
 
+    #Ben/Haode - Generate Productivity Report
+    url(r'productivity_report/(?P<nurse_id>[\w-]+)', Nurse.generateProductivityReport, name="generate_productivity_report"),
+
 ]

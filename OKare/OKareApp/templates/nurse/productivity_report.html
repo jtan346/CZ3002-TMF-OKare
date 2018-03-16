@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block page_stylesheets %}
+{% endblock page_stylesheets %}
+{% block page_javascripts %}
+{% endblock page_javascripts %}
+
+{% block sidebar %}
+    {% include 'nurse/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+    {% include 'nurse/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active"><a href="/Nurse">Home</a></li>
+    <li class="breadcrumb-item active"><a href="/Nurse/view_nurse">View Nurse</a></li>
+    <li class="breadcrumb-item active"><a href="/Nurse/view_nurse/{{ nurse_id }}">{{ nurse_id }}: {{ nurse_name }}</a></li>
+    <li class="breadcrumb-item">Productivity Report</li>
+{% endblock breadcrumb %}
+{% block content %}
+{% endblock content %}

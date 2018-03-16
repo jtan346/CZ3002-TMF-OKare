@@ -54,6 +54,18 @@ def viewPatientProfile(request, patient_id):
                }
     return HttpResponse(template.render(context, request))
 
+def generateProductivityReport(request, nurse_id):
+    template = loader.get_template('nurse/productivity_report.html')
+    nurse_name = 'Saklani' #From Models
+    page_name = 'Generate Productivity Report: ' + nurse_id + " (" + nurse_name + ")"
+
+    context = {
+                'page_name': page_name,
+                'nurse_id': nurse_id,
+                'nurse_name': nurse_name,
+               }
+    return HttpResponse(template.render(context, request))
+
 def team_tasklist(request):
     team_tasks = Tasks.objects.filter(patient)
     context = {}
