@@ -44,6 +44,8 @@ class Patient(models.Model):
     bed = models.IntegerField()
     team = models.ForeignKey(Teams, on_delete=None)
 
+    def name(self):
+        return self.first_name + " " + self.last_name
 
 class Task(models.Model):
     RECURTYPE = (
@@ -70,18 +72,22 @@ class Task(models.Model):
     )
 
     title = models.CharField(max_length=200)
+
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
     recur_type = models.CharField(max_length=100, choices=RECURTYPE, null=True)
 
     category = models.CharField(max_length = 100, choices=CATTYPE, null=False, default='Misc')
 
     #all tasks have a start_time, the day of the start time, and date
     start_time = models.TimeField(auto_now=False, editable=True, null=False)
-    #only recurring tasks have duration and day
-    duration = models.DurationField(editable=True, null=False)
-    day = models.CharField(max_length=20, choices=DAY)
-    #Date is specifically for tasks that are not recurring
     date = models.DateField(editable=True,null=True, auto_now=False)
+    #only recurring tasks have duration and day
+
+    duration = models.DurationField(editable=True, null=False)
+
+    #UX needed
+    day = models.CharField(max_length=20, choices=DAY)
 
 
 class OngoingTask(models.Model):

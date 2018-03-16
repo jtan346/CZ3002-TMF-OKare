@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %}{{ page_name }}{% endblock title %}
 {% block page_stylesheets %}
 {% endblock page_stylesheets %}
 {% block page_javascripts %}
@@ -15,8 +16,134 @@
 {% block breadcrumb %}
     <li class="breadcrumb-item active"><a href="/Nurse">Home</a></li>
     <li class="breadcrumb-item active"><a href="/Nurse/view_nurse">View Nurse</a></li>
-    <li class="breadcrumb-item active"><a href="/Nurse/view_nurse/{{ nurse_id }}">{{ nurse_id }}: {{ nurse_name }}</a></li>
+    <li class="breadcrumb-item active"><a href="/Nurse/view_nurse/{{ nurse_id }}">{{ nurse_id }}: {{ nurse.user.first_name }} {{ nurse.user.last_name }}</a></li>
     <li class="breadcrumb-item">Productivity Report</li>
 {% endblock breadcrumb %}
+
 {% block content %}
+<div class="BenContainer" style="overflow:auto;">
+	<div class="form-row col-md-12" style="margin-bottom:15px;">
+        <h1>Nurse Details</h1>
+    </div>
+
+	<div class="form-row col-md-12">
+
+		<div class="form-row col-md-2" style="margin-bottom:15px;">
+			<div class="col-md-12 hidden-xs hidden-sm" style="border:1px; border-style:solid;">
+                <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
+            </div>
+		</div>
+
+		<div class="form-row col-md-10">
+			<div class="form-row col-md-6"">
+				<div class="input-group">
+                    <span class="input-group-addon">First Name</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user.first_name }}" disabled>
+                </div>
+		    </div>
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">NRIC</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.nric }}" disabled>
+                </div>
+		    </div>
+
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">Last Name</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user.last_name }}" disabled>
+                </div>
+		    </div>
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">Contact No.</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.phoneNo }}" disabled>
+                </div>
+		    </div>
+
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">Nurse ID</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user_id }}" disabled>
+                </div>
+		    </div>
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">Team ID</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.team_id }}" disabled>
+                </div>
+		    </div>
+
+			<div class="form-row col-md-12">
+				<div class="input-group">
+                    <span class="input-group-addon">Address</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.state }} {{ nurse.street }} {{ nurse.zip_code }}" disabled>
+                </div>
+		    </div>
+
+		</div>
+	</div>
+
+	<div class="form-row col-md-12" style="margin-bottom:15px; margin-top:15px;">
+        <h1>Productivity Statistics</h1>
+    </div>
+
+	<div class="form-row col-md-12" style="height: 300px; margin-bottom:15px" >
+		<div class="form-row col-md-6" style="height: 300px; border-style:solid; border-width:1px;">
+			Graph 1 - Average Tasks (Tasks / Day) against Team median
+	    </div>
+		<div class="form-row col-md-6" style="height: 300px; border-style:solid; border-width:1px;">
+			Graph 2 - Help Response Rate against Team median
+	    </div>
+	</div>
+
+	<div class="form-row col-md-12" style="margin-bottom:15px;">
+        <h1>Tasks Completed</h1>
+    </div>
+
+	<div class="card mb-2" style="padding-right:0px;padding-left:0px; margin-bottom: 15px;">
+		<div class="card-header">
+	        Tasks completed by: {{ nurse.user.first_name }} {{ nurse.user.last_name }}
+	    </div>
+	    <div class="card-body col-md-12">
+	        <div class="table-responsive">
+		        <table width="100%" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="prod_task_table" role="grid" aria-describedby="dataTables-example_info" style="width: 100%;">
+		            <thead>
+			            <tr role="row">
+				            <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Task ID</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Title</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient ID</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient Name</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Category</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Start Time</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Duration</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Assisted</th>
+			            </tr>
+			        </thead>
+
+		            <tbody>
+	                {% if tasks %}
+		                {% for t in tasks %}
+		                <tr>
+			                <td><a href = "#">Task ID</a></td>
+			                <td><a href = "#">Task Title</a></td>
+			                <td><a href = "#">Patient ID</a></td>
+			                <td><a href = "#">Patient Name</a></td>
+			                <td>Category</td>
+			                <td>Start Time</td>
+			                <td>Duration</td>
+			                <td><a href = "#">Assisted</a></td>
+		                </tr>
+		                {% endfor %}
+	                {% else %}
+		                <tr>
+		                    <td colspan="8">{{ nurse.user.first_name }} {{ nurse.user.last_name }} has not completed any task!</td>
+		                </tr>
+	                {% endif %}
+		            </tbody>
+		        </table>
+	        </div>
+	    </div>
+	</div>
+</div>
 {% endblock content %}

@@ -5,6 +5,8 @@ from django.views.generic import ListView
 from django.http import Http404
 from django.urls import reverse
 from django.views import generic
+from django.db.models import Q
+from datetime import datetime
 from OKareApp.models import *
 
 def index(request):
@@ -16,7 +18,7 @@ def index(request):
 
 def listNurses(request):
     template = loader.get_template('nurse/list_nurse.html')
-    page_name = 'View Nurse'    #Fill in here
+    page_name = 'View Nurses'    #Fill in here
 
     nurses = Account.objects.filter(type="Nurse")
 
@@ -28,11 +30,10 @@ def listNurses(request):
 
 def viewNurseProfile(request, nurse_id):
     template = loader.get_template('nurse/view_nurse.html')
-    page_name = 'View Nurses'    #Fill in here
-    nurse_name = 'Nurse Joy'    # From Models
-
     nurse = Account.objects.filter(user_id=nurse_id).get()
+    nurse_name = nurse.user.first_name + " " + nurse.user.last_name    # From Models
 
+    page_name = str(nurse.user_id) + ": " + nurse_name  # Fill in here
     context = {
         'page_name': page_name,
         'nurse': nurse,
@@ -53,10 +54,8 @@ def listPatients(request):
 
 def viewPatientProfile(request, patient_id):
     template = loader.get_template('nurse/view_patient.html')
-    page_name = 'View Patient'
-
     patient = Patient.objects.filter(nric=patient_id).get()
-
+    page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
     context = {
                 'page_name': page_name,
                 'patient_id': patient_id,
@@ -67,13 +66,13 @@ def viewPatientProfile(request, patient_id):
 
 def generateProductivityReport(request, nurse_id):
     template = loader.get_template('nurse/productivity_report.html')
-    nurse_name = 'Saklani' #From Models
-    page_name = 'Generate Productivity Report: ' + nurse_id + " (" + nurse_name + ")"
+    nurse = Account.objects.filter(user_id=nurse_id).get() #From Models
+    page_name = 'Generate Productivity Report: ' + nurse_id + " (" + nurse.user.first_name + ")"
 
     context = {
                 'page_name': page_name,
                 'nurse_id': nurse_id,
-                'nurse_name': nurse_name,
+                'nurse': nurse,
                }
     return HttpResponse(template.render(context, request))
 
@@ -92,6 +91,6 @@ class TeamTaskList(ListView):
     #model=
     #queryset=
     def get_queryset(self):
-        return Task.objects.filter(patient__team__in=[1])
+        return Task.objects.filter(patient__team__in=[1],date=datetime.now()).exclude(id__in=CompletedTask.objects.all())
 #       user = self.request.
 #       return Tasks.object.filter(patient__team__in=self.)
