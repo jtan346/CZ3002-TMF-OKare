@@ -1704,6 +1704,31 @@
     }
 },
 {
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$100000$rzyTOgXVlM1D$OV0svXu4/pvU/ljfSggTF44K/tI5DKhGD3xnFgCXgOs=",
+        "last_login": "2018-03-16T14:45:16.758Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@example.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-03-16T14:45:11.777Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "1ae911u4mk0832zp912hz7syejz2nhji",
+    "fields": {
+        "session_data": "NTg0YjhjMjRjZmVjM2Q5YzE3MTc5NmRlOTQzNmEyOTRjNGE4ZmY0Mjp7Il9hdXRoX3VzZXJfaWQiOiI5IiwiX2F1dGhfdXNlcl9oYXNoIjoiYzM3NTNkOTA4YzE0MzEzNjA0NGMwYWM0NDYxMDJjMTRjNjU2OGQ0OSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=",
+        "expire_date": "2018-03-30T14:45:16.918Z"
+    }
+},
+{
     "model": "sessions.session",
     "pk": "2qw75xz8x8pj0cnlguemqn489vpncs61",
     "fields": {
@@ -1974,13 +1999,14 @@
     "pk": 1,
     "fields": {
         "title": "Breakfast",
+        "description": "",
         "patient": "S1231234G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "08:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -1988,13 +2014,14 @@
     "pk": 2,
     "fields": {
         "title": "Lunch",
+        "description": "",
         "patient": "S1231234G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "12:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2002,13 +2029,14 @@
     "pk": 3,
     "fields": {
         "title": "Dinner",
+        "description": "",
         "patient": "S1231234G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "23:59:59",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2016,13 +2044,14 @@
     "pk": 4,
     "fields": {
         "title": "Breakfast",
+        "description": "",
         "patient": "S2956234G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "08:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2030,13 +2059,14 @@
     "pk": 5,
     "fields": {
         "title": "Lunch",
+        "description": "",
         "patient": "S2956234G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "12:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2044,13 +2074,14 @@
     "pk": 6,
     "fields": {
         "title": "Dinner",
+        "description": "",
         "patient": "S2956234G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "23:59:59",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2058,13 +2089,14 @@
     "pk": 7,
     "fields": {
         "title": "Breakfast",
+        "description": "",
         "patient": "S3232334G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "08:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2072,13 +2104,14 @@
     "pk": 8,
     "fields": {
         "title": "Lunch",
+        "description": "",
         "patient": "S3232334G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "12:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2086,13 +2119,14 @@
     "pk": 9,
     "fields": {
         "title": "Dinner",
+        "description": "",
         "patient": "S3232334G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "23:59:59",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2100,13 +2134,14 @@
     "pk": 10,
     "fields": {
         "title": "Breakfast",
+        "description": "",
         "patient": "S3232334G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "08:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2114,13 +2149,14 @@
     "pk": 11,
     "fields": {
         "title": "Lunch",
+        "description": "",
         "patient": "S3232334G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "12:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2128,13 +2164,14 @@
     "pk": 12,
     "fields": {
         "title": "Dinner",
+        "description": "",
         "patient": "S3232334G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "23:59:59",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2142,13 +2179,14 @@
     "pk": 13,
     "fields": {
         "title": "Breakfast",
+        "description": "",
         "patient": "S5562334G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "08:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2156,13 +2194,14 @@
     "pk": 14,
     "fields": {
         "title": "Lunch",
+        "description": "",
         "patient": "S5562334G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "12:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2170,13 +2209,14 @@
     "pk": 15,
     "fields": {
         "title": "Dinner",
+        "description": "",
         "patient": "S5562334G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "23:59:59",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2184,13 +2224,14 @@
     "pk": 16,
     "fields": {
         "title": "Breakfast",
+        "description": "",
         "patient": "S6731234G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "08:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2198,13 +2239,14 @@
     "pk": 17,
     "fields": {
         "title": "Lunch",
+        "description": "",
         "patient": "S6731234G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "12:00:00",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
     }
 },
 {
@@ -2212,13 +2254,134 @@
     "pk": 18,
     "fields": {
         "title": "Dinner",
+        "description": "",
         "patient": "S6731234G",
         "recur_type": "Daily",
         "category": "Food",
         "start_time": "23:59:59",
+        "date": "2018-03-12",
         "duration": "00:00:30",
-        "day": "Monday",
-        "date": "2018-03-12"
+        "day": "0"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 19,
+    "fields": {
+        "title": "A Monthly Task",
+        "description": "",
+        "patient": "S1231234G",
+        "recur_type": "Monthly",
+        "category": "Misc",
+        "start_time": "12:00:00",
+        "date": "2018-02-17",
+        "duration": "00:25:00",
+        "day": "5"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 20,
+    "fields": {
+        "title": "A Weekly Task",
+        "description": "",
+        "patient": "S9678234G",
+        "recur_type": "Weekly",
+        "category": "Misc",
+        "start_time": "12:00:00",
+        "date": "2018-03-10",
+        "duration": "00:25:00",
+        "day": "5"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 21,
+    "fields": {
+        "title": "A daily task",
+        "description": "",
+        "patient": "S8456234G",
+        "recur_type": "Daily",
+        "category": "Misc",
+        "start_time": "12:00:00",
+        "date": "2018-03-17",
+        "duration": "00:25:00",
+        "day": "5"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 22,
+    "fields": {
+        "title": "An Adhoc Task",
+        "description": "",
+        "patient": "S6731234G",
+        "recur_type": null,
+        "category": "Misc",
+        "start_time": "12:00:00",
+        "date": "2018-03-17",
+        "duration": "00:25:12",
+        "day": "5"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 23,
+    "fields": {
+        "title": "An unwanted monthly task",
+        "description": "",
+        "patient": "S1231234G",
+        "recur_type": "Monthly",
+        "category": "Misc",
+        "start_time": "12:00:00",
+        "date": "2018-03-10",
+        "duration": "00:25:00",
+        "day": "5"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 24,
+    "fields": {
+        "title": "An unwanted weekly task",
+        "description": "",
+        "patient": "S8456234G",
+        "recur_type": "Weekly",
+        "category": "Misc",
+        "start_time": "12:00:00",
+        "date": "2018-03-07",
+        "duration": "00:25:00",
+        "day": "2"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 25,
+    "fields": {
+        "title": "An unwanted adhoc task",
+        "description": "",
+        "patient": "S4234234G",
+        "recur_type": null,
+        "category": "Misc",
+        "start_time": "12:00:00",
+        "date": "2018-03-18",
+        "duration": "00:25:00",
+        "day": "5"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 26,
+    "fields": {
+        "title": "Another unwanted weekly task",
+        "description": "",
+        "patient": "S6731234G",
+        "recur_type": "Weekly",
+        "category": "Misc",
+        "start_time": "00:00:00",
+        "date": "2018-03-10",
+        "duration": "00:00:25",
+        "day": "5"
     }
 },
 {
@@ -2845,6 +3008,348 @@
         "object_repr": "CompletedTask object",
         "action_flag": 2,
         "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 29,
+    "fields": {
+        "action_time": "2018-03-16T15:05:15.476Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "19",
+        "object_repr": "Task Title: A Monthly Task | Start Time: 23:04:30 | Date: 2018-02-06 | Day: Tuesday | patient: SERIOUS LEE | recur_type: Monthly",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 30,
+    "fields": {
+        "action_time": "2018-03-16T15:05:32.489Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "19",
+        "object_repr": "Task Title: A Monthly Task | Start Time: 23:04:30 | Date: 2018-02-09 | Day: Friday | patient: SERIOUS LEE | recur_type: Monthly",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"date\", \"day\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 31,
+    "fields": {
+        "action_time": "2018-03-16T15:07:26.626Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "19",
+        "object_repr": "Task Title: A Monthly Task | Start Time: 23:04:30 | Date: 2018-02-16 | Day: Friday | patient: SERIOUS LEE | recur_type: Monthly",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 32,
+    "fields": {
+        "action_time": "2018-03-16T15:08:09.325Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "19",
+        "object_repr": "Task Title: A Monthly Task | Start Time: 08:00:20 | Date: 2018-02-16 | Day: Friday | patient: SERIOUS LEE | recur_type: Monthly",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"start_time\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 33,
+    "fields": {
+        "action_time": "2018-03-16T15:10:19.458Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "19",
+        "object_repr": "Task Title: A Monthly Task | Start Time: 08:00:20 | Date: 2018-02-17 | Day: Saturday | patient: SERIOUS LEE | recur_type: Monthly",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"date\", \"day\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 34,
+    "fields": {
+        "action_time": "2018-03-16T15:11:07.372Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "20",
+        "object_repr": "Task Title: A Weekly Task | Start Time: 00:00:00 | Date: 2018-03-10 | Day: Saturday | patient: HANDSOME LEE | recur_type: Weekly",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 35,
+    "fields": {
+        "action_time": "2018-03-16T15:54:35.627Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "21",
+        "object_repr": "Task Title: A daily task | Start Time: 00:00:00 | Date: 2018-03-17 | Day: 5 | patient: ANGRY LEE | recur_type: Daily",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 36,
+    "fields": {
+        "action_time": "2018-03-16T15:55:14.594Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "22",
+        "object_repr": "Task Title: An Adhoc Task | Start Time: 00:00:00 | Date: 2018-03-17 | Day: 5 | patient: BENT LEE | recur_type: Monthly",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 37,
+    "fields": {
+        "action_time": "2018-03-16T15:55:45.308Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "19",
+        "object_repr": "Task Title: A Monthly Task | Start Time: 00:00:00 | Date: 2018-02-17 | Day: 5 | patient: SERIOUS LEE | recur_type: Monthly",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"start_time\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 38,
+    "fields": {
+        "action_time": "2018-03-16T16:07:18.548Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "19",
+        "object_repr": "Task Title: A Monthly Task | Start Time: 12:00:00 | Date: 2018-02-17 | Day: 5 | patient: SERIOUS LEE | recur_type: Monthly",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"start_time\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 39,
+    "fields": {
+        "action_time": "2018-03-16T16:07:25.598Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "20",
+        "object_repr": "Task Title: A Weekly Task | Start Time: 12:00:00 | Date: 2018-03-10 | Day: 5 | patient: HANDSOME LEE | recur_type: Weekly",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"start_time\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 40,
+    "fields": {
+        "action_time": "2018-03-16T16:07:31.637Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "21",
+        "object_repr": "Task Title: A daily task | Start Time: 12:00:00 | Date: 2018-03-17 | Day: 5 | patient: ANGRY LEE | recur_type: Daily",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"start_time\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 41,
+    "fields": {
+        "action_time": "2018-03-16T16:07:44.311Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "22",
+        "object_repr": "Task Title: An Adhoc Task | Start Time: 12:00:00 | Date: 2018-03-17 | Day: 5 | patient: BENT LEE | recur_type: Monthly",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"start_time\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 42,
+    "fields": {
+        "action_time": "2018-03-16T16:08:15.666Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "23",
+        "object_repr": "Task Title: An unwanted monthly task | Start Time: 12:00:00 | Date: 2018-03-10 | Day: 5 | patient: SERIOUS LEE | recur_type: Monthly",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 43,
+    "fields": {
+        "action_time": "2018-03-16T16:09:03.548Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "24",
+        "object_repr": "Task Title: An unwanted weekly task | Start Time: 12:00:00 | Date: 2018-03-07 | Day: 2 | patient: ANGRY LEE | recur_type: Weekly",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 44,
+    "fields": {
+        "action_time": "2018-03-16T16:12:21.257Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "22",
+        "object_repr": "Task Title: An Adhoc Task | Start Time: 12:00:00 | Date: 2018-03-17 | Day: 5 | patient: BENT LEE | recur_type: None",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"recur_type\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 45,
+    "fields": {
+        "action_time": "2018-03-16T16:13:25.930Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "25",
+        "object_repr": "Task Title: An unwanted adhoc task | Start Time: 12:00:00 | Date: 2018-03-18 | Day: 5 | patient: SAD LEE | recur_type: None",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 46,
+    "fields": {
+        "action_time": "2018-03-16T16:48:59.460Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "26",
+        "object_repr": "Task Title: Another unwanted weekly task | Start Time: 00:00:00 | Date: 2018-03-10 | Day: 6 | patient: BENT LEE | recur_type: Weekly",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 47,
+    "fields": {
+        "action_time": "2018-03-16T16:49:05.206Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "26",
+        "object_repr": "Task Title: Another unwanted weekly task | Start Time: 00:00:00 | Date: 2018-03-10 | Day: 5 | patient: BENT LEE | recur_type: Weekly",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"day\"]}}]"
     }
 }
 ]

@@ -14,13 +14,6 @@ import calendar
 import json
 from django.core import serializers
 
-def index(request):
-    nurse_id = 1
-    template = loader.get_template('nurse/template.html')
-    #nurse = get_object_or_404(Nurses, pk=nurse_id)
-    context = {'nurse': nurse_id}
-    return HttpResponse(template.render(context, request))
-
 def listNurses(request):
     template = loader.get_template('nurse/list_nurse.html')
     page_name = 'View Nurses'    #Fill in here
@@ -196,7 +189,19 @@ class TeamTaskList(ListView):
     template_name = 'nurse/team_tasklist.html'
     #model=
     #queryset=
+
     def get_queryset(self):
-        return Task.objects.filter(patient__team__in=[1],date=datetime.now()).exclude(id__in=CompletedTask.objects.all())
+        today = datetime.now().date()
+        #first, filter start_time greater or equal to the current time - gets all tasks whose start time
+        #then , exclude those task date's day is not before today's day and
+        return Task.objects.filter(start_time__gte=datetime.now(), patient__team__in=[1]).exclude(~Q(date__day=datetime.now().day), Q(recur_type='Monthly') | Q(recur_type__isnull=True))
+
+        #return Task.objects.filter(start_time__gte=datetime.now(), patient__team__in=[1]).exclude(recur_type="Monthly",date__day__lt=today.day,date__day__gt=today.day).exclude(recur_type="Weekly", day__iexact=today.weekday()).exclude(id__in=OngoingTask.objects.all().values_list('task__id', flat=True))
 #       user = self.request.
 #       return Tasks.object.filter(patient__team__in=self.)
+
+def index(request):
+    #assigned_task = OngoingTask.objects.filter(nurse=request)[0]
+    assigned_task = OngoingTask.objects.filter(nurse=Account.objects.get(nric="S9232342G")).first()
+    context = { 'assigned_task':assigned_task }
+    return render(request,'nurse/index.html', context)

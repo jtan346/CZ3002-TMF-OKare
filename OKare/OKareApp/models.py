@@ -47,6 +47,9 @@ class Patient(models.Model):
     def name(self):
         return self.first_name + " " + self.last_name
 
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
 class Task(models.Model):
     RECURTYPE = (
         ('Weekly','Weekly'),
@@ -54,13 +57,13 @@ class Task(models.Model):
         ('Monthly', 'Monthly')
     )
     DAY = (
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-        ('Saturday', 'Saturday'),
-        ('Sunday', 'Sunday'),
+        ('0', 'Monday'),
+        ('1', 'Tuesday'),
+        ('2', 'Wednesday'),
+        ('3', 'Thursday'),
+        ('4', 'Friday'),
+        ('5', 'Saturday'),
+        ('6', 'Sunday'),
     )
 
     CATTYPE = (
@@ -73,22 +76,27 @@ class Task(models.Model):
 
     title = models.CharField(max_length=200)
 
+    description = models.TextField(blank=True, default="")
+
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
-    recur_type = models.CharField(max_length=100, choices=RECURTYPE, null=True)
+    recur_type = models.CharField(max_length=100, choices=RECURTYPE, null=True, blank=True)
 
     category = models.CharField(max_length = 100, choices=CATTYPE, null=False, default='Misc')
 
-    #all tasks have a start_time, the day of the start time, and date
+    #all tasks have a date, and the start time
     start_time = models.TimeField(auto_now=False, editable=True, null=False)
     date = models.DateField(editable=True,null=True, auto_now=False)
-    #only recurring tasks have duration and day
 
+    #duration is stored, because it's easier than calculating the start_time between 2 tasks
     duration = models.DurationField(editable=True, null=False)
 
-    #UX needed
+    #day is only for weekly tasks, simplifies retrieving the day otherwise we need to have complex
+    #day retrieval from the date
     day = models.CharField(max_length=20, choices=DAY)
 
+    def __str__(self):
+        return "Task Title: {} | Start Time: {} | Date: {} | Day: {} | patient: {} | recur_type: {}".format(self.title, self.start_time,self.date, self.day, self.patient, self.recur_type)
 
 class OngoingTask(models.Model):
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
@@ -124,6 +132,7 @@ class CompletedTask(models.Model):
 
 
 class HelpRequest(models.Model):
+    # '+' prevents the Account from being able to access request and helper
     requester = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
     helper = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, related_name='+', on_delete= models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
