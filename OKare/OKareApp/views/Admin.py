@@ -1,16 +1,20 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Count, Avg, Sum
 from OKareApp.models import Account,Task, CompletedTask, DailyTriage,Patient,NurseStats, OngoingTask, Teams
 from datetime import datetime, timedelta
+from django.db.models import Q
 
 # Create your views here.
 def index(Request):
     #Id will get from session once login completed
     id = 1
-    activeNurses = Account.objects.filter(type="Nurse")
-    patients = Patient.total_patients
-    completed = CompletedTask.total_tasks_completed
-    remaining = 0#Task.total_remaining_tasks_for_day(datetime.now)
+    activeNurses = Account.objects.filter(type="Nurse").count()
+    patients = Patient.objects.count()
+    completed = CompletedTask.objects.filter(date = datetime.now().date()).count()
+    today = datetime.date.today
+    remaining = Task.objects.filter(start_time__gte = datetime.now()).exclude(recur_type = "Monthly", date__day_lt = today.day, date__day_gt = today.day).exclude().exclude(id__in = OngoingTask.objects.all().values_list('task__id', flat=True)).count()
+
     ongoingTasks = OngoingTask.objects.all
     context = {
         'id': id,
@@ -23,6 +27,16 @@ def index(Request):
     return render(Request, 'administrator/index.html', context)
     pass
 
+
+#Used to Get Number of OutStanding Tasks in each Category
+def getCatData(Request):
+    tasks = Task.objects.exclude(id = OngoingTask.id).exclude(id = CompletedTask).values('cateogry').annotate(catCount=Count('category'))
+
+    data = [tasks]
+
+    return JsonResponse(data, safe=False)
+
+
 def manageteam(Request):
     all_teams = Teams.objects.all()
     context = {
@@ -34,13 +48,8 @@ def manageteam(Request):
     pass
 
 
-def getCatData(Request):
-    tasks = Task.objects.exclude(id = OngoingTask.id).exclude(id = CompletedTask)
-
-
-
 def returnTeamInfo(Request):
-    crisis_id = request.POST.get("name")
+    crisis_id = Request.POST.get("name")
     # getAgency = Crisis.objects.get(id = crisis_id)
     response_data = {}
     # if(getAgency.external_agencies is not None or getAgency.external_agencies != ""):

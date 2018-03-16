@@ -1875,7 +1875,7 @@
     "pk": "S1231234G",
     "fields": {
         "first_name": "SERIOUS",
-        "last_name": "LEE GIRLFRIEND",
+        "last_name": "LEE",
         "ward": "1",
         "bed": 2,
         "team": 1
@@ -1885,8 +1885,8 @@
     "model": "OKareApp.patient",
     "pk": "S2956234G",
     "fields": {
-        "first_name": "SERIOUS",
-        "last_name": "LEE GIRLFRIEND",
+        "first_name": "HAPPY",
+        "last_name": "LEE",
         "ward": "1",
         "bed": 2,
         "team": 3
@@ -1896,8 +1896,8 @@
     "model": "OKareApp.patient",
     "pk": "S3232334G",
     "fields": {
-        "first_name": "SERIOUS",
-        "last_name": "LEE GIRLFRIEND",
+        "first_name": "QUIET",
+        "last_name": "LEE",
         "ward": "1",
         "bed": 3,
         "team": 1
@@ -1907,8 +1907,8 @@
     "model": "OKareApp.patient",
     "pk": "S4234234G",
     "fields": {
-        "first_name": "HAPPY",
-        "last_name": "LEE GIRLFRIEND",
+        "first_name": "SAD",
+        "last_name": "LEE",
         "ward": "1",
         "bed": 5,
         "team": 2
@@ -1918,8 +1918,8 @@
     "model": "OKareApp.patient",
     "pk": "S5562334G",
     "fields": {
-        "first_name": "HAPPY",
-        "last_name": "LEE GIRLFRIEND",
+        "first_name": "HEN",
+        "last_name": "LEE",
         "ward": "1",
         "bed": 4,
         "team": 3
@@ -1929,8 +1929,8 @@
     "model": "OKareApp.patient",
     "pk": "S6731234G",
     "fields": {
-        "first_name": "HAPPY",
-        "last_name": "LEE GIRLFRIEND",
+        "first_name": "BENT",
+        "last_name": "LEE",
         "ward": "1",
         "bed": 3,
         "team": 2
@@ -1940,8 +1940,8 @@
     "model": "OKareApp.patient",
     "pk": "S7831234G",
     "fields": {
-        "first_name": "HAPPY",
-        "last_name": "LEE GIRLFRIEND",
+        "first_name": "FREE",
+        "last_name": "LEE",
         "ward": "1",
         "bed": 2,
         "team": 4
@@ -1951,8 +1951,8 @@
     "model": "OKareApp.patient",
     "pk": "S8456234G",
     "fields": {
-        "first_name": "SERIOUS",
-        "last_name": "LEE GIRLFRIEND",
+        "first_name": "ANGRY",
+        "last_name": "LEE",
         "ward": "1",
         "bed": 2,
         "team": 4
@@ -1962,11 +1962,385 @@
     "model": "OKareApp.patient",
     "pk": "S9678234G",
     "fields": {
-        "first_name": "HAPPY",
-        "last_name": "LEE GIRLFRIEND",
+        "first_name": "HANDSOME",
+        "last_name": "LEE",
         "ward": "1",
         "bed": 3,
         "team": 2
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 1,
+    "fields": {
+        "title": "Breakfast",
+        "patient": "S1231234G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "08:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 2,
+    "fields": {
+        "title": "Lunch",
+        "patient": "S1231234G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "12:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 3,
+    "fields": {
+        "title": "Dinner",
+        "patient": "S1231234G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "23:59:59",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 4,
+    "fields": {
+        "title": "Breakfast",
+        "patient": "S2956234G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "08:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 5,
+    "fields": {
+        "title": "Lunch",
+        "patient": "S2956234G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "12:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 6,
+    "fields": {
+        "title": "Dinner",
+        "patient": "S2956234G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "23:59:59",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 7,
+    "fields": {
+        "title": "Breakfast",
+        "patient": "S3232334G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "08:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 8,
+    "fields": {
+        "title": "Lunch",
+        "patient": "S3232334G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "12:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 9,
+    "fields": {
+        "title": "Dinner",
+        "patient": "S3232334G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "23:59:59",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 10,
+    "fields": {
+        "title": "Breakfast",
+        "patient": "S3232334G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "08:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 11,
+    "fields": {
+        "title": "Lunch",
+        "patient": "S3232334G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "12:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 12,
+    "fields": {
+        "title": "Dinner",
+        "patient": "S3232334G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "23:59:59",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 13,
+    "fields": {
+        "title": "Breakfast",
+        "patient": "S5562334G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "08:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 14,
+    "fields": {
+        "title": "Lunch",
+        "patient": "S5562334G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "12:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 15,
+    "fields": {
+        "title": "Dinner",
+        "patient": "S5562334G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "23:59:59",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 16,
+    "fields": {
+        "title": "Breakfast",
+        "patient": "S6731234G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "08:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 17,
+    "fields": {
+        "title": "Lunch",
+        "patient": "S6731234G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "12:00:00",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 18,
+    "fields": {
+        "title": "Dinner",
+        "patient": "S6731234G",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "23:59:59",
+        "duration": "00:00:30",
+        "day": "Monday",
+        "date": "2018-03-12"
+    }
+},
+{
+    "model": "OKareApp.ongoingtask",
+    "pk": 1,
+    "fields": {
+        "task": 1,
+        "nurse": "4"
+    }
+},
+{
+    "model": "OKareApp.ongoingtask",
+    "pk": 2,
+    "fields": {
+        "task": 2,
+        "nurse": "7"
+    }
+},
+{
+    "model": "OKareApp.ongoingtask",
+    "pk": 3,
+    "fields": {
+        "task": 3,
+        "nurse": "5"
+    }
+},
+{
+    "model": "OKareApp.ongoingtask",
+    "pk": 4,
+    "fields": {
+        "task": 4,
+        "nurse": "6"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 1,
+    "fields": {
+        "task": 1,
+        "nurse": "S9234232G",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-16"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 2,
+    "fields": {
+        "task": 2,
+        "nurse": "S9845624G",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-16"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 3,
+    "fields": {
+        "task": 3,
+        "nurse": "S9898898G",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-16"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 4,
+    "fields": {
+        "task": 4,
+        "nurse": "S9765453G",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-16"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 5,
+    "fields": {
+        "task": 1,
+        "nurse": "S9845624G",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-16"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 6,
+    "fields": {
+        "task": 2,
+        "nurse": "S9845624G",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-16"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 7,
+    "fields": {
+        "task": 3,
+        "nurse": "S9765453G",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-16"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 8,
+    "fields": {
+        "task": 4,
+        "nurse": "S9234232G",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-16"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 9,
+    "fields": {
+        "task": 5,
+        "nurse": "S9232342G",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-16"
     }
 },
 {
@@ -2127,6 +2501,348 @@
         ],
         "object_id": "4",
         "object_repr": "nurse1",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2018-03-16T06:35:54.397Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "1",
+        "object_repr": "Task object",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2018-03-16T10:57:10.424Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "9",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"nurse\", \"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2018-03-16T10:57:11.481Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "9",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+        "action_time": "2018-03-16T10:57:31.042Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "8",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"nurse\", \"duration\", \"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+        "action_time": "2018-03-16T10:57:39.680Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "7",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"nurse\", \"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+        "action_time": "2018-03-16T10:57:45.323Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "6",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"nurse\", \"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+        "action_time": "2018-03-16T10:57:50.540Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "3",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"nurse\", \"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+        "action_time": "2018-03-16T10:57:54.962Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "1",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"nurse\", \"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+        "action_time": "2018-03-16T10:57:59.522Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "2",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"nurse\", \"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+        "action_time": "2018-03-16T10:58:03.961Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "6",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+        "action_time": "2018-03-16T10:58:05.823Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "9",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+        "action_time": "2018-03-16T10:58:07.928Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "8",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+        "action_time": "2018-03-16T10:58:10.045Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "7",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+        "action_time": "2018-03-16T10:58:12.453Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "6",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+        "action_time": "2018-03-16T10:58:18.479Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "5",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"nurse\", \"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+        "action_time": "2018-03-16T10:58:25.764Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "4",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"nurse\", \"date\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 26,
+    "fields": {
+        "action_time": "2018-03-16T10:58:31.574Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "3",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 27,
+    "fields": {
+        "action_time": "2018-03-16T10:58:37.823Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "2",
+        "object_repr": "CompletedTask object",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 28,
+    "fields": {
+        "action_time": "2018-03-16T10:58:39.921Z",
+        "user": [
+            "superuser"
+        ],
+        "content_type": [
+            "OKareApp",
+            "completedtask"
+        ],
+        "object_id": "1",
+        "object_repr": "CompletedTask object",
         "action_flag": 2,
         "change_message": "[]"
     }

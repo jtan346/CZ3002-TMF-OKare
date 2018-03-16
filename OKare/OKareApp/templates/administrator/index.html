@@ -19,26 +19,21 @@
         url: "/Admin/get_category_pie_data/",
         dataType: 'json',
         success: function (data) {
-            var newEfCount = data['count'];
-            if(efCount==-1)
-                efCount = newEfCount;
-            else if(efCount<newEfCount) {
-                reloadEfUpdate(efCount);
-                efCount = newEfCount
-            }
+            console.log(data)
+            new Morris.DonutSegment({
+                element:'category-pie-chart',
+
+                data:{
+
+                }
+            });
         },
         error: function(data){
             console.log(data);
         }
     });
 }
-    new Morris.DonutSegment({
-        element:'category-pie-chart',
 
-        data:{
-
-        }
-    });
     </script>
 {% endblock page_javascripts %}
 
@@ -68,7 +63,7 @@
                             <i class="fa fa-user-md fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right huge">
-                            <div class="huge">26</div>
+                            <div class="huge">{{ activeNurses }}</div>
                             <div class="medium">Active Nurses</div>
                         </div>
                     </div>
@@ -83,7 +78,7 @@
                             <i class="fa fa-user fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">12</div>
+                            <div class="huge">{{ patients }}</div>
                             <div class="medium">Active Patients</div>
                         </div>
                     </div>
@@ -95,10 +90,10 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-tick fa-5x"></i>
+                            <i class="fa fa-check-circle-o fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">124</div>
+                            <div class="huge">{{ completed }}</div>
                             <div class="medium">Completed Task</div>
                         </div>
                     </div>
@@ -113,7 +108,7 @@
                             <i class="fa fa-tasks fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">13</div>
+                            <div class="huge">{{ remaining }}</div>
                             <div class="medium">Remaining Tasks</div>
                         </div>
                     </div>
