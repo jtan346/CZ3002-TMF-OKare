@@ -72,9 +72,9 @@ class Task(models.Model):
     )
 
     title = models.CharField(max_length=200)
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
-    #the recur type is not important, as the frontend is supposed to make the
-    #recurring type occur; the recur type is only present for goodness knows what reason?
+
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
     recur_type = models.CharField(max_length=100, choices=RECURTYPE, null=True)
 
     category = models.CharField(max_length = 100, choices=CATTYPE, null=False, default='Misc')
@@ -90,6 +90,11 @@ class Task(models.Model):
     day = models.CharField(max_length=20, choices=DAY)
 
 
+class OngoingTask(models.Model):
+    task = models.OneToOneField(Task, on_delete=models.CASCADE)
+    nurse = models.OneToOneField(Account, limit_choices_to={'type': 'Nurse'}, on_delete=models.CASCADE)
+
+
 class DailyTriage(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     date = models.DateTimeField(editable=True, null=False)
@@ -99,17 +104,26 @@ class DailyTriage(models.Model):
 
 
 class CompletedTask(models.Model):
-    task = models.OneToOneField(Task, on_delete=models.CASCADE)
-    nurse = models.OneToOneField(Account, limit_choices_to={'type':'Nurse'}, on_delete= models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    nurse = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, on_delete= models.CASCADE)
     duration = models.DurationField(editable=True, null=False)
     date = models.DateField(editable=True, null=False)
 
     #make sure to test this Later when DB up (if dont work change back to .aggregate
     def average_duration(self,start_date=datetime.now()-timedelta(days=7)):
-        return CompletedTask.Objects.filter(id= self.task.id, date__gte = start_date).Avg('duration')
+        return CompletedTask.objects.filter(id= self.task.id, date__gte = start_date).Avg('duration')
 
-    def total_tasks_completed(self, nurse_search,start_date=datetime.now()-timedelta(days=7)):
-        return CompletedTask.Objects.filter(nurse = nurse_search,date__gte = start_date).Count()
+    def total_tasks_completed(self,start_date=datetime.now()-timedelta(days=7)):
+        return CompletedTask.objects.filter(date__gte = start_date).Count()
+
+    def total_tasks_completed_nurse(self, nurse_search,start_date=datetime.now()-timedelta(days=7)):
+        return CompletedTask.objects.filter(nurse = nurse_search,date__gte = start_date).Count()
 
     def total_time_spent(self, nurse_search, start_date=datetime.now()-timedelta(days=7)):
-        return CompletedTask.Objects.filter(nurse = nurse_search,date__gte = start_date).Sum('duration')
+        return CompletedTask.objects.filter(nurse = nurse_search,date__gte = start_date).Sum('duration')
+
+
+class HelpRequest(models.Model):
+    requester = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
+    helper = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, related_name='+', on_delete= models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
