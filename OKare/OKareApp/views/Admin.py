@@ -34,6 +34,11 @@ def manageteam(Request):
     pass
 
 
+def getCatData(Request):
+    tasks = Task.objects.exclude(id = OngoingTask.id).exclude(id = CompletedTask)
+
+
+
 def returnTeamInfo(Request):
     crisis_id = request.POST.get("name")
     # getAgency = Crisis.objects.get(id = crisis_id)

@@ -2,31 +2,44 @@
 
 {% block page_stylesheets %}
     <style type="text/css">
-.nav, .navbar, body {
-    background-color: #ff5b5b;
-    color:#333;
-}
-.active{
-    color: #333;
-}
-.nav a {
-    font-size:16px;
-    color:white;
-}
-.sidebar-nav{
-    color: white;
-}
 
-.panel-heading {
-    text-align: right;
-}
-.medium{
-    font-size: 18px;
-}
     </style>
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
+    <script type="text/javascript">
+    var link = document.createElement('link');
+    link.href = "/static/dist/css/admin.css";
+    link.rel = "stylesheet";
+    document.getElementsByTagName("head")[0].appendChild(link)
+
+    function categoryPiechartInit(){
+    $.ajax({
+        type:"GET",
+        url: "/Admin/get_category_pie_data/",
+        dataType: 'json',
+        success: function (data) {
+            var newEfCount = data['count'];
+            if(efCount==-1)
+                efCount = newEfCount;
+            else if(efCount<newEfCount) {
+                reloadEfUpdate(efCount);
+                efCount = newEfCount
+            }
+        },
+        error: function(data){
+            console.log(data);
+        }
+    });
+}
+    new Morris.DonutSegment({
+        element:'category-pie-chart',
+
+        data:{
+
+        }
+    });
+    </script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
@@ -52,7 +65,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3 ">
-                            <i class="fa fa-comments fa-5x"></i>
+                            <i class="fa fa-user-md fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right huge">
                             <div class="huge">26</div>
@@ -67,7 +80,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-tasks fa-5x"></i>
+                            <i class="fa fa-user fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge">12</div>
@@ -82,7 +95,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-shopping-cart fa-5x"></i>
+                            <i class="fa fa-tick fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge">124</div>
@@ -97,7 +110,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-support fa-5x"></i>
+                            <i class="fa fa-tasks fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge">13</div>
@@ -136,7 +149,9 @@
                     <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
                 </div>
                 <div class="panel-body">
-                    <div id="morris-donut-chart"><svg height="347" version="1.1" width="598" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; top: -0.799805px;"><desc>Created with Raphaël 2.2.0</desc><defs></defs><path style="opacity: 0;" fill="none" stroke="#0b62a4" d="M299,286.6666666666667A110.66666666666667,110.66666666666667,0,0,0,403.48523596313163,212.46843260739092" stroke-width="2" opacity="0"></path><path style="" fill="#0b62a4" stroke="#ffffff" d="M299,289.6666666666667A113.66666666666667,113.66666666666667,0,0,0,406.3176670585177,213.45703469614548L451.0071354523873,229.05497876316207A161,161,0,0,1,299,337Z" stroke-width="3"></path><path style="opacity: 1;" fill="none" stroke="#3980b5" d="M403.48523596313163,212.46843260739092A110.66666666666667,110.66666666666667,0,0,0,199.7245062356979,127.09716318080183" stroke-width="2" opacity="1"></path><path style="" fill="#3980b5" stroke="#ffffff" d="M406.3176670585177,213.45703469614548A113.66666666666667,113.66666666666667,0,0,0,197.03330309148487,125.77148386943801L150.08675935354682,102.64574477120273A166,166,0,0,1,455.7278539446975,230.70264891108636Z" stroke-width="3"></path><path style="opacity: 0;" fill="none" stroke="#679dc6" d="M199.7245062356979,127.09716318080183A110.66666666666667,110.66666666666667,0,0,0,298.96523304187207,286.66666120548564" stroke-width="2" opacity="0"></path><path style="" fill="#679dc6" stroke="#ffffff" d="M197.03330309148487,125.77148386943801A113.66666666666667,113.66666666666667,0,0,0,298.9642905640915,289.66666105744156L298.94942035910907,336.9999920549685A161,161,0,0,1,154.57209792723518,104.85521029014241Z" stroke-width="3"></path><text style="text-anchor: middle; font-family: &quot;Arial&quot;; font-size: 15px; font-weight: 800;" x="299" y="166" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="15px" stroke="none" fill="#000000" font-weight="800" transform="matrix(1.6739,0,0,1.6739,-201.8479,-117.9412)" stroke-width="0.5973895582329317"><tspan dy="5">In-Store Sales</tspan></text><text style="text-anchor: middle; font-family: &quot;Arial&quot;; font-size: 14px;" x="299" y="186" text-anchor="middle" font-family="&quot;Arial&quot;" font-size="14px" stroke="none" fill="#000000" transform="matrix(2.3056,0,0,2.3056,-391.0139,-232.3889)" stroke-width="0.4337349397590361"><tspan dy="5">30</tspan></text></svg></div>
+                    <div id="category-pie-chart">
+
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>

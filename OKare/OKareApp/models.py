@@ -73,7 +73,7 @@ class Task(models.Model):
     )
 
     title = models.CharField(max_length=200)
-    patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     recur_type = models.CharField(max_length=100, choices=RECURTYPE, null=True)
 
     category = models.CharField(max_length = 100, choices=CATTYPE, null=False, default='Misc')
