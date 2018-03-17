@@ -17,55 +17,6 @@
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
-    <script>
-        var editing = false;
-
-        function enableEditing() {
-            editing = true;
-
-            $('input').each(function() {
-                if ($(this).attr('disabled')) {
-                    $(this).removeAttr('disabled');
-                }
-                else {
-                    $(this).attr({
-                        'disabled': 'disabled'
-                    });
-                }
-            });
-
-            var x = document.getElementById("SaveDiscard");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-
-            var y = document.getElementById("btnEdit");
-            if (y.style.display === "none") {
-                y.style.display = "block";
-            } else {
-                y.style.display = "none";
-            }
-        }
-
-        function discard() {
-            if (confirm('Are you sure you want to discard all changes?')) {
-                enableEditing();
-                window.location.reload();
-            } else {
-
-            }
-        }
-
-        $(document).ready(function() {
-            $('input').each(function() {
-                $(this).attr({
-                    'disabled': 'disabled'
-                });
-            });
-        });
-    </script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
