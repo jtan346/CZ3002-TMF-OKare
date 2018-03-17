@@ -55,18 +55,12 @@
 
         $(document).ready(function() {
             $('input').each(function() {
-                if ($(this).attr('disabled')) {
-                    $(this).removeAttr('disabled');
-                }
-                else {
-                    $(this).attr({
-                        'disabled': 'disabled'
-                    });
-                }
+                $(this).attr({
+                    'disabled': 'disabled'
+                });
             });
         });
     </script>
-    <script src="/static/vendor/jquery/jquery.js" type="text/javascript"></script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
