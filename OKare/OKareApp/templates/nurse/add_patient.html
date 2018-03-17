@@ -18,8 +18,6 @@
 
 {% block page_javascripts %}
     <script>
-        var editing = false;
-
         $.ajaxSetup({
             beforeSend: function(xhr, settings) {
                 var csrfToken = getCookie('csrftoken');
@@ -27,38 +25,8 @@
             }
         });
 
-        function enableEditing() {
-            editing = true;
-
-            $('input').each(function() {
-                if ($(this).attr('disabled')) {
-                    $(this).removeAttr('disabled');
-                }
-                else {
-                    $(this).attr({
-                        'disabled': 'disabled'
-                    });
-                }
-            });
-
-            var x = document.getElementById("SaveDiscard");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-
-            var y = document.getElementById("btnEdit");
-            if (y.style.display === "none") {
-                y.style.display = "block";
-            } else {
-                y.style.display = "none";
-            }
-        }
-
         function discard() {
             if (confirm('Are you sure you want to discard all changes?')) {
-                enableEditing();
                 window.location.reload();
             } else {
 
@@ -84,7 +52,7 @@
             $('#input').hide(500);
 
             $.ajax({
-                url: '/Nurse/update_patient/',
+                url: '/Nurse/add_patient_into_db/',
                 type: 'post',
                 data: data,
                 success: function (msg) {
@@ -101,14 +69,6 @@
                 }
             });
         }
-
-        $(document).ready(function() {
-            $('input').each(function() {
-                $(this).attr({
-                    'disabled': 'disabled'
-                });
-            });
-        });
     </script>
 {% endblock page_javascripts %}
 
@@ -124,7 +84,7 @@
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
     <li class="breadcrumb-item"><a href="/Nurse/view_patient">View Patient</a></li>
-    <li class="breadcrumb-item active">{{ patient_id }}: {{ patient.first_name|title }} {{ patient.last_name|title }}</li>
+    <li class="breadcrumb-item active"></li>
 {% endblock breadcrumb %}
 
 {% block content %}
@@ -150,24 +110,22 @@
             </div>
 
             <form id="input_form" method="post"> {% csrf_token %}
-                <input id="nric" value="{{ patient.nric }}" type="hidden">
-
-                <div class="col-md-9">
+                <div class="col-md-10">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">NRIC</span>
-                                <input id="nric" name="nric" class="form-control" placeholder="" type="text" value="{{ patient.nric }}" disabled>
+                                <input id="nric" name="nric" class="form-control" placeholder="" type="text" value="">
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">First Name</span>
-                                <input id="firstName" name="first_name" class="form-control" placeholder="" type="text" value="{{ patient.first_name }}" disabled>
+                                <input id="firstName" name="first_name" class="form-control" placeholder="" type="text" value="">
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">Last Name</span>
-                                <input id="lastName" name="last_name" class="form-control" placeholder="" type="text" value="{{ patient.last_name }}" disabled>
+                                <input id="lastName" name="last_name" class="form-control" placeholder="" type="text" value="">
                             </div>
                         </div>
 
@@ -176,17 +134,17 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Date of Birth</span>
-                                <input id="dateOfBirth" name="date_of_birth" class="form-control" placeholder="" type="text" value="{{ patient.date_of_birth }}" disabled>
+                                <input id="dateOfBirth" name="date_of_birth" class="form-control" placeholder="YYYY-MM-DD" type="text" value="">
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">Ward</span>
-                                <input id="ward" name="ward" class="form-control" placeholder="" type="text" value="{{ patient.ward }}" disabled>
+                                <input id="ward" name="ward" class="form-control" placeholder="" type="text" value="">
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">Bed</span>
-                                <input id="bed" name="bed" class="form-control" placeholder="" type="text" value="{{ patient.bed }}" disabled>
+                                <input id="bed" name="bed" class="form-control" placeholder="" type="text" value="">
                             </div>
                         </div>
                     </div>
@@ -197,12 +155,12 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Street</span>
-                                <input id="street" name="street" class="form-control" placeholder="" type="text" value="{{ patient.street }}" disabled>
+                                <input id="street" name="street" class="form-control" placeholder="" type="text" value="">
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">City</span>
-                                <input id="city" name="city" class="form-control" placeholder="" type="text" value="{{ patient.city }}" disabled>
+                                <input id="city" name="city" class="form-control" placeholder="" type="text" value="">
                             </div>
                             <br>
                         </div>
@@ -210,41 +168,35 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">State</span>
-                                <input id="state" name="state" class="form-control" placeholder="" type="text" value="{{ patient.state }}" disabled>
+                                <input id="state" name="state" class="form-control" placeholder="" type="text" value="">
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">Zip code</span>
-                                <input id="zipCode" name="zip_code" class="form-control" placeholder="" type="text" value="{{ patient.zip_code }}" disabled>
+                                <input id="zipCode" name="zip_code" class="form-control" placeholder="" type="text" value="">
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">Phone No.</span>
-                                <input id="phoneNo" name="phone_no" class="form-control" placeholder="" type="text" value="{{ patient.phoneNo }}" disabled>
+                                <input id="phoneNo" name="phone_no" class="form-control" placeholder="" type="text" value="">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="hidden-md hidden-lg"><br></div>
-
-                <div class="col-md-1">
-                    <button id="btnEdit" class="btn btn-default" type="button" onclick="enableEditing()">Edit</button>
-                </div>
             </form>
         </div>
 
         <br>
 
-        <div id="SaveDiscard" class="row" style="display: none;">
-            <div class="col-md-2 col-md-offset-7">
+        <div id="SaveDiscard" class="row">
+            <div class="col-md-2 col-md-offset-8">
                 <button type="button" class="btn btn-success btn-block" onclick="submit()">Save</button>
             </div>
             <div class="hidden-md hidden-lg"><br></div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
-            </div>
-            <div class="col-md-1">
             </div>
         </div>
     </div>

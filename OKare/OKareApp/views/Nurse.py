@@ -42,6 +42,72 @@ def viewNurseProfile(request, nurse_id):
     }
     return HttpResponse(template.render(context, request))
 
+def addNurseView(request):
+    template = loader.get_template('nurse/add_nurse.html')
+    context = {
+                'page_name': "Adding a Nurse",
+               }
+    return HttpResponse(template.render(context, request))
+
+def addNurse(request):
+    if request.POST:
+        print(request.POST)
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+
+        nric = request.POST['nric']
+        date_of_birth = request.POST['date_of_birth']
+        street = request.POST['street']
+        city = request.POST['city']
+        state = request.POST['state']
+        zip_code = request.POST['zip_code']
+        phone_no = request.POST['phone_no']
+
+        nurse = Account(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=date_of_birth,
+                        street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="",
+                        team_id=1)
+
+        nurse.save()
+
+        return HttpResponse('successful')
+
+def updateNurseDetail(request):
+    if request.POST:
+        try:
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+
+            nric = request.POST['nric']
+            # date_of_birth = request.POST['date_of_birth']
+            street = request.POST['street']
+            city = request.POST['city']
+            state = request.POST['state']
+            zip_code = request.POST['zip_code']
+            phone_no = request.POST['phone_no']
+
+            nurse = Account.objects.get(nric=nric)
+
+            user = nurse.user
+            user.first_name = first_name
+            user.last_name = last_name
+
+            # nurse.nric = nric
+            # nurse.date_of_birth = date_of_birth
+            nurse.street = street
+            nurse.city = city
+            nurse.state = state
+            nurse.zip_code = zip_code
+            nurse.phoneNo = phone_no
+
+            nurse.save()
+            user.save()
+
+        except(KeyError, Account.DoesNotExist):
+            return HttpResponse('unsuccessful')
+
+        else:
+            return HttpResponse('successful')
+
 def listPatients(request):
     template = loader.get_template('nurse/list_patient.html')
     page_name = 'View Patient'    #Fill in here
@@ -65,10 +131,37 @@ def viewPatientProfile(request, patient_id):
                }
     return HttpResponse(template.render(context, request))
 
+def addPatientView(request):
+    template = loader.get_template('nurse/add_patient.html')
+    context = {
+                'page_name': "Adding a Patient",
+               }
+    return HttpResponse(template.render(context, request))
+
+def addPatient(request):
+    if request.POST:
+        nric = request.POST['nric']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        date_of_birth = request.POST['date_of_birth']
+        ward = request.POST['ward']
+        bed = request.POST['bed']
+        street = request.POST['street']
+        city = request.POST['city']
+        state = request.POST['state']
+        zip_code = request.POST['zip_code']
+        phone_no = request.POST['phone_no']
+
+        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=date_of_birth,
+                          ward=ward, bed=bed, street=street, city=city, state=state, zip_code=zip_code,
+                          phoneNo=phone_no, team_id=1)
+
+        patient.save()
+        return HttpResponse('successful')
+
 def updatePatientDetail(request):
     if request.POST:
         try:
-            print(request.POST)
             nric = request.POST['nric']
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
@@ -83,7 +176,7 @@ def updatePatientDetail(request):
 
             patient = Patient.objects.get(nric=nric)
 
-            patient.nric = nric
+            # patient.nric = nric
             patient.first_name = first_name
             patient.last_name = last_name
             # patient.date_of_birth = date_of_birth
@@ -98,45 +191,6 @@ def updatePatientDetail(request):
             patient.save()
 
         except(KeyError, Patient.DoesNotExist):
-            return 'unsuccessful'
-
-        else:
-            return 'successful'
-
-def updateNurseDetail(request):
-    if request.method=="POST":
-        try:
-            print(request.POST)
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-
-            nric = request.POST['nric']
-            # date_of_birth = request.POST['date_of_birth']
-            street = request.POST['street']
-            city = request.POST['city']
-            state = request.POST['state']
-            zip_code = request.POST['zip_code']
-            phone_no = request.POST['phone_no']
-
-            print("WE TESTING")
-            nurse = Account.objects.get(nric=nric)
-            print("WE TRIED")
-            user = nurse.user
-            user.first_name = first_name
-            user.last_name = last_name
-
-            nurse.nric = nric
-            # nurse.date_of_birth = date_of_birth
-            nurse.street = street
-            nurse.city = city
-            nurse.state = state
-            nurse.zip_code = zip_code
-            nurse.phoneNo = phone_no
-
-            nurse.save()
-            user.save()
-
-        except(KeyError, Account.DoesNotExist):
             return HttpResponse('unsuccessful')
 
         else:

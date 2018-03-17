@@ -62,13 +62,6 @@
         }
 
         function submit() {
-
-            console.log($.ajaxSettings['cache']);
-
-            $('#input').fadeOut( "fast", function() {
-                $('#input').hide();
-            });
-
             var data = {
                 'nric' : document.getElementById('nric').value,
                 'first_name' : document.getElementById('firstName').value,
@@ -81,21 +74,24 @@
                 'zip_code' : document.getElementById('zipCode').value
             };
 
+            $('#alert').hide(0);
+            $('#input').hide(500);
+
             $.ajax({
                 url: '/Nurse/update_nurse/',
                 type: 'post',
                 data: data,
                 success: function (msg) {
-                    console.log(msg);
-                    if (msg == "successful") {
-                        window.location.reload();
+                    if (msg=="successful") {
+                        $('#input').show(500);
+                        $('#alert').show(500);
                     }
                     else {
-                        alert("fail");
+                        alert("An error has occurred!");
                     }
                 },
                 error: function (msg, status, jqxhr) {
-                    console.log(msg + "\n" + status + "\n" + jqxhr)
+                    {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
                 }
             });
         }
@@ -129,6 +125,15 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Nurse Name</h1>
+        </div>
+    </div>
+
+    <div id="alert" class="row" style="display: none">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Success!</strong> Changes has been successfully saved!
+            </div>
         </div>
     </div>
 
