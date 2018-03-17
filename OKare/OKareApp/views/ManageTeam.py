@@ -20,7 +20,8 @@ def index(request):
     pass
 
 
-def returnTeamInfo(request):
+def returnteaminfo(request):
+    print('hi');
     team_id = request.POST.get("teamId")
     nurs_objs = Account.objects.filter(team_id=team_id, type="Nurse")
 

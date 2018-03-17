@@ -1,55 +1,136 @@
 {% extends 'base.html' %}
-
 {% block page_stylesheets %}
-    <style>
-        #summaryCards{
-            padding-top:10px;
-        }
+<style>
 
-        #team-row{
-            padding-top:30px;
-        }
+    #summaryCards{
+        padding-top:10px;
+    }
 
-        #add_team_icon{
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 21%;
-        }
-    </style>
+    #team-row{
+        padding-top:30px;
+    }
+
+    #add_team_icon{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 21%;
+    }
+
+    #trigger_modal{
+        display:none;
+    }
+
+    .hiddenwardname{
+        display:none;
+    }
+
+    #input_box_row{
+        padding-bottom:20px;
+    }
+
+
+</style>
 
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
 
-
+    <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
     <script src="/static/vendor/jquery/jquery.js" type="text/javascript"></script>
     <script>
-        var link = document.createElement('link');
-        link.href = "/static/dist/css/admin.css";
-        link.rel = "stylesheet";
-        document.getElementsByTagName("head")[0].appendChild(link)
+
 
         $(document).ready(function(){
+            $('#btnEdit').click(function(){
+                $("#inptBoxTeamName").removeAttr( "disabled" );
+                $("#inptBoxWardNo").removeAttr( "disabled" );
+                $(".tb_row_to_add").show();
+                $(".close").hide();
+            });
 
-            $('#exampleModalCenter').on('show.bs.modal', function (event) {
-                //var button = $(event.relatedTarget) // Button that triggered the modal
-                //var recipient = "Rubbish" // Extract info from data-* attributes
-                //If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                //Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                //var modal = $(this)
-                //modal.find('.modal-title').text('New message to ' + recipient)
-                //modal.find('.modal-body input').val(recipient)
-                var temp = "123";
+            $('.btnTeam').click(function(){
+                var id = this.id;
+                var teamName = $('#team_Name').text();
+                var wardNo = $('#ward' + id).text();
+
+                $("#inptBoxWardNo").val(wardNo);
+                $("#inptBoxTeamName").val(teamName);
+
                 $.ajax({
                     type: "POST",
-                    url: "path/to/url/",
-                    data: { name: "John"},
-                    success: function(data) {
-                        alert("HI");
+                    url: "/Admin/get_manage_team_info/",
+                    data:
+                        {
+                            teamId: id,
+                            csrfmiddlewaretoken: "{{ csrf_token }}"
+                        },
+                    success: function(data){
+
+                      try {
+                          alert(data);
+                          data = JSON.parse(data);
+
+                      } catch(e) {
+                          //JSON parse error, this is not json (or JSON isn't in your browser)
+                          alert("Error in Parsing");
+                      }
+
+                      var modal = $('#exampleModal');
+                      //modal.find('.modal-title').text('New message to ');
+                      //modal.find('.modal-body input').val();
+                      var str = "";
+                      var i;
+
+                      for (i = 0; i < data.data.length; i++) {
+                          var Obj = data.data[i];
+
+                          str = str + "<tr><td>";
+                          str = str + (i+1) + "</td>";
+                          str = str + "<td>";
+                          str = str + Obj.name;
+                          str = str + "</td></tr>";
+                      }
+
+                      str = str + "<tr class=\"tb_row_to_add\">" +
+                          "<td align=\"center\" colspan=\"2\">" +
+                          "<i class=\"fa fa-plus-circle fa-3x\" id=\"add_nurse_to_team_icon\"></i>" +
+                          "</td>" +
+                          "</tr>";
+
+
+                      $( "#nurse_table_body" ).html( str );
+
+                      str = "";
+                      for(i = 0;i<data.patientdata.length; i++){
+                          var Obj = data.patientdata[i];
+
+                          str = str + "<tr><td>";
+                          str = str + (i+1) + "</td>";
+                          str = str + "<td>";
+                          str = str + Obj.name + "</td>";
+                          str = str + "<td>";
+                          str = str + Obj.bed;
+                          str = str + "</td></tr>";
+                      }
+
+                      str = str + "<tr class=\"tb_row_to_add\">" +
+                      "<td align=\"center\" colspan=\"3\">" +
+                      "<i class=\"fa fa-plus-circle fa-3x\" id=\"add_patient_to_team_icon\"></i>\n" +
+                      "</td>" +
+                      "</tr>";
+
+                      $("#patient_table_body" ).html( str );
+
+                      $(".tb_row_to_add").hide();
+
+                      $('#btn_trigger_modal').click();
                     }
                 });
-            })
+
+            });
+
+
         });
 
 
@@ -59,135 +140,175 @@
 
 
 {% block sidebar %}
-    {% include 'administrator/ui_components/sidebar.html' %}
+    {% include 'nurse/ui_components/sidebar.html' %}
 {% endblock sidebar %}
 
 {% block topmenu %}
-    {% include 'administrator/ui_components/top-menu.html' %}
+    {% include 'nurse/ui_components/top-menu.html' %}
 {% endblock topmenu %}
 
 
 {% block content %}
 
-    <div id="summaryCards" class="row page-header">
-        <div class="col-lg-4 col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-user-md fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">26</div>
-                            <div class="medium">Active Nurses</div>
-                        </div>
+<div id="summaryCards" class="row page-header">
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-user-md fa-5x"></i>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="panel panel-green">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-user fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">12</div>
-                            <div class="medium">Patients</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="panel panel-yellow">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-users fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">124</div>
-                            <div class="medium">Teams</div>
-                        </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">26</div>
+                        <div>Active Nurses</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-3">
-            <div id="dataTables-example_filter" class="dataTables_filter">
-                <label>
-                    Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example">
-                </label>
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-user fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">12</div>
+                        <div>Patients</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="row" id="team-row">
-        {% for team in teams %}
-            <div class="col-md-3 col-md-6">
-                <div class="panel panel-default">
-                    <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-outline btn-success btn-block" id="{{team.name}}">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-users fa-3x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class=test_to_search">{{team.name}}</div>
-                                <div class=test_to_search">Ward Number {{team.ward}}</div>
-                            </div>
-                        </div>
-                    </button>
+    <div class="col-lg-4 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-users fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">124</div>
+                        <div>Teams</div>
+                    </div>
                 </div>
             </div>
-        {% endfor %}
+        </div>
+    </div>
+</div>
 
+<div class="row">
+     <div class="col-md-3">
+     </div>
+     <div class="col-md-3">
+     </div>
+     <div class="col-md-3">
+     </div>
+     <div class="col-md-3">
+         <div id="dataTables-example_filter" class="dataTables_filter">
+             <label>
+                 Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example">
+             </label>
+         </div>
+     </div>
+</div>
+
+<div class="row" id="team-row">
+    {% for team in teams %}
         <div class="col-md-3 col-md-6">
             <div class="panel panel-default">
-                <!--<div class="panel-heading">
-                data-toggle="modal" data-target="#exampleModalCenter"
-                </div> -->
+                <button type="button" class="btnTeam btn btn-outline btn-success btn-block" id="{{team.id}}">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-users fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class=test_to_search" id="team_Name">{{team.name}}</div>
+                            <div class=test_to_search">Ward Number {{team.ward}}</div>
+                            <div class="hiddenwardname" id="ward{{ team.id }}">{{team.ward}}</div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
 
-                <button type="button" id="hi" class="btnTeam btn btn-outline btn-success btn-block">
+     <div class="col-md-3 col-md-6">
+            <div class="panel panel-default">
+                <button type="button"   class="btnTeam btn btn-outline btn-success btn-block">
                     <i class="fa fa-plus-circle fa-3x" id="add_team_icon"></i>
                 </button>
 
             </div>
-        </div>
+     </div>
 
-
+    <div id="trigger_modal">
+         <button type="button" data-backdrop="static" data-keyboard="false" id="btn_trigger_modal"  data-toggle="modal" data-target="#exampleModal">
+         </button>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLongTitle">Team Information</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class ="row" id="input_box_row">
+                    <div class ="col-xs-5">
+                        <label for="disabledSelect">Team Name</label>
+                        <input class="form-control" id="inptBoxTeamName" type="text" placeholder="" disabled="" >
+                    </div>
+                    <div class ="col-xs-5">
+                        <label for="disabledSelect">Ward</label>
+                        <input class="form-control" id="inptBoxWardNo"  type="text" placeholder="" disabled="">
+                    </div>
                 </div>
-                <div class="modal-body">
-                    ...
+                <div class ="row">
+                    <div class="col-lg-6">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody id="nurse_table_body">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-6">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Bed</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patient_table_body">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btnEdit" class="btn btn-primary">Edit</button>
             </div>
         </div>
     </div>
+</div>
 
 
 
