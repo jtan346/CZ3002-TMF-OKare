@@ -13,25 +13,66 @@
         link.rel = "stylesheet";
         document.getElementsByTagName("head")[0].appendChild(link)
 
+
+
         function categoryPiechartInit(){
             $.ajax({
                 type:"GET",
                 url: "/Admin/get_category_pie_data/",
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data)
-                    new Morris.DonutSegment({
-                        element:'category-pie-chart',
-
-                        data:{
-
-                        }
-                    });
+                    console.log(data);
+                    $("#taskList").childNodes("div").hasClass('list-group').append(data);
                 },
                 error: function(data){
                     console.log(data);
                 }
             });
+        }
+
+
+        //Code for the Task Panel to show and not show!
+        var prevBtnClick = -1;
+        var panelOpen = false;
+        function display(id){
+            $.ajax({
+                type:"POST",
+                url: "/Admin/get_patient_tasks/",
+                data:{'id':id},
+                success: function (data) {
+                    panelOpen = ($("#taskList").css("display")!="none");
+
+                    $("#taskList").slideToggle();
+
+                    if(prevBtnClick != id && prevBtnClick != -1 && panelOpen)
+                        $("#taskList").slideToggle();
+                    $("#taskList").html(data);
+                    prevBtnClick = id;
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+        }
+
+
+        function search(){
+            console.log("search event");
+            var reset = false;
+            var searchTerm = $("#PatientSearchBar").val().toLowerCase();
+            var nameBtns = $("#patientPanel").find("div.name");
+            if(searchTerm == ''){
+                reset = true;
+            }
+            console.log(reset);
+            for(var i=0; i <nameBtns['length']; i++){
+                value = nameBtns[i].innerText.toLowerCase();
+                if(!value.includes(searchTerm) && !reset)
+                    $(nameBtns[i].id).css('display', 'none');
+                else
+                    $(nameBtns[i].id).css('display', 'block');
+
+            }
         }
 
     </script>
@@ -47,7 +88,7 @@
 
 {% block content %}
 
-    <div class="panel panel-default row">
+    <div id="patientPanel" class="panel panel-default row">
         <div class="col-md-3">
         </div>
         <div class="col-md-3">
@@ -57,24 +98,27 @@
         <div class="col-md-3" style="text-align: right;">
             <div id="dataTables-example_filter" class="dataTables_filter">
                 <label>
-                    Search:<input id="PatientSearchBar" type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example">
+                    Search:<input id="PatientSearchBar" type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example" onkeyup="search()">
                 </label>
             </div>
         </div>
         {% for patient in Patients %}
-        <div style="width:110px; float:left; margin:10px 20px">
-            <button class="btn btn-primary btn-lg" id="{{ patient.nric }}btn">
-                <div>
-                    <img src="/static/img/profile_picture.svg" height="100px">
-                </div>
-                <div class="" style="font-size:15px">
-                    <b>{{ patient.first_name}}<br>{{ patient.last_name}}</b>
-                </div>
-            </button>
-        </div>
+            <div id="{{ patient.nric }}Panel"style="float:left; margin:10px 10px">
+                <button class="btn btn-primary btn-lg" id="{{ patient.nric }}btn" onclick="display('{{ patient.nric }}')">
+                    <div>
+                        <img src="/static/img/profile_picture.svg" height="100px">
+                    </div>
+                    <div id="#{{ patient.nric }}Panel" class="name" style="font-size:15px">
+                        <b>{{ patient.first_name}}<br>{{ patient.last_name}}</b>
+                    </div>
+                </button>
+            </div>
         {% endfor %}
     </div>
-    <div class="panel panel-default row">
+    <div id="taskList" class="panel panel-primary col-md-6" style="padding:0px; display:none">
+
+    </div>
+    <div id="taskEditNAdd" class="panel panel-primary col-md-6">
         
     </div>
 {% endblock content %}

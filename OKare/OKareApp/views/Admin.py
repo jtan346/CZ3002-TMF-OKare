@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.template import loader
 from django.db.models import Count, Avg, Sum
 from OKareApp.models import Account,Task, CompletedTask, DailyTriage,Patient,NurseStats, OngoingTask, Teams
 from datetime import datetime, timedelta
@@ -56,6 +57,15 @@ def managetask(Request):
     }
     return render(Request, 'administrator/manage_task.html', context)
 
+def getPatientTasks(Request):
+    template = loader.get_template('administrator/ui_components/task_panel.html')
+    id = Request.POST.get('id')
+    context = {
+        "tasks":Task.objects.filter(patient_id = id),
+        "patient": Patient.objects.get(nric = id)
+    }
+    return HttpResponse(template.render(context, Request));
+    pass
 
 
 def manageteam(Request):
