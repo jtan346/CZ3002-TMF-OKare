@@ -17,6 +17,8 @@
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
+	<script src="/static/js/Chart.bundle.min.js"></script>
+
     <script>
         var editing = false;
 
@@ -109,6 +111,101 @@
                 });
             });
         });
+
+    //Graphs
+
+    var data2 = {
+	    labels: ["a","b","c","d","e","f","g"],
+		datasets: [
+            {
+                label: "{{ nurse.user.first_name }}" + " " + "{{ nurse.user.last_name }}",
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                data: [1,2,3,4,5,6,7]
+            }
+        ]
+    };
+
+    $( document ).ready(function() {
+        var ctx1 = document.getElementById("triage1").getContext('2d');
+        var myChart = new Chart(ctx1, {
+            type: 'bar',
+            data: data2,
+            options: {
+                title: {
+                    display: true,
+                    text: "Body Temperature"
+                },
+                legend: {
+                    labels: {
+                        fontSize: 10,
+                    },
+                },
+                barValueSpacing: 20,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            stepSize: 2,
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctx2 = document.getElementById("triage2").getContext('2d');
+        var myChart = new Chart(ctx2, {
+            type: 'bar',
+            data: data2,
+            options: {
+                title: {
+                    display: true,
+                    text: "Blood Pressure"
+                },
+                legend: {
+                    labels: {
+                        fontSize: 10,
+                    },
+                },
+                barValueSpacing: 20,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            stepSize: 2,
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctx3 = document.getElementById("triage3").getContext('2d');
+        var myChart = new Chart(ctx3, {
+            type: 'bar',
+            data: data2,
+            options: {
+                title: {
+                    display: true,
+                    text: "Blood Sugar"
+                },
+                legend: {
+                    labels: {
+                        fontSize: 10,
+                    },
+                },
+                barValueSpacing: 20,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            stepSize: 2,
+                        }
+                    }]
+                }
+            }
+        });
+    });
     </script>
 {% endblock page_javascripts %}
 
@@ -128,6 +225,7 @@
 {% endblock breadcrumb %}
 
 {% block content %}
+<div class="BenContainer">
     <div class="row">
         <div class="col-md-12">
             <h1>Patient Name</h1>
@@ -248,5 +346,23 @@
             </div>
         </div>
     </div>
+
+	<div class="row">
+        <div class="col-md-12">
+            <h1>Triage Information</h1>
+        </div>
+    </div>
+	 <div class="row" style="height:300px; margin-bottom:15px;">
+        <div class="col-md-4" style="height:100%;">
+	        <canvas id="triage1" style="height:100%; width:100%;"></canvas>
+        </div>
+		 <div class="col-md-4" style="height:100%; border-left: 1px; border-right: 1px; border-top:0px; border-bottom: 0px; border-style:solid;">
+			 <canvas id="triage2" style="height:100%; width:100%;"></canvas>
+        </div>
+		 <div class="col-md-4" style="height:100%;">
+			 <canvas id="triage3" style="height:100%; width:100%;"></canvas>
+        </div>
+	 </div>
+</div>
 
 {% endblock content %}
