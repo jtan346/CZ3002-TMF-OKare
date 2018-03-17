@@ -4,8 +4,9 @@
 {% endblock page_stylesheets %}
 {% block page_javascripts %}
 	<script src="/static/js/Chart.bundle.min.js"></script>
+	<script src="/static/js/jspdf.debug.js"></script>
+	<script src="/static/js/html2canvas.min.js"></script>
 	<script>
-
 		var graph1_raw = {{ graph1data|safe }};
 		//console.log(graph1_raw);
 		graph1_labels = [];
@@ -130,6 +131,21 @@
 			});
 		});
 
+		//Test
+
+		function exportReport() {
+		    console.log("HELLO");
+
+
+		    html2canvas(document.getElementById('report')).then(function(canvas) {
+		        var img = canvas.toDataURL('image/png', 1.0);
+		        var doc = new jsPDF("1","mm","a4");
+		        doc.addImage(img, 'JPEG', 10, 10, 180, 150);
+		        doc.save('test.pdf');
+            });
+
+
+		}
 
 	</script>
 
@@ -151,9 +167,14 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-<div class="BenContainer" style="overflow:auto;">
-	<div class="form-row col-md-12" style="margin-bottom:15px;">
+<div class="BenContainer" style="overflow:auto;" id="report">
+	<div class="form-row col-md-6" style="margin-bottom:15px;">
         <h1>Nurse Details</h1>
+    </div>
+	<div class="form-row col-md-6" style="margin-bottom:15px;">
+        <button class="btn btn-warning btn-block btn-lg" id="btnExport" onclick="exportReport()">
+	        Export as PDF
+        </button>
     </div>
 
 	<div class="form-row col-md-12">
