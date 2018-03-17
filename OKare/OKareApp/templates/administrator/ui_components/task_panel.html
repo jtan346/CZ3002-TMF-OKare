@@ -1,0 +1,19 @@
+<div class="panel-heading"><h4>{{ patient.first_name }}  {{ patient.last_name }}</h4></div>
+<div class="panel-body" style="padding:10px 10px">
+    <div class="list-group">
+        {% if tasks %}
+            {% for task in tasks %}
+                <button class="list-group-item">
+                    <h5 class="list-group-item-heading">{{ task.title }}</h5>
+                    {{ task.start_time }}
+                    <span class="pull-right text-muted small">
+                        {{ task.date }}
+                    </span>
+                </button>
+            {% endfor %}
+        {% else %}
+            <span class="list-group-item" style="text-align: center"><b>PATIENT DOES NOT HAVE ANY TASKS!</b></span>
+        {% endif %}
+    </div>
+    <button href="add" class="btn btn-success btn-block btn-lg"><i class="fa fa-plus-square fa"></i> ADD TASK</button>
+</div>
