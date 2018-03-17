@@ -19,9 +19,13 @@ def listNurses(request):
     page_name = 'View Nurse'    #Fill in here
 
     nurses = Account.objects.filter(type="Nurse")
-
+    #user session havn't implement yet, so placeholder
+    user_name="Benjamin"
+    user_type="Nurse"
     context = {
         'page_name': page_name,
+        'user_name': user_name,
+        'user_type': user_type,
         'nurses': nurses,
     }
     return HttpResponse(template.render(context, request))

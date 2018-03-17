@@ -15,11 +15,13 @@
             </li>-->
             <li>
                 <div class="article-container" style="color:#ffffff; height:120px; border:1px;">
-                  <div class="article">
-                        <img src="{{STATIC_URL}}img/profile_picture.svg"  id ="profilePic" alt = "image" width="100px" height="100px"/>
+                  <div class="article col-md-6" style="margin-top:15px;">
+                        <img src="{{STATIC_URL}}img/profile_picture.svg"  id ="profilePic" alt = "image" style="height:100%;"/>
                   </div>
-                  <div class="article" style="width:118px; padding-top:20px;">
-                        Welcome,<br/>{{accountType}} {{curUser}}
+                  <div class="article col-md-6" style="margin-top:20px; color: black; padding: 0px;">
+	                  <p>Welcome,</p>
+	                  <p>{{ user_name }}</p>
+	                  <p>{{ user_type }}</p>
                   </div>
                 </div>
             </li>
