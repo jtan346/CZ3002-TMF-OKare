@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.template import loader
 from django.db.models import Count, Avg, Sum
 from OKareApp.models import Account,Task, CompletedTask, DailyTriage,Patient,NurseStats, OngoingTask, Teams
 from datetime import datetime, timedelta
@@ -34,9 +35,9 @@ def index(Request):
         'completed': completed,
         'remaining': remaining,
         'ongoingTasks':ongoingTasks
-               }
+    }
     return render(Request, 'administrator/index.html', context)
-    pass
+pass
 
 
 #Used to Get Number of OutStanding Tasks in each Category
@@ -46,6 +47,25 @@ def getCatData(Request):
     data = [tasks]
 
     return JsonResponse(data, safe=False)
+pass
+
+
+def managetask(Request):
+    patients = Patient.objects.all
+    context = {
+        'Patients': patients
+    }
+    return render(Request, 'administrator/manage_task.html', context)
+
+def getPatientTasks(Request):
+    template = loader.get_template('administrator/ui_components/task_panel.html')
+    id = Request.POST.get('id')
+    context = {
+        "tasks":Task.objects.filter(patient_id = id),
+        "patient": Patient.objects.get(nric = id)
+    }
+    return HttpResponse(template.render(context, Request));
+    pass
 
 
 def manageteam(Request):
@@ -56,7 +76,7 @@ def manageteam(Request):
 
     # return HttpResponse(leads_as_json, content_type='json')
     return render(Request, 'administrator/manageteam.html', context)
-    pass
+pass
 
 
 def returnTeamInfo(Request):
@@ -69,3 +89,24 @@ def returnTeamInfo(Request):
     #    response_data['agency'] = '';
     response_data['name'] = crisis_id;
     return JsonResponse(response_data)
+pass
+
+
+def listPatients(Request):
+    patients = Patient.objects.all()
+    context = {
+        'patients': patients,
+        'updateTime': datetime.now().time()
+    }
+    return render(Request, 'administrator/list_patient.html', context)
+pass
+
+def viewPatientProfile(Request, patient_id):
+    patient = Patient.objects.filter(nric=patient_id).get()
+    page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
+    context = {
+                'page_name': page_name,
+                'patient_id': patient_id,
+                'patient': patient,
+               }
+    return render(Request, 'administrator/view_patient.html', context)
