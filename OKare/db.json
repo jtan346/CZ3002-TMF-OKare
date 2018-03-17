@@ -1783,7 +1783,7 @@
         "user": [
             "admin1"
         ],
-        "date_of_birth": "1976-03-29T09:23:05.756Z",
+        "date_of_birth": "1991-03-29",
         "street": "STREET",
         "city": "Singapore",
         "state": "Singapore",
@@ -1800,7 +1800,7 @@
         "user": [
             "nurse3"
         ],
-        "date_of_birth": "1980-03-29T09:23:05.756Z",
+        "date_of_birth": "1991-03-29",
         "street": "THIS",
         "city": "Singapore",
         "state": "Singapore",
@@ -1817,7 +1817,7 @@
         "user": [
             "nurse4"
         ],
-        "date_of_birth": "1978-03-29T09:23:05.756Z",
+        "date_of_birth": "1991-03-29",
         "street": "SHIT",
         "city": "Singapore",
         "state": "Singapore",
@@ -1834,7 +1834,7 @@
         "user": [
             "superuser"
         ],
-        "date_of_birth": "1990-03-29T09:23:05.756Z",
+        "date_of_birth": "1991-03-29",
         "street": "UR MOM",
         "city": "Singapore",
         "state": "Singapore",
@@ -1851,7 +1851,7 @@
         "user": [
             "nurse1"
         ],
-        "date_of_birth": "1991-03-29T09:23:05.756Z",
+        "date_of_birth": "1991-03-29",
         "street": "DONT",
         "city": "Singapore",
         "state": "Singapore",
@@ -1868,7 +1868,7 @@
         "user": [
             "nurse2"
         ],
-        "date_of_birth": "1976-03-29T09:23:05.756Z",
+        "date_of_birth": "1991-03-29",
         "street": "CARE",
         "city": "Singapore",
         "state": "Singapore",
@@ -1885,7 +1885,7 @@
         "user": [
             "admin2"
         ],
-        "date_of_birth": "1991-03-29T09:23:05.756Z",
+        "date_of_birth": "1991-03-29",
         "street": "I",
         "city": "Singapore",
         "state": "Singapore",
@@ -1896,9 +1896,11 @@
     }
 },
 {
+
     "model": "OKareApp.patient",
     "pk": "S1231234G",
     "fields": {
+        "date_of_birth": "1991-03-29",
         "first_name": "SERIOUS",
         "last_name": "LEE",
         "ward": "1",
@@ -1910,6 +1912,7 @@
     "model": "OKareApp.patient",
     "pk": "S2956234G",
     "fields": {
+        "date_of_birth": "1991-03-29",
         "first_name": "HAPPY",
         "last_name": "LEE",
         "ward": "1",
@@ -1923,6 +1926,7 @@
     "fields": {
         "first_name": "QUIET",
         "last_name": "LEE",
+        "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 3,
         "team": 1
@@ -1934,6 +1938,7 @@
     "fields": {
         "first_name": "SAD",
         "last_name": "LEE",
+        "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 5,
         "team": 2
@@ -1945,6 +1950,7 @@
     "fields": {
         "first_name": "HEN",
         "last_name": "LEE",
+        "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 4,
         "team": 3
@@ -1956,6 +1962,7 @@
     "fields": {
         "first_name": "BENT",
         "last_name": "LEE",
+        "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 3,
         "team": 2
@@ -1967,6 +1974,7 @@
     "fields": {
         "first_name": "FREE",
         "last_name": "LEE",
+        "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 2,
         "team": 4
@@ -1978,6 +1986,7 @@
     "fields": {
         "first_name": "ANGRY",
         "last_name": "LEE",
+        "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 2,
         "team": 4
@@ -1989,6 +1998,7 @@
     "fields": {
         "first_name": "HANDSOME",
         "last_name": "LEE",
+        "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 3,
         "team": 2
@@ -2504,6 +2514,56 @@
         "nurse": "S9232342G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 10,
+    "fields": {
+        "task": 26,
+        "nurse": "S9765453G",
+        "duration": "00:01:04.000004",
+        "date": "2018-03-17"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 11,
+    "fields": {
+        "task": 25,
+        "nurse": "S9765453G",
+        "duration": "00:01:04.000004",
+        "date": "2018-03-17"
+    }
+},
+    {
+    "model": "OKareApp.completedtask",
+    "pk": 12,
+    "fields": {
+        "task": 23,
+        "nurse": "S9234232G",
+        "duration": "00:02:04.000004",
+        "date": "2018-03-17"
+    }
+},
+    {
+    "model": "OKareApp.completedtask",
+    "pk": 13,
+    "fields": {
+        "task": 22,
+        "nurse": "S9234232G",
+        "duration": "00:03:04.000004",
+        "date": "2018-03-17"
+    }
+},
+        {
+    "model": "OKareApp.completedtask",
+    "pk": 14,
+    "fields": {
+        "task": 21,
+        "nurse": "S9234232G",
+        "duration": "00:04:04.000004",
+        "date": "2018-03-17"
     }
 },
 {

@@ -13,8 +13,8 @@
 		graph1_avgTasksCompleted = [];
 		for(var i = graph1_raw.length-1; i >= 0; i--){
 		    graph1_labels.push(graph1_raw[i].date);
-		    graph1_tasksCompleted.push(graph1_raw[i].tasks_completed+1);
-		    graph1_avgTasksCompleted.push(graph1_raw[i].avg_tasks_completed+1);
+		    graph1_tasksCompleted.push(graph1_raw[i].tasks_completed);
+		    graph1_avgTasksCompleted.push(graph1_raw[i].avg_tasks_completed);
 		}
 
 		var data1 = {
