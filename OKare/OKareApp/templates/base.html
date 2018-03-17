@@ -10,15 +10,18 @@
             <meta name="description" content="">
             <meta name="author" content="">
         {% endblock meta %}
-    
+
         <title>OKare - {% block title %}{% endblock title %}</title>
 
         {% block vendor_stylesheets %}
-		{% endblock vendor_stylesheets %}
+        {% endblock vendor_stylesheets %}
 
 
         <!-- Bootstrap Core CSS -->
         <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/static/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
         <!-- MetisMenu CSS -->
         <link href="/static/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -37,26 +40,34 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-	    <!-- jQuery -->
-	    <script src="/static/vendor/jquery/jquery.min.js"></script>
-		<!--<script src="/static/js/jquery-1.12.4.js"></script>-->
+        <!-- jQuery -->
+        <script src="/static/vendor/jquery/jquery.min.js"></script>
+        <!--<script src="/static/js/jquery-1.12.4.js"></script>-->
 
-	    <!-- Bootstrap Core JavaScript -->
-	    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-	    <!-- Metis Menu Plugin JavaScript -->
-	    <script src="/static/vendor/metisMenu/metisMenu.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-	    <!-- Custom Theme JavaScript -->
-	    <script src="/static/dist/js/sb-admin-2.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="/static/vendor/metisMenu/metisMenu.min.js"></script>
 
-	    <script src="/static/js/OKare.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="/static/dist/js/sb-admin-2.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/static/js/moment.js"></script>
+
+        <!-- Bootstrap-Datepicker JavaScript -->
+        <script src="/static/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+
+
+        <script src="/static/js/OKare.js"></script>
 
         {% block page_stylesheets %}
         {% endblock page_stylesheets %}
 
-		{% block page_javascripts %}
-	    {% endblock page_javascripts %}
+        {% block page_javascripts %}
+        {% endblock page_javascripts %}
     {% endblock head %}
 </head>
 
@@ -83,30 +94,28 @@
             {% endblock sidebar %}
             <!-- /.navbar-static-side -->
         </nav>
-            <ol class="breadcrumb"    style="margin: 0 0 0 250px;">
-		        {% block breadcrumb %}
-		        {% endblock breadcrumb %}
-	        </ol>
+        <ol class="breadcrumb"    style="margin: 0 0 0 250px;">
+            {% block breadcrumb %}
+            {% endblock breadcrumb %}
+        </ol>
         <!-- Start of Page Container/Wrapper -->
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="padding-bottom: 35px;">
 
-	        <!-- Page Breadcrumb (Hierarchy) Here -->
-
-
-	        <!-- Page Content Here -->
+            <!-- Page Breadcrumb (Hierarchy) Here -->
+            <!-- Page Content Here -->
             {% block content %}
             {% endblock content %}
 
-			<!-- /#Page Footer -->
-		    <footer class="sticky-footer">
-		        <div class="container">
-		            <div class="text-center">
-		                <small>OKare 2017 - The Most Fantasic!</small>
-		            </div>
-		        </div>
-		    </footer>
         </div>
         <!-- /#page-wrapper -->
+        <!-- /#Page Footer -->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>OKare 2017 - The Most Fantasic!</small>
+                </div>
+            </div>
+        </footer>
 
     </div>
     <!-- /#wrapper -->

@@ -44,9 +44,11 @@
 
                     $("#taskList").slideToggle();
 
-                    if(prevBtnClick != id && prevBtnClick != -1 && panelOpen)
+                    if(prevBtnClick != id && prevBtnClick != -1 && panelOpen){
                         $("#taskList").slideToggle();
-                    $("#taskList").html(data);
+                    }
+
+                    $("#taskList").find("div").html(data);
                     prevBtnClick = id;
                 },
                 error: function(data){
@@ -75,6 +77,10 @@
             }
         }
 
+        $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+
     </script>
 {% endblock page_javascripts %}
 
@@ -87,43 +93,45 @@
 {% endblock topmenu %}
 
 {% block content %}
+    <div class="row">
+        <div id="patientPanel" class="panel panel-primary col-xs-12">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3" style="text-align: right;">
+                <div id="dataTables-example_filter" class="dataTables_filter">
+                    <label>
+                        Search:<input id="PatientSearchBar" type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example" onkeyup="search()">
+                    </label>
+                </div>
+            </div>
+            {% for patient in Patients %}
+                <div id="{{ patient.nric }}Panel" class="col-xs-6 col-sm-4 col-lg-1" style="margin:10px 10px">
+                    <button class="btn btn-primary btn-lg" id="{{ patient.nric }}btn" onclick="display('{{ patient.nric }}')">
+                        <div>
+                            <img src="/static/img/profile_picture.svg" height="100px">
+                        </div>
+                        <div id="#{{ patient.nric }}Panel" class="name" style="font-size:15px">
+                            <b>{{ patient.first_name}}<br>{{ patient.last_name}}</b>
+                        </div>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class = "row">
+        <div id="taskList" style="display:none">
+            <div class="panel panel-primary">
 
-    <div id="patientPanel" class="panel panel-default">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-3" style="text-align: right;">
-            <div id="dataTables-example_filter" class="dataTables_filter">
-                <label>
-                    Search:<input id="PatientSearchBar" type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example" onkeyup="search()">
-                </label>
             </div>
         </div>
-        {% for patient in Patients %}
-            <div id="{{ patient.nric }}Panel"style="float:left; margin:10px 10px">
-                <button class="btn btn-primary btn-lg" id="{{ patient.nric }}btn" onclick="display('{{ patient.nric }}')">
-                    <div>
-                        <img src="/static/img/profile_picture.svg" height="100px">
-                    </div>
-                    <div id="#{{ patient.nric }}Panel" class="name" style="font-size:15px">
-                        <b>{{ patient.first_name}}<br>{{ patient.last_name}}</b>
-                    </div>
-                </button>
-            </div>
-        {% endfor %}
-    </div>
-    <div id="taskList" class="col-md-6 panel panel-primary" >
-
-    </div>
-    <div id="taskEditNAdd" class="col-md-6 panel panel-primary">
-
     </div>
 
     <!-- ADD Confirmation Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -131,7 +139,31 @@
                     <h4 class="modal-title" id="myModalLabel">Add Task</h4>
                 </div>
                 <div class="modal-body">
-
+                    <form role="form">
+                        <div class="input-group col-md-6">
+                            <span class="input-group-addon">Title</span>
+                            <input id="nric" name="Nric" class="form-control" placeholder="" type="text" >
+                        </div>
+                        <div class="input-group col-md-6">
+                            <span class="input-group-addon">Recurring</span>
+                            <input id="mobileNo" name="Mobile no." class="form-control" placeholder="" type="text">
+                        </div>
+                        <div class="input-group col-md-6">
+                            <span class="input-group-addon">Start Time</span>
+                            <input id="dateOfBirth" name="Date of Birth" class="form-control" placeholder="" type="text" >
+                        </div>
+                        <div class="input-group col-md-6">
+                            <span class="input-group-addon">Duration</span>
+                            <input id="dateOfBirth" name="Date of Birth" class="form-control" placeholder="" type="text">
+                        </div>
+                        <div class='input-group date' id='datetimepicker1'>
+                            <span class="input-group-addon">Date</span>
+                            <input type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -140,4 +172,5 @@
             </div>
         </div>
     </div>
+
 {% endblock content %}
