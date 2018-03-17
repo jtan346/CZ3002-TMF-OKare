@@ -16,7 +16,7 @@ from django.core import serializers
 
 def listNurses(request):
     template = loader.get_template('nurse/list_nurse.html')
-    page_name = 'View Nurses'    #Fill in here
+    page_name = 'View Nurse'    #Fill in here
 
     nurses = Account.objects.filter(type="Nurse")
 
@@ -40,7 +40,7 @@ def viewNurseProfile(request, nurse_id):
 
 def listPatients(request):
     template = loader.get_template('nurse/list_patient.html')
-    page_name = 'View Patients'    #Fill in here
+    page_name = 'View Patient'    #Fill in here
 
     patients = Patient.objects.all()
 

@@ -29,7 +29,7 @@
 <!-- Add the page hierarchy here -->
 {% block breadcrumb %}
 	<li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
-    <li class="breadcrumb-item active"><a href='{% url 'view_team_tasklist' %}' >Team Tasks</a></li>
+    <li class="breadcrumb-item active">{{ page_name }}</li>
 {% endblock breadcrumb %}
 
 {% block content %}
