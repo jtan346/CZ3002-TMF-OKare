@@ -30,7 +30,7 @@
 <!-- Add the page hierarchy here -->
 {% block breadcrumb %}
 	<li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
-    <li class="breadcrumb-item"><a href="/Nurse/view_patient">{{ page_name }}</a></li>
+    <li class="breadcrumb-item"><a href="/Nurse/view_patient">View Patient</a></li>
     <li class="breadcrumb-item active">{{ patient_id }}: {{ patient.first_name|title }} {{ patient.last_name|title }}</li>
 {% endblock breadcrumb %}
 
@@ -57,7 +57,7 @@
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon">Last Name</span>
-                            <input id="lastName" name="Last Name" class="form-control" placeholder="" type="text" value="{{ patient.user.last_name }}" disabled>
+                            <input id="lastName" name="Last Name" class="form-control" placeholder="" type="text" value="{{ patient.last_name }}" disabled>
                         </div>
                     </div>
 
