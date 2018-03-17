@@ -35,11 +35,20 @@ function csrfSafeMethod(method) {
 }
 
 //changed this method
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        var csrfToken = getCookie('csrftoken');
-        xhr.setRequestHeader("X-CSRFToken", csrfToken);
-    }
+
+$(document).ready(function(){
+    PNotify.prototype.options.styling = "bootstrap3";
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            var csrfToken = getCookie('csrftoken');
+            xhr.setRequestHeader("X-CSRFToken", csrfToken);
+        }
+    });
+
 });
 
 
+
+
+
+// Bootstrap version 3

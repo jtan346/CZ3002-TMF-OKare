@@ -12,6 +12,12 @@
             padding-top: 30px;
             padding-bottom: 30px;
         }
+
+        hr{
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
         .field-name
         {
             color: #586069 !important
@@ -31,60 +37,46 @@
 
 {% block page_javascripts %}
     <script>
-        var editing = false;
+        $(document).ready(function(){
+            setInterval(poll_requests, 3000);
 
-        function enableEditing() {
-            editing = true;
-
-            $('input').each(function() {
-                if ($(this).attr('disabled')) {
-                    $(this).removeAttr('disabled');
-                }
-                else {
-                    $(this).attr({
-                        'disabled': 'disabled'
-                    });
-                }
-            });
-
-            var x = document.getElementById("SaveDiscard");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-
-            var y = document.getElementById("btnEdit");
-            if (y.style.display === "none") {
-                y.style.display = "block";
-            } else {
-                y.style.display = "none";
-            }
-        }
-
-        function discard() {
-            if (confirm('Are you sure you want to discard all changes?')) {
-                enableEditing();
-                window.location.reload();
-            } else {
-
-            }
-        }
-
-        $(document).ready(function() {
-            $('input').each(function() {
-                if ($(this).attr('disabled')) {
-                    $(this).removeAttr('disabled');
-                }
-                else {
-                    $(this).attr({
-                        'disabled': 'disabled'
-                    });
-                }
+            $("#btnCreateRequest").click(function(){
+               $.ajax({
+                    type:"POST",
+                    url:"/Nurse/add_help_request",
+                    success: function(data, status, jqxhr){
+                        console.log(data);
+                        console.log(status);
+                        new PNotify({
+                            title: 'Help Request Sent',
+                            text: 'A new help request for the current task has been sent',
+                            type: 'success'
+                        });
+                    },
+                    error: function(data, status, jqxhr)
+                    {
+                        console.log(data);
+                        console.log(status);
+                    }
+               });
             });
         });
+
+        function poll_requests(){
+            $.ajax({
+                type: "POST",
+                url:"/Nurse/list_help_request",
+                success:function(data, status, jqxhr)
+                {
+                    console.log(data);
+                },
+                error: function(data, status, jqxhr)
+                {
+                    console.log(data);
+                }
+            });
+        }
     </script>
-    <script src="/static/vendor/jquery/jquery.js" type="text/javascript"></script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
@@ -129,13 +121,35 @@
         <hr>
         <div class="row field-wrapper">
             <div class="col-sm-1 field-name">
+                <p>Start Time</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.start_time }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
                 <p>Duration</p>
             </div>
             <div class="col-sm-11">
                 <p>{{ assigned_task.task.duration }}</p>
             </div>
         </div>
-        <hr>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <button class="btn btn-warning btn-block btn-lg" id="btnCreateRequest">
+                    Request Help
+                </button>
+            </div>
+            <div class="col-sm-4 col-sm-offset-2">
+                <button class="btn btn-success btn-block btn-lg" id="btnComplete">
+                    Mark As Complete
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 <div class="panel panel-default">
@@ -145,21 +159,41 @@
         </h3>
     </div>
     <div class="panel-body">
-        <div class="row field-wrapper">
-            <div class="col-sm-1 field-name">
-                <p>First Name</p>
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>Patient Info</h4>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>First Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.first_name }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>Last Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.last_name }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>Date of Birth</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.date_of_birth }}</p>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-11">
-                <p>{{ assigned_task.task.patient.first_name }}</p>
-            </div>
-        </div>
-        <hr>
-        <div class="row field-wrapper">
-            <div class="col-sm-1 field-name">
-                <p>Last Name</p>
-            </div>
-            <div class="col-sm-11">
-                <p>{{ assigned_task.task.patient.last_name }}</p>
+            <div class="col-sm-6">
+                <h4>Daily Triage</h4>
+                <div>
+
+                </div>
             </div>
         </div>
     </div>

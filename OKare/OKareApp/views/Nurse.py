@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
@@ -339,3 +339,27 @@ def index(request):
     assigned_task = OngoingTask.objects.filter(nurse=Account.objects.get(nric="S9232342G")).first()
     context = { 'assigned_task':assigned_task }
     return render(request,'nurse/index.html', context)
+
+def add_help_request(request):
+    if request.method == "POST":
+        try:
+            account = get_object_or_404(Account, nric="S9232342G")
+            task = OngoingTask.objects.get(nurse=account).task
+            help_request = HelpRequest(requester=account, helper=None, task=task)
+            # help_request.save()
+        except(KeyError, Account.DoesNotExist):
+            return HttpResponse("Failure")
+        else:
+            return HttpResponse("Success")
+
+def list_help_request(request):
+    account = get_object_or_404(Account, nric="S9232342G")
+    help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account))
+    context = { 'help_requests' : help_requests }
+    return JsonResponse(context)
+
+def check_help_request(request):
+    pass
+
+
+
