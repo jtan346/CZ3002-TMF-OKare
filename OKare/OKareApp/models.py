@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Count, Avg, Sum
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone, date
 # Create your models here.
 
 class Teams(models.Model):
@@ -40,6 +40,12 @@ class Patient(models.Model):
     nric = models.CharField(max_length=9, primary_key=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
+    date_of_birth = models.DateTimeField(auto_now=True)
+    street = models.CharField(max_length=128, default='Street')
+    city = models.CharField(max_length=64, default='City')
+    state = models.CharField(max_length=32, default='State')
+    zip_code = models.CharField(max_length=10, default='Zip Code')
+    phoneNo = models.DecimalField(null=True, max_digits=8, decimal_places=0)
     ward = models.CharField(max_length=15)
     bed = models.IntegerField()
     team = models.ForeignKey(Teams, on_delete=None)
@@ -101,6 +107,17 @@ class Task(models.Model):
 class OngoingTask(models.Model):
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     nurse = models.OneToOneField(Account, limit_choices_to={'type': 'Nurse'}, on_delete=models.CASCADE)
+
+    def timefrom(self):
+        now = datetime.utcnow().replace(tzinfo=timezone.utc)
+        difference = (now - datetime.combine(date.today(),self.task.start_time).replace(tzinfo=timezone.utc)).total_seconds()
+        #return hours
+        if int(difference/3600) >= 1:
+            return '{} hours ago...'.format(int(difference / 3600))
+        elif int(difference/60) >= 1:
+            return '{} minutes ago...'.format(int(difference / 60))
+        else:
+            return '{} seconds ago...'.format(int (difference))
 
 
 class DailyTriage(models.Model):
