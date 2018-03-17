@@ -54,9 +54,8 @@
 
         {% block page_stylesheets %}
         {% endblock page_stylesheets %}
-
-		{% block page_javascripts %}
-	    {% endblock page_javascripts %}
+	    {% block page_javascripts %}
+		{% endblock page_javascripts %}
     {% endblock head %}
 </head>
 
@@ -83,7 +82,7 @@
             {% endblock sidebar %}
             <!-- /.navbar-static-side -->
         </nav>
-            <ol class="breadcrumb"    style="margin: 0 0 0 250px;">
+            <ol class="breadcrumb" style="margin: 0 0 0 250px;">
 		        {% block breadcrumb %}
 		        {% endblock breadcrumb %}
 	        </ol>
@@ -112,5 +111,8 @@
     <!-- /#wrapper -->
 {% endblock body %}
 </body>
+<footer>
+
+</footer>
 
 </html>

@@ -7,6 +7,25 @@
         .input-group-addon {
             min-width: 100px;
         }
+        #page-wrapper
+        {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+        .field-name
+        {
+            color: #586069 !important
+        }
+
+        .field-value
+        {
+
+        }
+
+        .field-wrapper:after
+        {
+
+        }
     </style>
 {% endblock page_stylesheets %}
 
@@ -82,5 +101,69 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-   Default page here. SC!
+
+{% if assigned_task == none %}
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            No Task Currently Assigned
+        </h3>
+    </div>
+</div>
+{% else %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Task Title: {{ assigned_task.task.title }}
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>Description</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.title }} </p>
+            </div>
+        </div>
+        <hr>
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>Duration</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.duration }}</p>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Patient Details
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>First Name</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.patient.first_name }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>Last Name</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.patient.last_name }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock content %}
+
