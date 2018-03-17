@@ -78,8 +78,14 @@
         }
 
         $(function () {
-                $('#datetimepicker1').datetimepicker();
+            $('#datetimepicker1').datetimepicker({
+               format:'L'
             });
+        });
+
+        function validateAddTask(){
+
+        }
 
     </script>
 {% endblock page_javascripts %}
@@ -140,25 +146,30 @@
                 </div>
                 <div class="modal-body">
                     <form role="form">
-                        <div class="input-group col-md-6">
+                        <div class="input-group">
                             <span class="input-group-addon">Title</span>
-                            <input id="nric" name="Nric" class="form-control" placeholder="" type="text" >
+                            <input id="title" name="Title" class="form-control" placeholder="" type="text" >
                         </div>
-                        <div class="input-group col-md-6">
+                        <div class="input-group">
                             <span class="input-group-addon">Recurring</span>
-                            <input id="mobileNo" name="Mobile no." class="form-control" placeholder="" type="text">
+                            <select id="recurType" name="RecurType" class="form-control">
+                                <option value="">Never</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                            </select>
                         </div>
-                        <div class="input-group col-md-6">
+                        <div class="input-group">
                             <span class="input-group-addon">Start Time</span>
-                            <input id="dateOfBirth" name="Date of Birth" class="form-control" placeholder="" type="text" >
+                            <input id="start_time" name="Start_Time" class="form-control" placeholder="" type="text" >
                         </div>
-                        <div class="input-group col-md-6">
+                        <div class="input-group">
                             <span class="input-group-addon">Duration</span>
-                            <input id="dateOfBirth" name="Date of Birth" class="form-control" placeholder="" type="text">
+                            <input id="duration" name="duration" class="form-control" placeholder="" type="text">
                         </div>
                         <div class='input-group date' id='datetimepicker1'>
                             <span class="input-group-addon">Date</span>
-                            <input type='text' class="form-control" />
+                            <input id="date" name="Date" type='text' class="form-control" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
