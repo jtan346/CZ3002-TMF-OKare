@@ -19,4 +19,6 @@ urlpatterns = [
     #Ben/Haode - Generate Productivity Report
     url(r'productivity_report/(?P<nurse_id>[\w-]+)', Nurse.generateProductivityReport, name="generate_productivity_report"),
 
+    url(r'^update_patient/$', Nurse.updatePatientDetail, name="update_patient_detail"),
+    url(r'^update_nurse/$', Nurse.updateNurseDetail, name="update_nurse_detail"),
 ]

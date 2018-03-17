@@ -65,6 +65,82 @@ def viewPatientProfile(request, patient_id):
                }
     return HttpResponse(template.render(context, request))
 
+def updatePatientDetail(request):
+    if request.POST:
+        try:
+            print(request.POST)
+            nric = request.POST['nric']
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            # date_of_birth = request.POST['date_of_birth']
+            ward = request.POST['ward']
+            bed = request.POST['bed']
+            street = request.POST['street']
+            city = request.POST['city']
+            state = request.POST['state']
+            zip_code = request.POST['zip_code']
+            phone_no = request.POST['phone_no']
+
+            patient = Patient.objects.get(nric=nric)
+
+            patient.nric = nric
+            patient.first_name = first_name
+            patient.last_name = last_name
+            # patient.date_of_birth = date_of_birth
+            patient.ward = ward
+            patient.bed = bed
+            patient.street = street
+            patient.city = city
+            patient.state = state
+            patient.zip_code = zip_code
+            patient.phoneNo = phone_no
+
+            patient.save()
+
+        except(KeyError, Patient.DoesNotExist):
+            return 'unsuccessful'
+
+        else:
+            return 'successful'
+
+def updateNurseDetail(request):
+    if request.method=="POST":
+        try:
+            print(request.POST)
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+
+            nric = request.POST['nric']
+            # date_of_birth = request.POST['date_of_birth']
+            street = request.POST['street']
+            city = request.POST['city']
+            state = request.POST['state']
+            zip_code = request.POST['zip_code']
+            phone_no = request.POST['phone_no']
+
+            print("WE TESTING")
+            nurse = Account.objects.get(nric=nric)
+            print("WE TRIED")
+            user = nurse.user
+            user.first_name = first_name
+            user.last_name = last_name
+
+            nurse.nric = nric
+            # nurse.date_of_birth = date_of_birth
+            nurse.street = street
+            nurse.city = city
+            nurse.state = state
+            nurse.zip_code = zip_code
+            nurse.phoneNo = phone_no
+
+            nurse.save()
+            user.save()
+
+        except(KeyError, Account.DoesNotExist):
+            return HttpResponse('unsuccessful')
+
+        else:
+            return HttpResponse('successful')
 
 def generateProductivityReport(request, nurse_id):
     template = loader.get_template('nurse/productivity_report.html')
