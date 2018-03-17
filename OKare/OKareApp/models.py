@@ -151,5 +151,5 @@ class CompletedTask(models.Model):
 class HelpRequest(models.Model):
     # '+' prevents the Account from being able to access request and helper
     requester = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
-    helper = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, related_name='+', on_delete= models.CASCADE)
+    helper = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, related_name='+', on_delete= models.CASCADE, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
