@@ -5,7 +5,7 @@ urlpatterns = [
     #SC/Joey - Nurse Homepage
     url(r'^$', Nurse.index, name="Nurse_Index"),
 
-    #SC/Joey - Nurse's Team Tasklist
+    #SC/Joey - N urse's Team Tasklist
     url(r'^view_team_tasklist/', Nurse.TeamTaskList.as_view(),name="view_team_tasklist"),
 
     #Ben/HaoDe - List/View Nurse Profiles

@@ -19,5 +19,6 @@ from django.conf.urls import url,include
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^Nurse/',include('OKareApp.urls.nurse')),
-    url(r'^Admin/',include('OKareApp.urls.admin'))
+    url(r'^Admin/',include('OKareApp.urls.admin')),
+    url(r'^account/', include('OKareApp.urls.login'))
 ]
