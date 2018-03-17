@@ -58,13 +58,12 @@ def managetask(Request):
     return render(Request, 'administrator/manage_task.html', context)
 
 def getPatientTasks(Request):
-    template = loader.get_template('administrator/ui_components/task_panel.html')
     id = Request.POST.get('id')
     context = {
         "tasks":Task.objects.filter(patient_id = id),
         "patient": Patient.objects.get(nric = id)
     }
-    return HttpResponse(template.render(context, Request));
+    return render(Request, 'administrator/ui_components/task_panel.html', context)
     pass
 
 
