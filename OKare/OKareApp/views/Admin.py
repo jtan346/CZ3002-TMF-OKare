@@ -109,3 +109,37 @@ def viewPatientProfile(Request, patient_id):
                 'patient': patient,
                }
     return render(Request, 'administrator/view_patient.html', context)
+
+
+def addTask(Request):
+    try:
+        nric = Request.POST.get('Nric');
+        title = Request.POST.get('Title');
+        desctiption = Request.POST.get('Description');
+        category = Request.POST.get('Category');
+        recurType = Request.POST.get('RecurType');
+        start_Time = Request.POST.get('Start_Time');
+        hours = Request.POST.get('Hours');
+        min = Request.POST.get('Minutes');
+        date = Request.POST.get('Date');
+        day = Request.POST.get('Day');
+        duration = timedelta(hours=int(hours),minutes=int(min))
+        patient = Patient.objects.get(nric=nric);
+    except(KeyError):
+        return JsonResponse({"success": False, "error": "Error Occurred Problems check key names!"})
+    else:
+        task = Task()
+        task.patient = patient
+        task.title = title
+        task.description = desctiption
+        task.category = category
+        if recurType != '':
+            task.recur_type = recurType
+        task.start_time = datetime.strptime(start_Time, '%H:%M %p')
+        task.date = datetime.strptime(date, '%d/%m/%Y')
+        print(day)
+        task.day = day
+        task.duration = duration
+
+        task.save()
+        return JsonResponse({"success": True})
