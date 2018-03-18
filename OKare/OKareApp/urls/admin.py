@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^view_patient/(?P<patient_id>[\w-]+)$', Admin.viewPatientProfile, name="view_patient"),
     url(r'^manage_task/', Admin.managetask, name="manage_tasks"),
     url(r'^get_patient_tasks/', Admin.getPatientTasks, name="Get_Patient_Tasks"),
+    url(r'^addTask/', Admin.addTask, name="Add_Task"),
     url(r'^get_category_pie_data/', Admin.getCatData, name="Get_Cat_Data"),
     url(r'^get_manage_team_info/', ManageTeam.returnteaminfo, name="ManageTeam_returnteaminfo")
 ]

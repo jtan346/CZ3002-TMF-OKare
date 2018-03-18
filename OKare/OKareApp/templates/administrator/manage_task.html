@@ -4,17 +4,12 @@
     <style type="text/css">
 
     </style>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/dist/css/admin.css" rel="stylesheet">
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
     <script type="text/javascript">
-        var link = document.createElement('link');
-        link.href = "/static/dist/css/admin.css";
-        link.rel = "stylesheet";
-        document.getElementsByTagName("head")[0].appendChild(link)
-
-
-
         function categoryPiechartInit(){
             $.ajax({
                 type:"GET",
@@ -77,15 +72,82 @@
             }
         }
 
-        $(function () {
-            $('#datetimepicker1').datetimepicker({
-               format:'L'
+        function modalSetup() {
+            $('#addTimeInput').datetimepicker({
+                format:'LT'
             });
-        });
 
-        function validateAddTask(){
+            $('#addDateInput').datetimepicker({
+                format:'DD/MM/YYYY',
+                onChange: setDay("addDay")
+            });
+
+            $(".modal").on("hide.bs.modal", function(e) {
+                console.log("hidden");
+                $(".modal-body").find("input").val("");
+            });
+            $('#addDateInput').on('dp.change', function(e){ console.log(e.date);setDay('addDay', e.date); })
+
+            //Used to Control the Day (changes Based on the date Input
+            function setDay(id, date){
+                var day = moment(date);
+                $('#'+id).val(day.format("dddd"));
+            }
+        }
+
+        function validateAdd(){
+            console.log('validateAdd');
+            var pass = true;
+            //Each can only be exited when return false;
+            $('#addTaskModal').find('.form-control').each(function(){
+                if(this.value.length == 0 && this.id != 'addRecurType'){
+                    pass = false;
+                    new PNotify({
+                        type: 'error',
+                        title: 'Error Adding!',
+                        text: 'Please Ensure that all fields are filled in!'
+                    });
+                    return pass;
+                }
+            });
+
+            return pass;
+        }
+
+        function addTask(){
+            if(validateAdd()){
+                console.log('Add Task');
+                var form = document.getElementById('addForm');
+                var data = new FormData(form);
+                $.ajax({
+                    type:"POST",
+                    url: "/Admin/addTask/",
+                    data:$('#addForm').serialize(),
+                    success: function (data) {
+                        console.log('sucess');
+                        new PNotify({
+                        type: 'success',
+                        title: 'Task Added Sucessfully!',
+                        });
+                    },
+                    error: function(error){
+                        console.log('fail');
+                        new PNotify({
+                        type: 'error',
+                        title: 'Error Adding!',
+                        text: error
+                        });
+                    }
+                });
+
+                $('#addTaskModal').modal('hide');
+
+            }
 
         }
+
+
+
 
     </script>
 {% endblock page_javascripts %}
@@ -136,52 +198,6 @@
         </div>
     </div>
 
-    <!-- ADD Confirmation Modal -->
-    <div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Add Task</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form">
-                        <div class="input-group">
-                            <span class="input-group-addon">Title</span>
-                            <input id="title" name="Title" class="form-control" placeholder="" type="text" >
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Recurring</span>
-                            <select id="recurType" name="RecurType" class="form-control">
-                                <option value="">Never</option>
-                                <option value="Daily">Daily</option>
-                                <option value="Weekly">Weekly</option>
-                                <option value="Monthly">Monthly</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Start Time</span>
-                            <input id="start_time" name="Start_Time" class="form-control" placeholder="" type="text" >
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon">Duration</span>
-                            <input id="duration" name="duration" class="form-control" placeholder="" type="text">
-                        </div>
-                        <div class='input-group date' id='datetimepicker1'>
-                            <span class="input-group-addon">Date</span>
-                            <input id="date" name="Date" type='text' class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 {% endblock content %}
