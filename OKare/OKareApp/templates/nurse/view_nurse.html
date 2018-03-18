@@ -37,6 +37,10 @@
                 }
             });
 
+            $('#nric').attr({
+                'disabled': 'disabled'
+            });
+
             var x = document.getElementById("SaveDiscard");
             if (x.style.display === "none") {
                 x.style.display = "block";
@@ -75,7 +79,6 @@
             };
 
             $('#alert').hide(0);
-            $('#input').hide(500);
 
             $.ajax({
                 url: '/Nurse/update_nurse/',
@@ -83,7 +86,6 @@
                 data: data,
                 success: function (msg) {
                     if (msg=="successful") {
-                        $('#input').show(500);
                         $('#alert').show(500);
                     }
                     else {

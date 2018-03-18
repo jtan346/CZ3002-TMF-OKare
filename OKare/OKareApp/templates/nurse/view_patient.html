@@ -43,6 +43,10 @@
                 }
             });
 
+            $('#nric_displayed').attr({
+                'disabled': 'disabled'
+            });
+
             var x = document.getElementById("SaveDiscard");
             if (x.style.display === "none") {
                 x.style.display = "block";
@@ -83,7 +87,6 @@
             };
 
             $('#alert').hide(0);
-            $('#input').hide(500);
 
             $.ajax({
                 url: '/Nurse/update_patient/',
@@ -91,7 +94,6 @@
                 data: data,
                 success: function (msg) {
                     if (msg=="successful") {
-                        $('#input').show(500);
                         $('#alert').show(500);
                     }
                     else {
@@ -255,7 +257,7 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">NRIC</span>
-                                <input id="nric" name="nric" class="form-control" placeholder="" type="text" value="{{ patient.nric }}" disabled>
+                                <input id="nric_displayed" name="nric" class="form-control" placeholder="" type="text" value="{{ patient.nric }}" disabled>
                             </div>
                             <br>
                             <div class="input-group">
