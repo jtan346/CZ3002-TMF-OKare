@@ -46,9 +46,9 @@ class Patient(models.Model):
     state = models.CharField(max_length=32, default='State')
     zip_code = models.CharField(max_length=10, default='Zip Code')
     phoneNo = models.DecimalField(null=True, max_digits=8, decimal_places=0)
-    ward = models.CharField(max_length=15)
-    bed = models.IntegerField()
-    team = models.ForeignKey(Teams, on_delete=None)
+    ward = models.CharField(null=True, max_length=15)
+    bed = models.IntegerField(null=True)
+    team = models.ForeignKey(Teams, on_delete=None, null=True)
 
     def name(self):
         return self.first_name + " " + self.last_name
