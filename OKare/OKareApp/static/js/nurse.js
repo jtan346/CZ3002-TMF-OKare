@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('#prod_task_table').DataTable( {
-        "paging":   true,
+        "paging":   false,
         "ordering": true,
         "info":     true
     } );

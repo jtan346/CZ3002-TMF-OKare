@@ -1902,6 +1902,7 @@
     "fields": {
         "date_of_birth": "1991-03-29",
         "first_name": "SERIOUS",
+        "phoneNo": "89562354",
         "last_name": "LEE",
         "ward": "1",
         "bed": 2,
@@ -1915,6 +1916,7 @@
         "date_of_birth": "1991-03-29",
         "first_name": "HAPPY",
         "last_name": "LEE",
+        "phoneNo": "89562354",
         "ward": "1",
         "bed": 2,
         "team": 3
@@ -1926,6 +1928,7 @@
     "fields": {
         "first_name": "QUIET",
         "last_name": "LEE",
+        "phoneNo": "89562354",
         "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 3,
@@ -1938,6 +1941,7 @@
     "fields": {
         "first_name": "SAD",
         "last_name": "LEE",
+        "phoneNo": "89562354",
         "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 5,
@@ -1948,9 +1952,10 @@
     "model": "OKareApp.patient",
     "pk": "S5562334G",
     "fields": {
-        "first_name": "HEN",
+        "first_name": "LOL",
         "last_name": "LEE",
         "date_of_birth": "1991-03-29",
+        "phoneNo": "89562354",
         "ward": "1",
         "bed": 4,
         "team": 3
@@ -1962,6 +1967,7 @@
     "fields": {
         "first_name": "BENT",
         "last_name": "LEE",
+        "phoneNo": "89562354",
         "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 3,
@@ -1974,6 +1980,7 @@
     "fields": {
         "first_name": "FREE",
         "last_name": "LEE",
+        "phoneNo": "89562354",
         "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 2,
@@ -1986,6 +1993,7 @@
     "fields": {
         "first_name": "ANGRY",
         "last_name": "LEE",
+        "phoneNo": "89562354",
         "date_of_birth": "1991-03-29",
         "ward": "1",
         "bed": 2,
@@ -1997,6 +2005,7 @@
     "pk": "S9678234G",
     "fields": {
         "first_name": "HANDSOME",
+        "phoneNo": "89562354",
         "last_name": "LEE",
         "date_of_birth": "1991-03-29",
         "ward": "1",
