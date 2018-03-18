@@ -7,15 +7,23 @@ urlpatterns = [
     #SC/Joey - Request's Help Request Creation
     url(r'^add_help_request$', Nurse.add_help_request, name="add_help_request"),
     # SC/Joey - Request's Help Request Checking
-    url(r'^get_help_request$', Nurse.add_help_request, name="get_help_request"),
-
+    url(r'^check_help_request$', Nurse.check_help_request, name="get_help_request"),
     # SC/Joey - Accepter's Help Request Checking
-    url(r'^list_help_request$', Nurse.list_help_request, name="list_help_request"),
-    # SC/Joey - Accepter's Help Request Acception
-    url(r'^accept_help_request$', Nurse.add_help_request, name="list_help_request"),
+    url(r'^unread_help_request$', Nurse.list_unread_help_request, name="unread_help_request"),
 
-    #SC/Joey - N urse's Team Tasklist
-    url(r'^view_team_tasklist/', Nurse.TeamTaskList.as_view(),name="view_team_tasklist"),
+    # SC/Joey - Accepter's Help Request Listing
+    url(r'^list_help_request$', Nurse.list_allowed_help_requests, name="list_help_request"),
+    # SC/Joey - Accepter's Help Request Reloading
+    url(r'^reload_help_request$', Nurse.reload_allowed_help_requests, name="reload_help_request"),
+
+    # SC/Joey - Accepter's Help Request Accepting
+    url(r'^accept_help_request$', Nurse.accept_help_request, name="accept_help_request"),
+
+    #SC/Joey - Nurse's Team Tasklist
+    url(r'^view_team_tasklist/', Nurse.view_team_tasklist,name="view_team_tasklist"),
+
+    # SC/Joey - Nurse's Complete Task
+    url(r'^complete_task/', Nurse.complete_task, name="complete_task"),
 
     #Ben/HaoDe - List/View Nurse Profiles
     url(r'^view_nurse/$', Nurse.listNurses, name="list_nurse"),

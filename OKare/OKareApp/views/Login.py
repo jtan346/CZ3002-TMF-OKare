@@ -18,7 +18,7 @@ def login_view(request):
                     elif user.account.type=="Admin":
                         return HttpResponseRedirect("/Admin")
                 else:
-                    messages.error(request, "Invalid")
+                    messages.error(request, "Invalid Credentials")
                 return render(request, "login.html", {})
             else:
                 return render(request, "login.html", {})
@@ -28,5 +28,5 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect("")
+    return HttpResponseRedirect("/login")
 

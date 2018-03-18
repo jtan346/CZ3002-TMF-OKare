@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock title %}
+
+{% block page_stylesheets %}
+	<link href="/static/css/bootstrap-datatables.css" rel="stylesheet">
+    <style>
+        .panel
+        {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock page_stylesheets %}
+
+{% block page_javascripts %}
+<script src="/static/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/dataTables.bootstrap.min.js"></script>
+<script src="/static/js/nurse.js"></script>
+<script type="text/javascript">
+
+    function reload_help_request_table()
+    {
+        console.log("reloading");
+        $.ajax({
+            type: "POST",
+            url:"/Nurse/reload_help_request",
+            success:function(data, status, jqxhr)
+            {
+                $("#page-wrapper").html(data);
+                $("#table-team-allowed").DataTable();
+                $("#table-team-created").DataTable();
+            }
+        });
+    }
+    $(document).ready(function(){
+        $("#table-team-allowed").DataTable();
+        $("#table-team-created").DataTable();
+        setInterval(reload_help_request_table,15000);
+    });
+
+</script>
+{% endblock page_javascripts %}
+
+{% block sidebar %}
+    {% include 'nurse/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+    {% include 'nurse/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active"><a href="/Nurse">Home</a></li>
+    <li class="breadcrumb-item active"><a href="/list_help_requests">Help Requests</a></li>
+{% endblock breadcrumb %}
+{% block content %}
+    {% include 'nurse/ui_components/help_requests.html' %}
+{% endblock content %}

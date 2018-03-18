@@ -1,0 +1,142 @@
+{% if assigned_task == none %}
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            No Task Currently Assigned
+        </h3>
+    </div>
+</div>
+{% else %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Task Title: {{ assigned_task.task.title }}
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>Description</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.title }} </p>
+            </div>
+        </div>
+        <hr>
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>Start Time</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.start_time }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>Duration</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.duration }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <button class="btn btn-warning btn-block btn-lg" id="btnCreateRequest">
+                    Request Help
+                </button>
+            </div>
+            <div class="col-sm-4 col-sm-offset-2">
+                <button class="btn btn-success btn-block btn-lg" id="btnCompleteTask">
+                    Mark As Complete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Patient Details
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Patient Info</h4>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>First Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.first_name }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>Last Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.last_name }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>Date of Birth</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.date_of_birth }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>Ward Number</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.ward }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>Bed Number</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.bed }} </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Triage Information
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+	            <div class="row" style="height:300px; margin-bottom:15px;">
+				<div class="col-md-4" style="height:100%;">
+				    <canvas id="triage1" style="height:100%; width:100%;"></canvas>
+				</div>
+				 <div class="col-md-4" style="height:100%; border-left: 1px; border-right: 1px; border-top:0px; border-bottom: 0px; border-style:solid;">
+					 <canvas id="triage2" style="height:100%; width:100%;"></canvas>
+				</div>
+				 <div class="col-md-4" style="height:100%;">
+					 <canvas id="triage3" style="height:100%; width:100%;"></canvas>
+				</div>
+			</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

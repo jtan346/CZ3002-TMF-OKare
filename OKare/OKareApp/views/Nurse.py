@@ -388,61 +388,152 @@ def generateProductivityReport(request, nurse_id):
 
 def view_team_tasklist(request):
     #team is from nurse's team, retrieved from user, awaiting completion of login
-    team = 1
-    team_tasks = Task.object.fliter(patient__team__in=team)
-    context = { "team_tasks": team_tasks }
+    team_tasks = Task.objects.filter(start_time__gte=datetime.datetime.now(), patient__team=request.user.account.team).exclude(~Q(date__day=datetime.datetime.now().day), Q(recur_type='Monthly') | Q(recur_type__isnull=True))
+    context = { "team_tasks": team_tasks,
+                'name': request.user.first_name,
+                'usertype': request.user.account.type
+                }
     return render(request,'nurse/team_tasklist.html',context)
 
-#ListView
-class TeamTaskList(ListView):
-    context_object_name="team_tasks"
-    template_name = 'nurse/team_tasklist.html'
-    #model=
-    #queryset=
 
-    def get_queryset(self):
-        today = datetime.now().date()
-        #first, filter start_time greater or equal to the current time - gets all tasks whose start time
-        #then , exclude those task date's day is not before today's day and
-        return Task.objects.filter(start_time__gte=datetime.now(), patient__team__in=[1]).exclude(~Q(date__day=datetime.now().day), Q(recur_type='Monthly') | Q(recur_type__isnull=True))
-
-        #return Task.objects.filter(start_time__gte=datetime.now(), patient__team__in=[1]).exclude(recur_type="Monthly",date__day__lt=today.day,date__day__gt=today.day).exclude(recur_type="Weekly", day__iexact=today.weekday()).exclude(id__in=OngoingTask.objects.all().values_list('task__id', flat=True))
-#       user = self.request.
-#       return Tasks.object.filter(patient__team__in=self.)
 
 def index(request):
-    #assigned_task = OngoingTask.objects.filter(nurse=request)[0]
-    assigned_task = OngoingTask.objects.filter(nurse=Account.objects.get(nric="S9232342G")).first()
-    curUser = request.user
-    curAccount = Account.objects.filter(user_id=curUser.id).get()
+    assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
     context = { 'assigned_task':assigned_task,
-                'name': curUser.first_name,
-                'usertype': curAccount.type}
+                'name': request.user.first_name,
+                'usertype': request.user.account.type}
+
     return render(request,'nurse/index.html', context)
+
+def current_task(request):
+    assigned_task = OngoingTask.objects.filter(nurse=request.user).first()
+    context = { 'assigned_task':assigned_task }
+    return render(request,'nurse/ui_components/current_task.html', context)
+
+
+def complete_task(request):
+    # assigned_task = OngoingTask.objects.filter(nurse=request)[0]
+    if request.method =="POST":
+#        try:
+            assigned_task = OngoingTask.objects.filter(nurse=Account.objects.get(nric="S9232342G")).first()
+            duration = datetime.datetime.now() - assigned_task.assigned_datetime
+            completed_task = CompletedTask(task=assigned_task.task, date=assigned_task.task.date,
+                                           nurse=assigned_task.nurse, duration=duration)
+            completed_task.save()
+            assigned_task.delete()
+            #assignTask()
+ #       except(Exception):
+            return HttpResponse("Failure")
+  #      else:
+   #         return HttpResponse("Success")
+
 
 def add_help_request(request):
     if request.method == "POST":
         try:
-            account = get_object_or_404(Account, nric="S9232342G")
-            task = OngoingTask.objects.get(nurse=account).task
-            help_request = HelpRequest(requester=account, helper=None, task=task)
-            # help_request.save()
+            account = request.user.account
+            current_task = OngoingTask.objects.get(nurse=account)
+            help_request = HelpRequest(requester=account, helper=None, task=current_task.task, ongoing_task=current_task)
+            help_request.save()
         except(KeyError, Account.DoesNotExist):
             return HttpResponse("Failure")
         else:
             return HttpResponse("Success")
 
-def list_help_request(request):
-    account = get_object_or_404(Account, nric="S9232342G")
-    help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account))
+#list help requests lists all the help requests for a person to accept
+def list_unread_help_request(request):
+    account = request.user.account
+    help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True).exclude(
+        id__in=Notification.objects.filter(reader=account, read_type="Help Requested").values('help_request'))
+
+    print(help_requests)
+    for help_request in help_requests:
+        i_read_this = Notification(reader=account, help_request=help_request, read_type="Help Requested")
+        i_read_this.save()
+
     context = { 'help_requests' : help_requests }
-    return JsonResponse(context)
+    # this gives you a list of dicts
+    raw_data = serializers.serialize('python', help_requests)
+    # now extract the inner `fields` dicts
+    actual_data = [d['fields'] for d in raw_data]
 
+    for request in actual_data:
+        nric = request['requester']
+        request['requester'] = Account.objects.get(nric=nric).fullname()
+        del request['time_created']
+
+    # and now dump to JSON
+    return JsonResponse(actual_data,safe=False)
+
+def list_allowed_help_requests(request):
+    account = request.user.account
+    allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True).\
+        exclude(helper=account)
+
+    try:
+        ongoing_task = OngoingTask.objects.get(nurse=account)
+        created_help_requests = HelpRequest.objects.filter(requester=account, ongoing_task=ongoing_task)
+    except (OngoingTask.DoesNotExist):
+        created_help_requests = None
+
+    context = {
+        'created_help_requests' : created_help_requests,
+        'allowed_help_requests' : allowed_help_requests
+    }
+
+    return render(request, 'nurse/help_requests.html', context)
+
+def reload_allowed_help_requests(request):
+    account = request.user.account
+    allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True).\
+        exclude(ongoing_task__in=HelpRequest.objects.filter(helper=account).values('ongoing_task'))
+
+    try:
+        ongoing_task = OngoingTask.objects.get(nurse=account)
+        created_help_requests = HelpRequest.objects.filter(requester=account, ongoing_task=ongoing_task)
+    except (OngoingTask.DoesNotExist):
+        created_help_requests = None
+
+    context = {
+        'created_help_requests' : created_help_requests,
+        'allowed_help_requests' : allowed_help_requests
+    }
+
+    return render(request, 'nurse/ui_components/help_requests.html', context)
+
+#check help request returns a list of help requests initiated by the account to see if they are acepted
 def check_help_request(request):
-    pass
+    account = request.user.account
+    try:
+        ongoing_task = OngoingTask.objects.get(nurse=account)
+        help_requests = HelpRequest.objects.filter(requester=account, acknowledgement=False, helper__isnull=False, ongoing_task=ongoing_task).\
+            exclude(id__in=Notification.objects.filter(reader=account, read_type="Help Accepted").values('help_request'))
 
+        for help_request in help_requests:
+            i_read_this = Notification(reader=account, help_request=help_request, read_type="Help Accepted")
+            i_read_this.save()
 
+        # .update(acknowledgement=True)
+        # this gives you a list of dicts
+        raw_data = serializers.serialize('python', help_requests)
+        # now extract the inner `fields` dicts
+        actual_data = [d['fields'] for d in raw_data]
 
+        for request in actual_data:
+            nric = request['helper']
+            request['helper'] = Account.objects.get(nric=nric).fullname()
+            del request['time_created']
+    except(Exception):
+        actual_data = {}
 
+    # and now dump to JSON
+    return JsonResponse(actual_data,safe=False)
 
+def accept_help_request(request):
+    account = request.user.account
+    help_request_id = request.POST.get("id")
+    help_request = HelpRequest.objects.get(id=help_request_id)
+    help_request.helper = account
+    help_request.save()
+    return HttpResponse("OKAY")
 

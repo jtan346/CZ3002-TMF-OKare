@@ -164,16 +164,28 @@ class HelpRequest(models.Model):
     requester = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
     helper = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, related_name='+', on_delete= models.CASCADE, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    time_created =models.DateTimeField(auto_now_add=True)
     ongoing_task = models.ForeignKey(OngoingTask, on_delete=models.SET_NULL, null=True)
     acknowledgement = models.BooleanField(default=False)
+
+    def status(self):
+        if(self.helper == None):
+            return None
+        else:
+            return self.helper.fullname()
+
     def __str__(self):
         return "Task: {} | Requester: {} | Helper: {} | Ongoing Tasks: {}".format(self.task.title, self.requester, self.helper, self.ongoing_task)
 
 
-class HelpRequestNotification(models.Model):
-    read = models.BooleanField()
+class Notification(models.Model):
+    type = (
+        ("Help Requested", "Help Request Read"),
+        ("Help Accepted",  "Help Accepted")
+    )
+    read_type = models.CharField(choices=type, max_length=100)
     reader = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
-    help_request = models.OneToOneField(HelpRequest, on_delete=models.CASCADE)
+    help_request = models.ForeignKey(HelpRequest, on_delete=models.CASCADE)
 
     def __str__(self):
         return "reader: {} for help request {}".format(self.reader.fullname(), self.help_request.id)

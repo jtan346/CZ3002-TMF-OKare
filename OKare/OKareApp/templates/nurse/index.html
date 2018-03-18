@@ -36,13 +36,18 @@
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
-		<script src="/static/js/Chart.bundle.min.js"></script>
-
+	<script src="/static/js/jquery.dataTables.min.js"></script>
+	<script src="/static/js/dataTables.bootstrap.min.js"></script>
+	<script src="/static/js/nurse.js"></script>
     <script>
         $(document).ready(function(){
-            setInterval(poll_requests, 3000);
+            //setTimeout(render_current_task,30000);
+            $("#btnCreateRequest").click(create_request);
 
-            $("#btnCreateRequest").click(function(){
+            $("#btnCompleteTask").click(complete_task);
+        });
+
+        function create_request(){
                $.ajax({
                     type:"POST",
                     url:"/Nurse/add_help_request",
@@ -61,25 +66,60 @@
                         console.log(status);
                     }
                });
-            });
-        });
+        }
 
-        function poll_requests(){
+        function complete_task()
+        {
+            $.ajax({
+                type: "POST",
+                url:"/Nurse/complete_task/",
+                success:function(data, status, jqxhr)
+                {
+                    if(data === "SUCCESS")
+                    {
+                        new PNotify({
+                            title: 'Task is completed',
+                            text: 'Your task is indicated as complete',
+                            type: 'success'
+                        });
+                    }
+                    else
+                    {
+                         console.log(data);
+                         new PNotify({
+                            title: 'Unable to mark task as complete',
+                            text: "We couldn't mark your task as complete, please contact the adminstrator",
+                            type: 'error'
+                         });
+                    }
+                },
+                error: function(data, status, jqxhr)
+                {
+                       new PNotify({
+                            title: "Can't connect",
+                            text: "We couldn't connect to the server",
+                            type: 'error'
+                       });
+                }
+            });
+
+        }
+
+        function render_current_task()
+        {
             $.ajax({
                 type: "POST",
                 url:"/Nurse/list_help_request",
                 success:function(data, status, jqxhr)
                 {
-                    console.log(data);
-                },
-                error: function(data, status, jqxhr)
-                {
-                    console.log(data);
+                    $("#wrapper").prepend(data);
+                    $("#btnCreateRequest").click(create_request);
+                    $("#btnCompleteTask").click(complete_task);
                 }
             });
         }
 
-        //Graphs
+
 
     var data2 = {
 	    labels: ["a","b","c","d","e","f","g"],
@@ -95,84 +135,89 @@
     };
 
     $( document ).ready(function() {
-        var ctx1 = document.getElementById("triage1").getContext('2d');
-        var myChart = new Chart(ctx1, {
-            type: 'bar',
-            data: data2,
-            options: {
-                title: {
-                    display: true,
-                    text: "Body Temperature"
-                },
-                legend: {
-                    labels: {
-                        fontSize: 10,
+        try
+        {
+            var ctx1 = document.getElementById("triage1").getContext('2d');
+            var myChart = new Chart(ctx1, {
+                type: 'bar',
+                data: data2,
+                options: {
+                    title: {
+                        display: true,
+                        text: "Body Temperature"
                     },
-                },
-                barValueSpacing: 20,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            stepSize: 2,
-                        }
-                    }]
+                    legend: {
+                        labels: {
+                            fontSize: 10,
+                        },
+                    },
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                stepSize: 2,
+                            }
+                        }]
+                    }
                 }
-            }
-        });
+            });
 
-        var ctx2 = document.getElementById("triage2").getContext('2d');
-        var myChart = new Chart(ctx2, {
-            type: 'bar',
-            data: data2,
-            options: {
-                title: {
-                    display: true,
-                    text: "Blood Pressure"
-                },
-                legend: {
-                    labels: {
-                        fontSize: 10,
+            var ctx2 = document.getElementById("triage2").getContext('2d');
+            var myChart = new Chart(ctx2, {
+                type: 'bar',
+                data: data2,
+                options: {
+                    title: {
+                        display: true,
+                        text: "Blood Pressure"
                     },
-                },
-                barValueSpacing: 20,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            stepSize: 2,
-                        }
-                    }]
+                    legend: {
+                        labels: {
+                            fontSize: 10,
+                        },
+                    },
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                stepSize: 2,
+                            }
+                        }]
+                    }
                 }
-            }
-        });
+            });
 
-        var ctx3 = document.getElementById("triage3").getContext('2d');
-        var myChart = new Chart(ctx3, {
-            type: 'bar',
-            data: data2,
-            options: {
-                title: {
-                    display: true,
-                    text: "Blood Sugar"
-                },
-                legend: {
-                    labels: {
-                        fontSize: 10,
+            var ctx3 = document.getElementById("triage3").getContext('2d');
+            var myChart = new Chart(ctx3, {
+                type: 'bar',
+                data: data2,
+                options: {
+                    title: {
+                        display: true,
+                        text: "Blood Sugar"
                     },
-                },
-                barValueSpacing: 20,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            stepSize: 2,
-                        }
-                    }]
+                    legend: {
+                        labels: {
+                            fontSize: 10,
+                        },
+                    },
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                stepSize: 2,
+                            }
+                        }]
+                    }
                 }
-            }
-        });
+            });
+        }
+        catch(err){}
     });
+
     </script>
 {% endblock page_javascripts %}
 
@@ -190,131 +235,7 @@
 {% endblock breadcrumb %}
 
 {% block content %}
-
-{% if assigned_task == none %}
-<div class="panel panel-success">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            No Task Currently Assigned
-        </h3>
-    </div>
-</div>
-{% else %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            Task Title: {{ assigned_task.task.title }}
-        </h3>
-    </div>
-    <div class="panel-body">
-        <div class="row field-wrapper">
-            <div class="col-sm-1 field-name">
-                <p>Description</p>
-            </div>
-            <div class="col-sm-11">
-                <p>{{ assigned_task.task.title }} </p>
-            </div>
-        </div>
-        <hr>
-        <div class="row field-wrapper">
-            <div class="col-sm-1 field-name">
-                <p>Start Time</p>
-            </div>
-            <div class="col-sm-11">
-                <p>{{ assigned_task.task.start_time }}</p>
-            </div>
-        </div>
-        <hr>
-        <div class="row field-wrapper">
-            <div class="col-sm-1 field-name">
-                <p>Duration</p>
-            </div>
-            <div class="col-sm-11">
-                <p>{{ assigned_task.task.duration }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="panel-footer">
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-1">
-                <button class="btn btn-warning btn-block btn-lg" id="btnCreateRequest">
-                    Request Help
-                </button>
-            </div>
-            <div class="col-sm-4 col-sm-offset-2">
-                <button class="btn btn-success btn-block btn-lg" id="btnComplete">
-                    Mark As Complete
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            Patient Details
-        </h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12">
-                <h4>Patient Info</h4>
-                <div class="row field-wrapper">
-                    <div class="col-sm-3 field-name">
-                        <p>First Name</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <p>{{ assigned_task.task.patient.first_name }}</p>
-                    </div>
-                </div>
-                <hr>
-                <div class="row field-wrapper">
-                    <div class="col-sm-3 field-name">
-                        <p>Last Name</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <p>{{ assigned_task.task.patient.last_name }}</p>
-                    </div>
-                </div>
-                <hr>
-                <div class="row field-wrapper">
-                    <div class="col-sm-3 field-name">
-                        <p>Date of Birth</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <p>{{ assigned_task.task.patient.date_of_birth }}</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            Triage Information
-        </h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12">
-	            <div class="row" style="height:300px; margin-bottom:15px;">
-				<div class="col-md-4" style="height:100%;">
-				    <canvas id="triage1" style="height:100%; width:100%;"></canvas>
-				</div>
-				 <div class="col-md-4" style="height:100%; border-left: 1px; border-right: 1px; border-top:0px; border-bottom: 0px; border-style:solid;">
-					 <canvas id="triage2" style="height:100%; width:100%;"></canvas>
-				</div>
-				 <div class="col-md-4" style="height:100%;">
-					 <canvas id="triage3" style="height:100%; width:100%;"></canvas>
-				</div>
-			</div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+    {% include 'nurse/ui_components/current_task.html' %}
 {% endblock content %}
 
 
