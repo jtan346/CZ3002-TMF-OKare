@@ -66,36 +66,38 @@
         }
 
         function submit() {
-            var data = {
-                'nric' : document.getElementById('nric').value,
-                'first_name' : document.getElementById('firstName').value,
-                'last_name' : document.getElementById('lastName').value,
-                'phone_no' : document.getElementById('mobileNo').value,
-                'date_of_birth' : document.getElementById('dateOfBirth').value,
-                'street' : document.getElementById('street').value,
-                'city' : document.getElementById('city').value,
-                'state' : document.getElementById('state').value,
-                'zip_code' : document.getElementById('zipCode').value
-            };
+            if (confirm('Are you sure you want to save changes?')) {
+                var data = {
+                    'nric': document.getElementById('nric').value,
+                    'first_name': document.getElementById('firstName').value,
+                    'last_name': document.getElementById('lastName').value,
+                    'phone_no': document.getElementById('mobileNo').value,
+                    'date_of_birth': document.getElementById('dateOfBirth').value,
+                    'street': document.getElementById('street').value,
+                    'city': document.getElementById('city').value,
+                    'state': document.getElementById('state').value,
+                    'zip_code': document.getElementById('zipCode').value
+                };
 
-            $('#alert').hide(0);
+                $('#alert').hide(0);
 
-            $.ajax({
-                url: '/Nurse/update_nurse/',
-                type: 'post',
-                data: data,
-                success: function (msg) {
-                    if (msg=="successful") {
-                        $('#alert').show(500);
+                $.ajax({
+                    url: '/Nurse/update_nurse/',
+                    type: 'post',
+                    data: data,
+                    success: function (msg) {
+                        if (msg == "successful") {
+                            $('#alert').show(500);
+                        }
+                        else {
+                            alert("An error has occurred!");
+                        }
+                    },
+                    error: function (msg, status, jqxhr) {
+                        {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
                     }
-                    else {
-                        alert("An error has occurred!");
-                    }
-                },
-                error: function (msg, status, jqxhr) {
-                    {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
-                }
-            });
+                });
+            }
         }
 
         $(document).ready(function() {

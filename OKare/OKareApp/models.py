@@ -40,7 +40,7 @@ class Patient(models.Model):
     nric = models.CharField(max_length=9, primary_key=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    date_of_birth = models.DateField(auto_now=False, editable=True, blank=False,null=False)
+    date_of_birth = models.DateField(auto_now=False, editable=True, blank=False, null=False)
     street = models.CharField(max_length=128, default='Street')
     city = models.CharField(max_length=64, default='City')
     state = models.CharField(max_length=32, default='State')

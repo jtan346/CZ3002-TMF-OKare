@@ -124,6 +124,7 @@ def viewPatientProfile(request, patient_id):
     template = loader.get_template('nurse/view_patient.html')
     patient = Patient.objects.filter(nric=patient_id).get()
     page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
+
     context = {
                 'page_name': page_name,
                 'patient_id': patient_id,
@@ -165,7 +166,7 @@ def updatePatientDetail(request):
             nric = request.POST['nric']
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
-            # date_of_birth = request.POST['date_of_birth']
+            date_of_birth = request.POST['date_of_birth']
             ward = request.POST['ward']
             bed = request.POST['bed']
             street = request.POST['street']
@@ -176,10 +177,13 @@ def updatePatientDetail(request):
 
             patient = Patient.objects.get(nric=nric)
 
+            #Format date..
+            datetimeobj = datetime.datetime.strptime(date_of_birth, "%B %d, %Y")
+
             # patient.nric = nric
             patient.first_name = first_name
             patient.last_name = last_name
-            # patient.date_of_birth = date_of_birth
+            patient.date_of_birth = datetimeobj
             patient.ward = ward
             patient.bed = bed
             patient.street = street
