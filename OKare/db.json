@@ -2628,6 +2628,16 @@
 },
 {
     "model": "OKareApp.completedtask",
+    "pk": 30,
+    "fields": {
+        "task": 29,
+        "nurse": "S12345678",
+        "duration": "00:00:04.000004",
+        "date": "2018-03-19",
+        "compldt": "2018-03-19T02:57:17.663Z"
+    }
+},{
+    "model": "OKareApp.completedtask",
     "pk": 3,
     "fields": {
         "task": 3,
