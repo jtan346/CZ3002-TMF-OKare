@@ -30,6 +30,11 @@ class Account(models.Model):
 
         super(Account, self).clean(*args, **kwargs)
 
+    def __str__(self):
+        return "NRIC: {} | TYPE: {} | TEAM: {} | Username: {}".format(self.nric, self.type, self.team, self.user.username)
+
+    def fullname(self):
+        return self.user.first_name + " " + self.user.last_name
 
 class NurseStats(models.Model):
     help_requested = models.IntegerField()
@@ -102,12 +107,15 @@ class Task(models.Model):
     day = models.CharField(max_length=20, choices=DAY)
 
     def __str__(self):
-        return "Task Title: {} | Start Time: {} | Date: {} | Day: {} | patient: {} | recur_type: {}".format(self.title, self.start_time,self.date, self.day, self.patient, self.recur_type)
+        return "ID : {} | Task Title: {} | Start Time: {} | Date: {} | Day: {} | patient: {} | recur_type: {}".format(self.id, self.title, self.start_time,self.date, self.day, self.patient, self.recur_type)
 
 class OngoingTask(models.Model):
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     nurse = models.OneToOneField(Account, limit_choices_to={'type': 'Nurse'}, on_delete=models.CASCADE)
-
+    #to track when it was assigned, for computation of duration
+    #  if a daily task was assigned on monday at 11:50, and was finished tuesday at 00:25
+    #  then the task's date captures the date of creation
+    assigned_datetime = models.DateTimeField(auto_now_add=True)
     def timefrom(self):
         now = datetime.utcnow().replace(tzinfo=timezone.utc)
         difference = (now - datetime.combine(date.today(),self.task.start_time).replace(tzinfo=timezone.utc)).total_seconds()
@@ -118,6 +126,9 @@ class OngoingTask(models.Model):
             return '{} minutes ago...'.format(int(difference / 60))
         else:
             return '{} seconds ago...'.format(int (difference))
+
+    def __str__(self):
+        return "Ongoing Task - {} : {} assigned to {} ".format(self.id, self.task.title, self.nurse.nric)
 
 
 class DailyTriage(models.Model):
@@ -153,3 +164,16 @@ class HelpRequest(models.Model):
     requester = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
     helper = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, related_name='+', on_delete= models.CASCADE, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    ongoing_task = models.ForeignKey(OngoingTask, on_delete=models.SET_NULL, null=True)
+    acknowledgement = models.BooleanField(default=False)
+    def __str__(self):
+        return "Task: {} | Requester: {} | Helper: {} | Ongoing Tasks: {}".format(self.task.title, self.requester, self.helper, self.ongoing_task)
+
+
+class HelpRequestNotification(models.Model):
+    read = models.BooleanField()
+    reader = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
+    help_request = models.OneToOneField(HelpRequest, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "reader: {} for help request {}".format(self.reader.fullname(), self.help_request.id)
