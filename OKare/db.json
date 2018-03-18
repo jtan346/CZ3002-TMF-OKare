@@ -2515,6 +2515,51 @@
     }
 },
 {
+    "model": "OKareApp.task",
+    "pk": 27,
+    "fields": {
+        "title": "An unwanted adhoc task test",
+        "description": "",
+        "patient": "S4234234G",
+        "recur_type": null,
+        "category": "Misc",
+        "start_time": "12:00:00",
+        "date": "2018-03-19",
+        "duration": "00:25:00",
+        "day": "5"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 28,
+    "fields": {
+        "title": "An unwanted adhoc task test 2",
+        "description": "",
+        "patient": "S4234234G",
+        "recur_type": null,
+        "category": "Misc",
+        "start_time": "01:00:00",
+        "date": "2018-03-19",
+        "duration": "00:25:00",
+        "day": "5"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 29,
+    "fields": {
+        "title": "An unwanted adhoc task test 3",
+        "description": "",
+        "patient": "S1231234G",
+        "recur_type": null,
+        "category": "Misc",
+        "start_time": "01:20:00",
+        "date": "2018-03-19",
+        "duration": "00:25:00",
+        "day": "5"
+    }
+},
+{
     "model": "OKareApp.ongoingtask",
     "pk": 1,
     "fields": {
@@ -2556,7 +2601,7 @@
     "fields": {
         "task": 6,
         "nurse": "S9765453G",
-        "assigned_datetime": "2018-03-18T13:57:17.663Z"
+        "assigned_datetime": "2018-03-19T13:57:17.663Z"
     }
 },
 {
@@ -2566,7 +2611,8 @@
         "task": 1,
         "nurse": "S9234232G",
         "duration": "00:00:04.000004",
-        "date": "2018-03-16"
+        "date": "2018-03-16",
+        "compldt": "2018-03-16T13:57:17.663Z"
     }
 },
 {
@@ -2576,7 +2622,8 @@
         "task": 2,
         "nurse": "S9845624G",
         "duration": "00:00:04.000004",
-        "date": "2018-03-16"
+        "date": "2018-03-16",
+        "compldt": "2018-03-16T13:57:17.663Z"
     }
 },
 {
@@ -2586,7 +2633,8 @@
         "task": 3,
         "nurse": "S9898898G",
         "duration": "00:00:04.000004",
-        "date": "2018-03-16"
+        "date": "2018-03-16",
+        "compldt": "2018-03-16T13:57:17.663Z"
     }
 },
 {
@@ -2596,7 +2644,8 @@
         "task": 4,
         "nurse": "S9765453G",
         "duration": "00:00:04.000004",
-        "date": "2018-03-16"
+        "date": "2018-03-16",
+        "compldt": "2018-03-16T13:57:17.663Z"
     }
 },
 {
@@ -2606,7 +2655,8 @@
         "task": 1,
         "nurse": "S9845624G",
         "duration": "00:00:04.000004",
-        "date": "2018-03-16"
+        "date": "2018-03-16",
+        "compldt": "2018-03-16T13:57:17.663Z"
     }
 },
 {
@@ -2616,7 +2666,8 @@
         "task": 2,
         "nurse": "S9845624G",
         "duration": "00:00:04.000004",
-        "date": "2018-03-16"
+        "date": "2018-03-16",
+        "compldt": "2018-03-16T13:57:17.663Z"
     }
 },
 {
@@ -2626,7 +2677,8 @@
         "task": 3,
         "nurse": "S9765453G",
         "duration": "00:00:04.000004",
-        "date": "2018-03-16"
+        "date": "2018-03-16",
+        "compldt": "2018-03-16T13:57:17.663Z"
     }
 },
 {
@@ -2636,7 +2688,8 @@
         "task": 4,
         "nurse": "S9234232G",
         "duration": "00:00:04.000004",
-        "date": "2018-03-16"
+        "date": "2018-03-16",
+        "compldt": "2018-03-16T13:57:17.663Z"
     }
 },
 {
@@ -2646,7 +2699,8 @@
         "task": 5,
         "nurse": "S9232342G",
         "duration": "00:00:04.000004",
-        "date": "2018-03-16"
+        "date": "2018-03-16",
+        "compldt": "2018-03-16T13:57:17.663Z"
     }
 },
 {
@@ -2656,7 +2710,8 @@
         "task": 26,
         "nurse": "S9765453G",
         "duration": "00:01:04.000004",
-        "date": "2018-03-17"
+        "date": "2018-03-17",
+        "compldt": "2018-03-17T13:57:17.663Z"
     }
 },
 {
@@ -2666,7 +2721,8 @@
         "task": 25,
         "nurse": "S9765453G",
         "duration": "00:01:04.000004",
-        "date": "2018-03-17"
+        "date": "2018-03-17",
+        "compldt": "2018-03-17T13:57:17.663Z"
     }
 },
 {
@@ -2676,7 +2732,8 @@
         "task": 23,
         "nurse": "S9234232G",
         "duration": "00:02:04.000004",
-        "date": "2018-03-17"
+        "date": "2018-03-17",
+        "compldt": "2018-03-17T13:57:17.663Z"
     }
 },
 {
@@ -2686,7 +2743,8 @@
         "task": 22,
         "nurse": "S9234232G",
         "duration": "00:03:04.000004",
-        "date": "2018-03-17"
+        "date": "2018-03-17",
+        "compldt": "2018-03-17T13:57:17.663Z"
     }
 },
 {
@@ -2695,8 +2753,19 @@
     "fields": {
         "task": 21,
         "nurse": "S9234232G",
+        "duration": "02:04:04.000004",
+        "date": "2018-03-19",
+        "compldt": "2018-03-19T00:57:17.663Z"
+    }
+},{
+    "model": "OKareApp.completedtask",
+    "pk": 15,
+    "fields": {
+        "task": 20,
+        "nurse": "S9234232G",
         "duration": "00:04:04.000004",
-        "date": "2018-03-17"
+        "date": "2018-03-19",
+        "compldt": "2018-03-19T00:57:17.663Z"
     }
 },
 {

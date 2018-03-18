@@ -144,7 +144,7 @@ class CompletedTask(models.Model):
     nurse = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, on_delete= models.CASCADE)
     duration = models.DurationField(editable=True, null=False)
     date = models.DateField(editable=True, null=False)
-
+    compldt = models.DateTimeField(auto_now_add=True)
     #make sure to test this Later when DB up (if dont work change back to .aggregate
     def average_duration(self,start_date=datetime.now()-timedelta(days=7)):
         return CompletedTask.objects.filter(id= self.task.id, date__gte = start_date).Avg('duration')

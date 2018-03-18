@@ -44,8 +44,9 @@ def viewNurseProfile(request, nurse_id):
 
 def addNurseView(request):
     template = loader.get_template('nurse/add_nurse.html')
+    assignTask()
     context = {
-                'page_name': "Adding a Nurse",
+                'page_name': "Add Nurse",
                }
     return HttpResponse(template.render(context, request))
 
@@ -135,7 +136,7 @@ def viewPatientProfile(request, patient_id):
 def addPatientView(request):
     template = loader.get_template('nurse/add_patient.html')
     context = {
-                'page_name': "Adding a Patient",
+                'page_name': "Add Patient",
                }
     return HttpResponse(template.render(context, request))
 
@@ -364,6 +365,59 @@ def list_help_request(request):
 
 def check_help_request(request):
     pass
+
+def assignTask():
+
+    allCompleteTasks = CompletedTask.objects.all()
+
+    #Get all tasks that are not completed/ongoing and need to be started (time < now)
+
+    completeIds = []
+    for i in allCompleteTasks:
+        # print(i.compldt)
+        # print(i.duration)
+        endDate = i.compldt
+        dur = i.duration
+        intendedDate = endDate - dur
+        #print("ID:" + str(i.task_id) + " Start Date:" + str(intendedDate.strftime('%d')))
+        if intendedDate.strftime('%d') == datetime.datetime.today().strftime('%d'):
+            completeIds.append(i.task_id)
+
+    toBeAssigned = Task.objects.exclude(id__in=OngoingTask.objects.all().values('task')).exclude(id__in=completeIds).filter(date=date.today()).order_by('start_time')
+
+    #Emulate Task Queue
+
+    taskQueue = []
+
+    for a in toBeAssigned:
+        #print(a.start_time, datetime.datetime.now().time(), a.start_time < datetime.datetime.now().time())
+        if a.start_time < datetime.datetime.now().time():
+            taskQueue.append(a)
+
+    #print(len(taskQueue))
+
+    for i in taskQueue:
+        #DO THE ASSIGNING GOD
+        #GOD SAID LET THERE BE TASKS FOR YOU SLAVE
+        #assign i to a nurse
+
+        # Find free nurse(s) in team where patient is from:
+        patient = Patient.objects.filter(nric=i.patient_id).get()
+
+        # Requery every round because free nurses must be updated, just assign to first nurse in queryset if any
+        freeNurses = Account.objects.exclude(nric__in=OngoingTask.objects.all().values('nurse_id')).filter(type='Nurse').filter(team_id=patient.team_id)
+        #print(patient.team_id)
+
+        #Only if got free nurses in team god
+        if freeNurses:
+            print("Free Nurse ID: " + str(freeNurses[0].nric))
+            print("Task ID: " + str(i.id))
+            ongoingtask = OngoingTask(assigned_datetime=datetime.datetime.now(), nurse_id=freeNurses[0].nric, task_id=i.id)
+            ongoingtask.save()
+
+    # chek = OngoingTask.objects.all()
+    # for bla in chek:
+    #     print(bla)
 
 
 
