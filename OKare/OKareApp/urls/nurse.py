@@ -14,7 +14,7 @@ urlpatterns = [
     # SC/Joey - Accepter's Help Request Acception
     url(r'^accept_help_request$', Nurse.add_help_request, name="list_help_request"),
 
-    #SC/Joey - Nurse's Team Tasklist
+    #SC/Joey - N urse's Team Tasklist
     url(r'^view_team_tasklist/', Nurse.TeamTaskList.as_view(),name="view_team_tasklist"),
 
     #Ben/HaoDe - List/View Nurse Profiles
