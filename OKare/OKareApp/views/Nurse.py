@@ -44,11 +44,82 @@ def viewNurseProfile(request, nurse_id):
 
 def addNurseView(request):
     template = loader.get_template('nurse/add_nurse.html')
+
     assignTask()
+    # lmaotest()
+
+    lmao = CompletedTask.objects.filter(task_id='29')
+    for i in lmao:
+        print(i.compldt)
+
     context = {
                 'page_name': "Add Nurse",
                }
     return HttpResponse(template.render(context, request))
+
+def assignTask():
+
+    allCompleteTasks = CompletedTask.objects.all()
+
+    #Get all tasks that are not completed/ongoing and need to be started (time < now)
+
+    completeIds = []
+    for i in allCompleteTasks:
+        # print(i.compldt)
+        # print(i.duration)
+        endDate = i.compldt
+        dur = i.duration
+        intendedDate = endDate - dur
+        #print("ID:" + str(i.task_id) + " Start Date:" + str(intendedDate.strftime('%d')))
+        if intendedDate.strftime('%d') == datetime.datetime.today().strftime('%d'):
+            completeIds.append(i.task_id)
+
+    print(completeIds)
+    toBeAssigned = Task.objects.exclude(id__in=OngoingTask.objects.all().values('task')).exclude(id__in=completeIds).filter(date=date.today()).order_by('start_time')
+
+    #Emulate Task Queue
+
+    taskQueue = []
+
+    for a in toBeAssigned:
+        print(a.id, a.start_time, datetime.datetime.now().time(), a.start_time < datetime.datetime.now().time())
+        if a.start_time < datetime.datetime.now().time():
+            taskQueue.append(a)
+
+    #print(len(taskQueue))
+
+    for i in taskQueue:
+        #DO THE ASSIGNING GOD
+        #GOD SAID LET THERE BE TASKS FOR YOU SLAVE
+        #assign i to a nurse
+
+        # Find free nurse(s) in team where patient is from:
+        patient = Patient.objects.filter(nric=i.patient_id).get()
+
+        # Requery every round because free nurses must be updated, just assign to first nurse in queryset if any
+        freeNurses = Account.objects.exclude(nric__in=OngoingTask.objects.all().values('nurse_id')).filter(type='Nurse').filter(team_id=patient.team_id)
+        #print(patient.team_id)
+
+        #Only if got free nurses in team god
+        if freeNurses:
+            print("Free Nurse ID: " + str(freeNurses[0].nric))
+            print("Task ID: " + str(i.id))
+            ongoingtask = OngoingTask(assigned_datetime=datetime.datetime.now(), nurse_id=freeNurses[0].nric, task_id=i.id)
+            ongoingtask.save()
+
+    chek = OngoingTask.objects.all()
+    for bla in chek:
+        print(bla)
+
+def lmaotest():
+    #delete task 29 from ongoing and put into completed
+    tasktodel = OngoingTask.objects.filter(task_id='29').get()
+    print("HERE" + str(tasktodel.task_id))
+    nownow = str(datetime.datetime.today())
+    print(nownow) #wtf
+    compltask = CompletedTask(duration=datetime.timedelta(minutes=30), date=datetime.date.today(), compldt=datetime.datetime.today(), nurse_id=tasktodel.nurse_id, task_id=tasktodel.task_id)
+    compltask.save()
+    tasktodel.delete()
 
 def addNurse(request):
     if request.POST:
@@ -342,7 +413,11 @@ class TeamTaskList(ListView):
 def index(request):
     #assigned_task = OngoingTask.objects.filter(nurse=request)[0]
     assigned_task = OngoingTask.objects.filter(nurse=Account.objects.get(nric="S9232342G")).first()
-    context = { 'assigned_task':assigned_task }
+    curUser = request.user
+    curAccount = Account.objects.filter(user_id=curUser.id).get()
+    context = { 'assigned_task':assigned_task,
+                'name': curUser.first_name,
+                'usertype': curAccount.type}
     return render(request,'nurse/index.html', context)
 
 def add_help_request(request):
@@ -366,58 +441,8 @@ def list_help_request(request):
 def check_help_request(request):
     pass
 
-def assignTask():
 
-    allCompleteTasks = CompletedTask.objects.all()
 
-    #Get all tasks that are not completed/ongoing and need to be started (time < now)
-
-    completeIds = []
-    for i in allCompleteTasks:
-        # print(i.compldt)
-        # print(i.duration)
-        endDate = i.compldt
-        dur = i.duration
-        intendedDate = endDate - dur
-        #print("ID:" + str(i.task_id) + " Start Date:" + str(intendedDate.strftime('%d')))
-        if intendedDate.strftime('%d') == datetime.datetime.today().strftime('%d'):
-            completeIds.append(i.task_id)
-
-    toBeAssigned = Task.objects.exclude(id__in=OngoingTask.objects.all().values('task')).exclude(id__in=completeIds).filter(date=date.today()).order_by('start_time')
-
-    #Emulate Task Queue
-
-    taskQueue = []
-
-    for a in toBeAssigned:
-        #print(a.start_time, datetime.datetime.now().time(), a.start_time < datetime.datetime.now().time())
-        if a.start_time < datetime.datetime.now().time():
-            taskQueue.append(a)
-
-    #print(len(taskQueue))
-
-    for i in taskQueue:
-        #DO THE ASSIGNING GOD
-        #GOD SAID LET THERE BE TASKS FOR YOU SLAVE
-        #assign i to a nurse
-
-        # Find free nurse(s) in team where patient is from:
-        patient = Patient.objects.filter(nric=i.patient_id).get()
-
-        # Requery every round because free nurses must be updated, just assign to first nurse in queryset if any
-        freeNurses = Account.objects.exclude(nric__in=OngoingTask.objects.all().values('nurse_id')).filter(type='Nurse').filter(team_id=patient.team_id)
-        #print(patient.team_id)
-
-        #Only if got free nurses in team god
-        if freeNurses:
-            print("Free Nurse ID: " + str(freeNurses[0].nric))
-            print("Task ID: " + str(i.id))
-            ongoingtask = OngoingTask(assigned_datetime=datetime.datetime.now(), nurse_id=freeNurses[0].nric, task_id=i.id)
-            ongoingtask.save()
-
-    # chek = OngoingTask.objects.all()
-    # for bla in chek:
-    #     print(bla)
 
 
 

@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^Nurse/',include('OKareApp.urls.nurse')),
     url(r'^Admin/',include('OKareApp.urls.admin')),
-    url(r'^account/', include('OKareApp.urls.login'))
+    url(r'^login/', include('OKareApp.urls.login'))
 ]
