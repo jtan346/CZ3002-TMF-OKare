@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% block title %}{{ page_name }}{% endblock title %}
+{% block page_stylesheets %}
+    <style type="text/css">
+        body {
+            background-color: #f8f8f8;
+        }
+        .input-group-addon {
+            min-width: 100px;
+        }
+    </style>
+{% endblock page_stylesheets %}
+
+{% block page_javascripts %}
+    <script>
+        var editing = false;
+
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                var csrfToken = getCookie('csrftoken');
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                console.log("CSRF Token set: " + csrfToken);
+            }
+        });
+
+        function enableEditing() {
+            editing = true;
+
+            $('input').each(function() {
+                if ($(this).attr('disabled')) {
+                    $(this).removeAttr('disabled');
+                }
+                else {
+                    $(this).attr({
+                        'disabled': 'disabled'
+                    });
+                }
+            });
+
+            $('#nric').attr({
+                'disabled': 'disabled'
+            });
+
+            var x = document.getElementById("SaveDiscard");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+
+            var y = document.getElementById("btnEdit");
+            if (y.style.display === "none") {
+                y.style.display = "block";
+            } else {
+                y.style.display = "none";
+            }
+        }
+
+        function discard() {
+            if (confirm('Are you sure you want to discard all changes?')) {
+                enableEditing();
+                window.location.reload();
+            } else {
+
+            }
+        }
+
+        function submit() {
+            if (confirm('Are you sure you want to save changes?')) {
+                var data = {
+                    'nric': document.getElementById('nric').value,
+                    'first_name': document.getElementById('firstName').value,
+                    'last_name': document.getElementById('lastName').value,
+                    'phone_no': document.getElementById('mobileNo').value,
+                    'date_of_birth': document.getElementById('dateOfBirth').value,
+                    'street': document.getElementById('street').value,
+                    'city': document.getElementById('city').value,
+                    'state': document.getElementById('state').value,
+                    'zip_code': document.getElementById('zipCode').value
+                };
+
+                $('#alert').hide(0);
+
+                $.ajax({
+                    url: '/Nurse/update_nurse/',
+                    type: 'post',
+                    data: data,
+                    success: function (msg) {
+                        if (msg == "successful") {
+                            $('#alert').show(500);
+                        }
+                        else {
+                            alert("An error has occurred!");
+                        }
+                    },
+                    error: function (msg, status, jqxhr) {
+                        {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function() {
+            $('input').each(function() {
+                $(this).attr({
+                    'disabled': 'disabled'
+                });
+            });
+        });
+    </script>
+{% endblock page_javascripts %}
+
+{% block sidebar %}
+    {% include 'nurse/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+    {% include 'nurse/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+<!-- Add the page hierarchy here -->
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
+    <li class="breadcrumb-item"><a href="/Nurse/view_nurse">View Nurse</a></li>
+    <li class="breadcrumb-item active">{{ nurse.user_id }}: {{ nurse.user.first_name }} {{ nurse.user.last_name }}</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Nurse Name</h1>
+        </div>
+    </div>
+
+    <div id="alert" class="row" style="display: none">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Success!</strong> Changes has been successfully saved!
+            </div>
+        </div>
+    </div>
+
+    <div id="input">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
+            </div>
+
+            <form action="" method="post"> {% csrf_token %}
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">NRIC</span>
+                                <input id="nric" name="nric" class="form-control" placeholder="" type="text" value="{{ nurse.nric }}" disabled>
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">First Name</span>
+                                <input id="firstName" name="first_name" class="form-control" placeholder="" type="text" value="{{ nurse.user.first_name }}" disabled>
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Last Name</span>
+                                <input id="lastName" name="last_name" class="form-control" placeholder="" type="text" value="{{ nurse.user.last_name }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="hidden-md hidden-lg"><br></div>
+
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Mobile no.</span>
+                                <input id="mobileNo" name="phone_no" class="form-control" placeholder="" type="text" value="{{ nurse.phoneNo }}" disabled>
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Date of Birth</span>
+                                <input id="dateOfBirth" name="date_of_birth" class="form-control" placeholder="" type="text" value="{{ nurse.date_of_birth }}" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Street</span>
+                                <input id="street" name="street" class="form-control" placeholder="" type="text" value="{{ nurse.street }}" disabled>
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">City</span>
+                                <input id="city" name="city" class="form-control" placeholder="" type="text" value="{{ nurse.city }}" disabled>
+                            </div>
+                            <br>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">State</span>
+                                <input id="state" name="state" class="form-control" placeholder="" type="text" value="{{ nurse.state }}" disabled>
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Zip code</span>
+                                <input id="zipCode" name="zip_code" class="form-control" placeholder="" type="text" value="{{ nurse.zip_code }}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden-md hidden-lg"><br></div>
+
+                <div class="col-md-1">
+                    <button id="btnEdit" class="btn btn-default" type="button" onclick="enableEditing()">Edit</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+
+        <div id="SaveDiscard" class="row" style="display: none;">
+            <div class="col-md-2 col-md-offset-7">
+                <button type="button" class="btn btn-success btn-block" onclick="submit()">Save</button>
+            </div>
+            <div class="hidden-md hidden-lg"><br></div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2><a href="/Nurse/productivity_report/{{ nurse.user_id }}">Performance</a></h2>
+        </div>
+    </div>
+{% endblock content %}

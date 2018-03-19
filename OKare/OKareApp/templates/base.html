@@ -4,23 +4,39 @@
 <head>
     {% block head %}
         {% block meta %}
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="">
+            <meta name="author" content="">
         {% endblock meta %}
-        <title>SB Admin 2 - Bootstrap Admin Theme</title>
+
+        <title>OKare - {% block title %}{% endblock title %}</title>
 
         {% block vendor_stylesheets %}
+        {% endblock vendor_stylesheets %}
+
+
         <!-- Bootstrap Core CSS -->
         <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/static/vendor/bootstrap-datepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/static/vendor/bootstrap-durationpicker/dist/bootstrap-duration-picker.css" rel="stylesheet">
+        <!-- Bootstrap Core CSS -->
+        <link href="/static/vendor/pnotify/pnotify.min.css" rel="stylesheet">
 
         <!-- MetisMenu CSS -->
         <link href="/static/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
         <!-- Custom CSS -->
         <link href="/static/dist/css/sb-admin-2.css" rel="stylesheet">
+        <link href="/static/tmf_custom.css" rel="stylesheet">
+
+        <!-- PNotify Core CSS -->
+        <link href="/static/vendor/pnotify/pnotify.custom.min.css" rel="stylesheet">
 
         <!-- Custom Fonts -->
         <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -28,17 +44,50 @@
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        {% endblock vendor_stylesheets %}
+
+        <!-- jQuery -->
+        <script src="/static/vendor/jquery/jquery.min.js"></script>
+        <!--<script src="/static/js/jquery-1.12.4.js"></script>-->
+
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="/static/vendor/metisMenu/metisMenu.min.js"></script>
+
+
+        <!-- Moment Js -->
+        <script src="/static/vendor/momentjs/moment.min.js"></script>
+
+        <!-- Bootstrap-Datepicker JavaScript -->
+        <script src="/static/vendor/bootstrap-datepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Bootstrap-duration Core CSS -->
+        <script src="/static/vendor/bootstrap-durationpicker/dist/bootstrap-duration-picker-debug.js"></script>
+
+        <script src="/static/vendor/pnotify/pnotify.custom.min.js"></script>
+
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/static/dist/js/sb-admin-2.js"></script>
+	    <script src="/static/js/OKare.js"></script>
+
+
+        {% block page_stylesheets %}
+        {% endblock page_stylesheets %}
+
+        {% block page_javascripts %}
+        {% endblock page_javascripts %}
     {% endblock head %}
 </head>
 
 <body>
-    {% block body %}
+{% block body %}
     <div id="wrapper">
-
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -59,29 +108,32 @@
             {% endblock sidebar %}
             <!-- /.navbar-static-side -->
         </nav>
+        <ol class="breadcrumb"    style="margin: 0 0 0 250px;">
+            {% block breadcrumb %}
+            {% endblock breadcrumb %}
+        </ol>
+        <!-- Start of Page Container/Wrapper -->
+        <div id="page-wrapper" style="padding-bottom: 35px;">
 
-        <!-- Page Content -->
-        <div id="page-wrapper">
+            <!-- Page Breadcrumb (Hierarchy) Here -->
+            <!-- Page Content Here -->
             {% block content %}
             {% endblock content %}
+
         </div>
         <!-- /#page-wrapper -->
+        <!-- /#Page Footer -->
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>OKare 2017 - The Most Fantasic!</small>
+                </div>
+            </div>
+        </footer>
 
     </div>
     <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="/static/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/static/vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="/static/dist/js/sb-admin-2.js"></script>
-    {% endblock body %}
+{% endblock body %}
 </body>
 
 </html>

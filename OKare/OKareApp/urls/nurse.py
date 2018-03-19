@@ -1,5 +1,42 @@
 from django.conf.urls import url
 from OKareApp.views import Nurse
+
 urlpatterns = [
+    #SC/Joey - Nurse Homepage
     url(r'^$', Nurse.index, name="Nurse_Index"),
+    #SC/Joey - Request's Help Request Creation
+    url(r'^add_help_request$', Nurse.add_help_request, name="add_help_request"),
+    # SC/Joey - Request's Help Request Checking
+    url(r'^get_help_request$', Nurse.add_help_request, name="get_help_request"),
+
+    # SC/Joey - Accepter's Help Request Checking
+    url(r'^list_help_request$', Nurse.list_help_request, name="list_help_request"),
+    # SC/Joey - Accepter's Help Request Acception
+    url(r'^accept_help_request$', Nurse.add_help_request, name="list_help_request"),
+
+    #SC/Joey - N urse's Team Tasklist
+    url(r'^view_team_tasklist/', Nurse.TeamTaskList.as_view(),name="view_team_tasklist"),
+
+    #Ben/HaoDe - List/View Nurse Profiles
+    url(r'^view_nurse/$', Nurse.listNurses, name="list_nurse"),
+    url(r'^view_nurse/(?P<nurse_id>[\w-]+)$', Nurse.viewNurseProfile, name="view_nurse"),
+
+    #Ben/Haode - List/View Patient Profiles
+    url(r'^view_patient/$', Nurse.listPatients, name="list_patient"),
+    url(r'^view_patient/(?P<patient_id>[\w-]+)$', Nurse.viewPatientProfile, name="view_patient"),
+
+    #Ben/Haode - Generate Productivity Report
+    url(r'productivity_report/(?P<nurse_id>[\w-]+)', Nurse.generateProductivityReport, name="generate_productivity_report"),
+
+    #Ben/Haode - Updating patient or nurse details
+    url(r'^update_patient/$', Nurse.updatePatientDetail, name="update_patient_detail"),
+    url(r'^update_nurse/$', Nurse.updateNurseDetail, name="update_nurse_detail"),
+
+    #Ben/Haode - View for adding new patient or nurse details
+    url(r'^add_nurse/', Nurse.addNurseView, name="add_nurse_view"),
+    url(r'^add_patient/', Nurse.addPatientView, name="add_patient_view"),
+
+    #Ben/Haode - Add new patient or nurse
+    url(r'^add_patient_into_db/$', Nurse.addPatient, name="add_patient_into_db"),
+    url(r'^add_nurse_into_db/$', Nurse.addNurse, name="add_nurse_into_db"),
 ]

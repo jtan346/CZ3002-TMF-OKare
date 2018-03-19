@@ -1,4 +1,14 @@
 #ignore the following files
-.idea
+.idea/
+
 OKare/db.sqlite3
+
 OKare/OKareApp/__pycache__
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+*.pyc
+OKare/OKareApp/migrations/0001_initial.py

@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block page_stylesheets %}
+    <style type="text/css">
+
+    </style>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/dist/css/admin.css" rel="stylesheet">
+{% endblock page_stylesheets %}
+
+{% block page_javascripts %}
+    <script type="text/javascript">
+        function categoryPiechartInit(){
+            $.ajax({
+                type:"GET",
+                url: "/Admin/get_category_pie_data/",
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    $("#taskList").childNodes("div").hasClass('list-group').append(data);
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+        }
+
+
+        //Code for the Task Panel to show and not show!
+        var prevBtnClick = -1;
+        var panelOpen = false;
+        function display(id){
+            $.ajax({
+                type:"POST",
+                url: "/Admin/get_patient_tasks/",
+                data:{'id':id},
+                success: function (data) {
+                    panelOpen = ($("#taskList").css("display")!="none");
+
+                    $("#taskList").slideToggle();
+
+                    if(prevBtnClick != id && prevBtnClick != -1 && panelOpen){
+                        $("#taskList").slideToggle();
+                    }
+
+                    $("#taskList").find("div").html(data);
+                    prevBtnClick = id;
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+        }
+
+
+        function search(){
+            console.log("search event");
+            var reset = false;
+            var searchTerm = $("#PatientSearchBar").val().toLowerCase();
+            var nameBtns = $("#patientPanel").find("div.name");
+            if(searchTerm == ''){
+                reset = true;
+            }
+            console.log(reset);
+            for(var i=0; i <nameBtns['length']; i++){
+                value = nameBtns[i].innerText.toLowerCase();
+                if(!value.includes(searchTerm) && !reset)
+                    $(nameBtns[i].id).css('display', 'none');
+                else
+                    $(nameBtns[i].id).css('display', 'block');
+
+            }
+        }
+
+        function modalSetup() {
+            $('#addTimeInput').datetimepicker({
+                format:'LT'
+            });
+
+            $('#addDateInput').datetimepicker({
+                format:'DD/MM/YYYY',
+                onChange: setDay("addDay")
+            });
+
+            $(".modal").on("hide.bs.modal", function(e) {
+                console.log("hidden");
+                $(".modal-body").find("input").val("");
+            });
+            $('#addDateInput').on('dp.change', function(e){ console.log(e.date);setDay('addDay', e.date); })
+
+            //Used to Control the Day (changes Based on the date Input
+            function setDay(id, date){
+                var day = moment(date);
+                $('#'+id).val(day.format("dddd"));
+            }
+        }
+
+        function validateAdd(){
+            console.log('validateAdd');
+            var pass = true;
+            //Each can only be exited when return false;
+            $('#addTaskModal').find('.form-control').each(function(){
+                if(this.value.length == 0 && this.id != 'addRecurType'){
+                    pass = false;
+                    new PNotify({
+                        type: 'error',
+                        title: 'Error Adding!',
+                        text: 'Please Ensure that all fields are filled in!'
+                    });
+                    return pass;
+                }
+            });
+
+            return pass;
+        }
+
+        function addTask(){
+            if(validateAdd()){
+                console.log('Add Task');
+                var form = document.getElementById('addForm');
+                var data = new FormData(form);
+                $.ajax({
+                    type:"POST",
+                    url: "/Admin/addTask/",
+                    data:$('#addForm').serialize(),
+                    success: function (data) {
+                        console.log('sucess');
+                        new PNotify({
+                        type: 'success',
+                        title: 'Task Added Sucessfully!',
+                        });
+                    },
+                    error: function(error){
+                        console.log('fail');
+                        new PNotify({
+                        type: 'error',
+                        title: 'Error Adding!',
+                        text: error
+                        });
+                    }
+                });
+
+                $('#addTaskModal').modal('hide');
+
+            }
+
+        }
+
+
+
+
+    </script>
+{% endblock page_javascripts %}
+
+{% block sidebar %}
+    {% include 'administrator/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+    {% include 'administrator/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+{% block content %}
+    <div class="row">
+        <div id="patientPanel" class="panel panel-primary col-xs-12">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-3" style="text-align: right;">
+                <div id="dataTables-example_filter" class="dataTables_filter">
+                    <label>
+                        Search:<input id="PatientSearchBar" type="search" class="form-control input-sm" placeholder="" aria-controls="dataTables-example" onkeyup="search()">
+                    </label>
+                </div>
+            </div>
+            {% for patient in Patients %}
+                <div id="{{ patient.nric }}Panel" class="col-xs-6 col-sm-4 col-lg-1" style="margin:10px 10px">
+                    <button class="btn btn-primary btn-lg" id="{{ patient.nric }}btn" onclick="display('{{ patient.nric }}')">
+                        <div>
+                            <img src="/static/img/profile_picture.svg" height="100px">
+                        </div>
+                        <div id="#{{ patient.nric }}Panel" class="name" style="font-size:15px">
+                            <b>{{ patient.first_name}}<br>{{ patient.last_name}}</b>
+                        </div>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class = "row">
+        <div id="taskList" style="display:none">
+            <div class="panel panel-primary">
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock content %}

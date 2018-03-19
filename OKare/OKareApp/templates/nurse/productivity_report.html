@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+{% block title %}{{ page_name }}{% endblock title %}
+{% block page_stylesheets %}
+{% endblock page_stylesheets %}
+{% block page_javascripts %}
+	<script src="/static/js/Chart.bundle.min.js"></script>
+	<script src="/static/js/jspdf.debug.js"></script>
+	<script src="/static/js/html2canvas.min.js"></script>
+	<script>
+		var graph1_raw = {{ graph1data|safe }};
+		//console.log(graph1_raw);
+		graph1_labels = [];
+		graph1_tasksCompleted = [];
+		graph1_avgTasksCompleted = [];
+		for(var i = graph1_raw.length-1; i >= 0; i--){
+		    graph1_labels.push(graph1_raw[i].date);
+		    graph1_tasksCompleted.push(graph1_raw[i].tasks_completed);
+		    graph1_avgTasksCompleted.push(graph1_raw[i].avg_tasks_completed);
+		}
+
+		var data1 = {
+		    labels: graph1_labels,
+			datasets: [
+                {
+                    label: "{{ nurse.user.first_name }}" + " " + "{{ nurse.user.last_name }}",
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+	                borderColor: 'rgba(255,99,132,1)',
+	                borderWidth: 1,
+                    data: graph1_tasksCompleted
+                }, {
+                    label: "Team {{ nurse.team_id }} Average",
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+					borderColor: 'rgba(54, 162, 235, 1)',
+					borderWidth: 1,
+                    data: graph1_avgTasksCompleted
+                }
+			]
+		};
+
+		var graph2_raw = {{ graph2data|safe }};
+		console.log(graph2_raw);
+		graph2_labels = [];
+		graph2_taskDur = [];
+		graph2_avgTeamDur = [];
+		graph2_avgAllDur = [];
+		for(var i = graph2_raw.length-1; i >= 0; i--){
+		    graph2_labels.push(graph2_raw[i].date);
+		    graph2_taskDur.push(graph2_raw[i].avg_duration);
+		    graph2_avgTeamDur.push(graph2_raw[i].team_avg_duration);
+		    graph2_avgAllDur.push(graph2_raw[i].team_avg_duration);
+		}
+
+		console.log(graph2_taskDur,graph2_avgTeamDur, graph2_avgAllDur);
+
+		var data2 = {
+			    labels: graph2_labels,
+				datasets: [
+	                {
+	                    label: "{{ nurse.user.first_name }}" + " " + "{{ nurse.user.last_name }}",
+	                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+		                borderColor: 'rgba(255,99,132,1)',
+		                borderWidth: 1,
+	                    data: graph2_taskDur
+	                }, {
+	                    label: "Team {{ nurse.team_id }} Avg. Duration",
+	                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+						borderColor: 'rgba(54, 162, 235, 1)',
+						borderWidth: 1,
+	                    data: graph2_avgTeamDur
+	                }, {
+	                    label: "Overall Avg. Duration",
+	                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+						borderColor: 'rgba(75, 192, 192, 1)',
+						borderWidth: 1,
+	                    data: graph2_avgAllDur
+	                }
+				]
+			};
+
+		$( document ).ready(function() {
+			var ctx1 = document.getElementById("graph1").getContext('2d');
+			var myChart = new Chart(ctx1, {
+			    type: 'bar',
+			    data: data1,
+			    options: {
+			        title: {
+			            display: true,
+				        text: "Avg. Tasks Completed against Team Avg."
+			        },
+				    legend: {
+			            labels: {
+			                fontSize: 10,
+			            },
+				    },
+			        barValueSpacing: 20,
+						scales: {
+							yAxes: [{
+								ticks: {
+									min: 0,
+									stepSize:2,
+								}
+							}]
+						}
+			    }
+			});
+
+			var ctx2 = document.getElementById("graph2").getContext('2d');
+			var myChart = new Chart(ctx2, {
+			    type: 'bar',
+			    data: data2,
+			    options: {
+			        title: {
+			            display: true,
+				        text: "Avg. Task Duration (in Mins.) against Team & Overall Avg."
+			        },
+				    legend: {
+			            labels: {
+			                fontSize: 10,
+			            },
+				    },
+			        barValueSpacing: 20,
+						scales: {
+							yAxes: [{
+								ticks: {
+									min: 0,
+
+								}
+							}]
+						}
+			    }
+			});
+		});
+
+		//Test
+
+		function exportReport() {
+		    console.log("HELLO");
+
+
+		    html2canvas(document.getElementById('report')).then(function(canvas) {
+		        var img = canvas.toDataURL('image/png', 1.0);
+		        var doc = new jsPDF("1","mm","a4");
+		        doc.addImage(img, 'JPEG', 10, 10, 180, 150);
+		        doc.save('test.pdf');
+            });
+
+
+		}
+
+	</script>
+
+{% endblock page_javascripts %}
+
+{% block sidebar %}
+    {% include 'nurse/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+    {% include 'nurse/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active"><a href="/Nurse">Home</a></li>
+    <li class="breadcrumb-item active"><a href="/Nurse/view_nurse">View Nurse</a></li>
+    <li class="breadcrumb-item active"><a href="/Nurse/view_nurse/{{ nurse_id }}">{{ nurse_id }}: {{ nurse.user.first_name }} {{ nurse.user.last_name }}</a></li>
+    <li class="breadcrumb-item">Productivity Report</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="BenContainer" style="overflow:auto;" id="report">
+	<div class="form-row col-md-6" style="margin-bottom:15px;">
+        <h1>Nurse Details</h1>
+    </div>
+	<div class="form-row col-md-6" style="margin-bottom:15px;">
+        <button class="btn btn-warning btn-block btn-lg" id="btnExport" onclick="exportReport()">
+	        Export as PDF
+        </button>
+    </div>
+
+	<div class="form-row col-md-12">
+		<div class="form-row col-md-2" style="margin-bottom:15px;">
+			<div class="col-md-12 hidden-xs hidden-sm" style="border:1px; border-style:solid;">
+                <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
+            </div>
+		</div>
+
+		<div class="form-row col-md-10">
+			<div class="form-row col-md-6"">
+				<div class="input-group">
+                    <span class="input-group-addon">First Name</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user.first_name }}" disabled>
+                </div>
+		    </div>
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">NRIC</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.nric }}" disabled>
+                </div>
+		    </div>
+
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">Last Name</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user.last_name }}" disabled>
+                </div>
+		    </div>
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">Contact No.</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.phoneNo }}" disabled>
+                </div>
+		    </div>
+
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">Nurse ID</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user_id }}" disabled>
+                </div>
+		    </div>
+			<div class="form-row col-md-6">
+				<div class="input-group">
+                    <span class="input-group-addon">Team ID</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.team_id }}" disabled>
+                </div>
+		    </div>
+
+			<div class="form-row col-md-12">
+				<div class="input-group">
+                    <span class="input-group-addon">Address</span>
+                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.street }} {{ nurse.city }} {{ nurse.state }} {{ nurse.zip_code }}" disabled>
+                </div>
+		    </div>
+
+		</div>
+	</div>
+
+	<div class="form-row col-md-12" style="margin-bottom:15px; margin-top:15px;">
+        <h1>Productivity Statistics</h1>
+    </div>
+
+	<div class="form-row col-md-12" style="height: 300px; margin-bottom:15px" >
+		<div class="form-row col-md-6" style="height: 300px;">
+			<canvas id="graph1" style="height:100%; width:100%;">
+			</canvas>
+	    </div>
+		<div class="form-row col-md-6" style="height: 300px;">
+			<canvas id="graph2" style="height:100%; width:100%;">
+			</canvas>
+	    </div>
+	</div>
+
+	<div class="form-row col-md-12" style="margin-bottom:15px;">
+        <h1>Tasks Completed</h1>
+    </div>
+
+	<div class="card mb-2" style="padding-right:0px;padding-left:0px; margin-bottom: 15px;">
+		<div class="card-header">
+	        Tasks completed by: {{ nurse.user.first_name }} {{ nurse.user.last_name }}
+	    </div>
+	    <div class="card-body col-md-12">
+	        <div class="table-responsive">
+		        <table width="100%" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="prod_task_table" role="grid" aria-describedby="dataTables-example_info" style="width: 100%;">
+		            <thead>
+			            <tr role="row">
+				            <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Task ID</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Title</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient ID</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Patient Name</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Category</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Start Time</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Duration</th>
+				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Assisted</th>
+			            </tr>
+			        </thead>
+
+		            <tbody>
+	                {% if tasks %}
+		                {% for t in tasks %}
+		                <tr>
+			                <td><a href = "#">{{ t.task_id }}</a></td>
+			                <td><a href = "#">{{ t.task.title }}</a></td>
+			                <td><a href = "#">{{ t.task.patient.nric }}</a></td>
+			                <td><a href = "#">{{ t.task.patient.first_name }} {{ t.task.patient.last_name }}</a></td>
+			                <td>{{ t.task.category }}</td>
+			                <td>{{ t.task.start_time }}</td>
+			                <td>{{ t.task.duration }}</td>
+			                <td><a href = "#">Assisted??</a></td>
+		                </tr>
+		                {% endfor %}
+	                {% else %}
+		                <tr>
+		                    <td colspan="8">{{ nurse.user.first_name }} {{ nurse.user.last_name }} has not completed any task!</td>
+		                </tr>
+	                {% endif %}
+		            </tbody>
+		        </table>
+	        </div>
+	    </div>
+	</div>
+</div>
+{% endblock content %}

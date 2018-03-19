@@ -1,0 +1,24 @@
+.nav, .navbar, body {
+    background-color: #ff5b5b;
+    color:#333;
+}
+.active{
+    color: #333;
+}
+.nav a {
+    font-size:16px;
+    color:white;
+}
+
+.nav li a:hover {
+    background-color: rgb(124, 165, 255);
+    color: white;
+    font-weight: bold;
+}
+
+.panel-heading {
+    text-align: right;
+}
+.medium{
+    font-size: 18px;
+}

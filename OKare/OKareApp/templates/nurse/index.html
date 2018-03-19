@@ -1,14 +1,179 @@
 {% extends 'base.html' %}
 {% block page_stylesheets %}
-<style type="text/css">
-    body {
-        background-color: #f8f8f8;
-    }
+    <style type="text/css">
+        body {
+            background-color: #f8f8f8;
+        }
+        .input-group-addon {
+            min-width: 100px;
+        }
+        #page-wrapper
+        {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
 
-</style>
+        hr{
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .field-name
+        {
+            color: #586069 !important
+        }
+
+        .field-value
+        {
+
+        }
+
+        .field-wrapper:after
+        {
+
+        }
+    </style>
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
+		<script src="/static/js/Chart.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            setInterval(poll_requests, 3000);
+
+            $("#btnCreateRequest").click(function(){
+               $.ajax({
+                    type:"POST",
+                    url:"/Nurse/add_help_request",
+                    success: function(data, status, jqxhr){
+                        console.log(data);
+                        console.log(status);
+                        new PNotify({
+                            title: 'Help Request Sent',
+                            text: 'A new help request for the current task has been sent',
+                            type: 'success'
+                        });
+                    },
+                    error: function(data, status, jqxhr)
+                    {
+                        console.log(data);
+                        console.log(status);
+                    }
+               });
+            });
+        });
+
+        function poll_requests(){
+            $.ajax({
+                type: "POST",
+                url:"/Nurse/list_help_request",
+                success:function(data, status, jqxhr)
+                {
+                    console.log(data);
+                },
+                error: function(data, status, jqxhr)
+                {
+                    console.log(data);
+                }
+            });
+        }
+
+        //Graphs
+
+    var data2 = {
+	    labels: ["a","b","c","d","e","f","g"],
+		datasets: [
+            {
+                label: "{{ nurse.user.first_name }}" + " " + "{{ nurse.user.last_name }}",
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                data: [1,2,3,4,5,6,7]
+            }
+        ]
+    };
+
+    $( document ).ready(function() {
+        var ctx1 = document.getElementById("triage1").getContext('2d');
+        var myChart = new Chart(ctx1, {
+            type: 'bar',
+            data: data2,
+            options: {
+                title: {
+                    display: true,
+                    text: "Body Temperature"
+                },
+                legend: {
+                    labels: {
+                        fontSize: 10,
+                    },
+                },
+                barValueSpacing: 20,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            stepSize: 2,
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctx2 = document.getElementById("triage2").getContext('2d');
+        var myChart = new Chart(ctx2, {
+            type: 'bar',
+            data: data2,
+            options: {
+                title: {
+                    display: true,
+                    text: "Blood Pressure"
+                },
+                legend: {
+                    labels: {
+                        fontSize: 10,
+                    },
+                },
+                barValueSpacing: 20,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            stepSize: 2,
+                        }
+                    }]
+                }
+            }
+        });
+
+        var ctx3 = document.getElementById("triage3").getContext('2d');
+        var myChart = new Chart(ctx3, {
+            type: 'bar',
+            data: data2,
+            options: {
+                title: {
+                    display: true,
+                    text: "Blood Sugar"
+                },
+                legend: {
+                    labels: {
+                        fontSize: 10,
+                    },
+                },
+                barValueSpacing: 20,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            stepSize: 2,
+                        }
+                    }]
+                }
+            }
+        });
+    });
+    </script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
@@ -19,7 +184,141 @@
     {% include 'nurse/ui_components/top-menu.html' %}
 {% endblock topmenu %}
 
+<!-- Add the page hierarchy here -->
+{% block breadcrumb %}
+    <!--<li class="breadcrumb-item active">{{ page_name }}</li>-->
+{% endblock breadcrumb %}
+
 {% block content %}
 
+{% if assigned_task == none %}
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            No Task Currently Assigned
+        </h3>
+    </div>
+</div>
+{% else %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Task Title: {{ assigned_task.task.title }}
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>Description</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.title }} </p>
+            </div>
+        </div>
+        <hr>
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>Start Time</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.start_time }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row field-wrapper">
+            <div class="col-sm-1 field-name">
+                <p>Duration</p>
+            </div>
+            <div class="col-sm-11">
+                <p>{{ assigned_task.task.duration }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <button class="btn btn-warning btn-block btn-lg" id="btnCreateRequest">
+                    Request Help
+                </button>
+            </div>
+            <div class="col-sm-4 col-sm-offset-2">
+                <button class="btn btn-success btn-block btn-lg" id="btnComplete">
+                    Mark As Complete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Patient Details
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Patient Info</h4>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>First Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.first_name }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>Last Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.last_name }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row field-wrapper">
+                    <div class="col-sm-3 field-name">
+                        <p>Date of Birth</p>
+                    </div>
+                    <div class="col-sm-9">
+                        <p>{{ assigned_task.task.patient.date_of_birth }}</p>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Triage Information
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+	            <div class="row" style="height:300px; margin-bottom:15px;">
+				<div class="col-md-4" style="height:100%;">
+				    <canvas id="triage1" style="height:100%; width:100%;"></canvas>
+				</div>
+				 <div class="col-md-4" style="height:100%; border-left: 1px; border-right: 1px; border-top:0px; border-bottom: 0px; border-style:solid;">
+					 <canvas id="triage2" style="height:100%; width:100%;"></canvas>
+				</div>
+				 <div class="col-md-4" style="height:100%;">
+					 <canvas id="triage3" style="height:100%; width:100%;"></canvas>
+				</div>
+			</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock content %}
+
+
+
+
+
+
