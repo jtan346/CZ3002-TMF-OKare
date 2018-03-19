@@ -26,7 +26,7 @@ $(document).ready(function() {
 } );
 
 $(document).ready(function(){
-   //setInterval(poll_requests, 3000);
+   setInterval(poll_requests, 3000);
    setInterval(check_requests,3000);
 });
 

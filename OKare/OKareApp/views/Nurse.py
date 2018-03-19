@@ -13,6 +13,7 @@ from datetime import timedelta, date
 import calendar
 import json
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
 
 def listNurses(request):
     template = loader.get_template('nurse/list_nurse.html')
@@ -396,7 +397,7 @@ def view_team_tasklist(request):
     return render(request,'nurse/team_tasklist.html',context)
 
 
-
+@login_required(login_url='/login/')
 def index(request):
     assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
     context = { 'assigned_task':assigned_task,
@@ -412,20 +413,19 @@ def current_task(request):
 
 
 def complete_task(request):
-    # assigned_task = OngoingTask.objects.filter(nurse=request)[0]
     if request.method =="POST":
-#        try:
-            assigned_task = OngoingTask.objects.filter(nurse=Account.objects.get(nric="S9232342G")).first()
-            duration = datetime.datetime.now() - assigned_task.assigned_datetime
+        try:
+            assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
+            duration = datetime.datetime.now(datetime.timezone.utc) - assigned_task.assigned_datetime + timedelta(hours=8)
             completed_task = CompletedTask(task=assigned_task.task, date=assigned_task.task.date,
                                            nurse=assigned_task.nurse, duration=duration)
             completed_task.save()
             assigned_task.delete()
             #assignTask()
- #       except(Exception):
-            return HttpResponse("Failure")
-  #      else:
-   #         return HttpResponse("Success")
+        except(Exception):
+            return HttpResponse("FAILURE")
+        else:
+            return HttpResponse("SUCCESS")
 
 
 def add_help_request(request):
@@ -442,6 +442,7 @@ def add_help_request(request):
 
 #list help requests lists all the help requests for a person to accept
 def list_unread_help_request(request):
+    assignTask()
     account = request.user.account
     help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True).exclude(
         id__in=Notification.objects.filter(reader=account, read_type="Help Requested").values('help_request'))
