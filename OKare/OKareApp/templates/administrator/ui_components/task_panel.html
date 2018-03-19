@@ -1,4 +1,4 @@
-<div class="panel-heading"><h4>{{ patient.first_name }}  {{ patient.last_name }}</h4></div>
+<div id="{{ patient.nric }}" class="panel-heading"><h4>{{ patient.first_name }}  {{ patient.last_name }}</h4></div>
 <div class="panel-body" style="padding:10px 10px">
     <div class="list-group">
         {% if tasks %}
@@ -15,5 +15,80 @@
             <span class="list-group-item" style="text-align: center"><b>PATIENT DOES NOT HAVE ANY TASKS!</b></span>
         {% endif %}
     </div>
-    <button class="btn btn-success btn-block btn-lg" data-toggle="modal" data-target="#addTask"><i class="fa fa-plus-square fa-1x"></i> ADD TASK</button>
+    <button class="btn btn-success btn-block btn-lg" onclick="modalSetup()" data-toggle="modal" data-target="#addTaskModal"><i class="fa fa-plus-square fa-1x"></i> ADD TASK</button>
+</div>
+
+
+<!-- ADD Confirmation Modal -->
+<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Task</h4>
+            </div>
+            <form id='addForm'role="form" action="/Admin/addTask/" title="" method="post" >
+                <div class="modal-body">
+                    <input name="Nric" class="form-control" value="{{ patient.nric }}" type="text" style="display:none">
+                    <div class="input-group">
+                        <span class="input-group-addon">Title</span>
+                        <input id="addTitle" name="Title" class="form-control" placeholder="" type="text" >
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Description</span>
+                        <textarea id="addDesctiption" name="Description" class="form-control" placeholder="" ></textarea>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Category</span>
+                        <select id="addCat" name="Category" class="form-control">
+                            <option value="Hygiene">Hygiene</option>
+                            <option value="Medical_Care">Medical Care</option>
+                            <option value="Therapy">Therapy</option>
+                            <option value="Food">Food</option>
+                            <option value="Misc">Misc</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">Recurring</span>
+                        <select id="addRecurType" name="RecurType" class="form-control">
+                            <option value="">Never</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Monthly">Monthly</option>
+                        </select>
+                    </div>
+                    <div class="input-group date" id="addTimeInput">
+                        <span class="input-group-addon">Start Time</span>
+                        <input id="addStart_time" name="Start_Time" class="form-control" placeholder="" type="text">
+                        <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                    </div>
+                    <h1 class="input-group-addon">Duration</h1>
+                    <div class="input-group">
+                        <span class="input-group-addon">Hours</span>
+                        <input id="addDurationHours" name="Hours" class="form-control"value="0" min="0" max="24" type="number">
+                        <span class="input-group-addon">Minutes</span>
+                        <input id="addDurationHours" name="Minutes" class="form-control" placeholder="" min="0" max="59" type="number">
+                    </div>
+                    <div class='input-group date' id='addDateInput'>
+                        <span class="input-group-addon">Date</span>
+                        <input id="addDate" name="Date" type='text' class="form-control"/>
+                        <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                    </div>
+                    <div class='input-group'>
+                        <span class="input-group-addon">Day</span>
+                        <input id="addDay" name="Day" type='text' class="form-control" readonly/>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addTask()">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
