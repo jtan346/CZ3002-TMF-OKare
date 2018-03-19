@@ -29,7 +29,7 @@
             </div>
             <form id='addForm'role="form" action="/Admin/addTask/" title="" method="post" >
                 <div class="modal-body">
-                    <input name="Nric" class="form-control" value="{{ patient.nric }}" type="text" style="display:none">
+                    <input name="Nric" value="{{ patient.nric }}" type="text" style="display:none">
                     <div class="input-group">
                         <span class="input-group-addon">Title</span>
                         <input id="addTitle" name="Title" class="form-control" placeholder="" type="text" >
