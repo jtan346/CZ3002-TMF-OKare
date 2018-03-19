@@ -128,9 +128,9 @@ def lmaotest():
 def addNurse(request):
     if request.POST:
         print(request.POST)
+        #alidate nric
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
-
         nric = request.POST['nric']
         date_of_birth = request.POST['date_of_birth']
         street = request.POST['street']
@@ -138,10 +138,22 @@ def addNurse(request):
         state = request.POST['state']
         zip_code = request.POST['zip_code']
         phone_no = request.POST['phone_no']
+        user_name = request.POST['user_name']
+        pass_word = request.POST['pass_word']
 
-        nurse = Account(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=date_of_birth,
-                        street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="",
-                        team_id=1)
+        user = User.objects.create_user(username=user_name,
+                                        email='testtest@testetst.com',
+                                        password=pass_word,
+                                        first_name=first_name,
+                                        last_name=last_name)
+
+        #added user get id
+
+        addeduser = User.objects.filter(username=user_name).get()
+
+        nurse = Account(nric=nric, date_of_birth=date_of_birth,
+                        street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="Nurse",
+                        team_id=1,user_id=addeduser.id)
 
         nurse.save()
 
@@ -229,7 +241,7 @@ def addPatient(request):
         zip_code = request.POST['zip_code']
         phone_no = request.POST['phone_no']
 
-        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=date_of_birth,
+        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=datetime.datetime.today(),
                           ward=ward, bed=bed, street=street, city=city, state=state, zip_code=zip_code,
                           phoneNo=phone_no, team_id=1)
 
