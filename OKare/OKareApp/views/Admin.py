@@ -143,3 +143,65 @@ def addTask(Request):
 
         task.save()
         return JsonResponse({"success": True})
+
+
+def editTask(Request):
+    try:
+        title = Request.POST.get('Title');
+        desctiption = Request.POST.get('Description');
+        category = Request.POST.get('Category');
+        recurType = Request.POST.get('RecurType');
+        start_Time = Request.POST.get('Start_Time');
+        hours = Request.POST.get('Hours');
+        min = Request.POST.get('Minutes');
+        date = Request.POST.get('Date');
+        day = Request.POST.get('Day');
+        duration = timedelta(hours=int(hours),minutes=int(min))
+        id = Request.POST.get('Id')
+    except(KeyError):
+        return JsonResponse({"success": False, "error": "Error Occurred Problems check key names!"})
+    else:
+        task = Task.objects.get(id=id)
+        task.title = title
+        task.description = desctiption
+        task.category = category
+        if recurType != '':
+            task.recur_type = recurType
+        task.start_time = datetime.strptime(start_Time, '%H:%M %p')
+        task.date = datetime.strptime(date, '%d/%m/%Y')
+        task.day = day
+        task.duration = duration
+
+        task.save()
+
+        return JsonResponse({"success": True})
+
+
+def getTask(Request, id):
+    print("We Here BOI")
+    task = Task.objects.get(id=id)
+    duration = task.duration
+    hours = duration.total_seconds() // 3600
+    minutes = (duration.total_seconds() % 3600) // 60
+
+    data = {
+        'id':task.id,
+        'title': task.title,
+        'description': task.description,
+        'recur_type': task.recur_type,
+        'category': task.category,
+        'start_time': task.start_time.strftime('%H:%M %p'),
+        'date': task.date.strftime('%d/%m/%Y'),
+        'hours': hours,
+        'minutes':minutes,
+        'day': task.day
+    }
+
+    return JsonResponse(data,safe=False)
+
+
+
+
+
+
+

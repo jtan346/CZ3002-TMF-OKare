@@ -26,6 +26,8 @@
         }
 
 
+
+
         //Code for the Task Panel to show and not show!
         var prevBtnClick = -1;
         var panelOpen = false;
@@ -52,7 +54,6 @@
             });
         }
 
-
         function search(){
             console.log("search event");
             var reset = false;
@@ -71,29 +72,36 @@
 
             }
         }
+        $(document).ready(function() {
+
+        });
 
         function modalSetup() {
-            $('#addTimeInput').datetimepicker({
-                format:'LT'
-            });
-
-            $('#addDateInput').datetimepicker({
-                format:'DD/MM/YYYY',
-                onChange: setDay("addDay")
-            });
-
-            $(".modal").on("hide.bs.modal", function(e) {
+            $(".modal").on("hide.bs.modal", function (e) {
                 console.log("hidden");
                 $(".modal-body").find("input").val("");
             });
-            $('#addDateInput').on('dp.change', function(e){ console.log(e.date);setDay('addDay', e.date); })
 
-            //Used to Control the Day (changes Based on the date Input
-            function setDay(id, date){
-                var day = moment(date);
-                $('#'+id).val(day.format("dddd"));
-            }
+            $('#addTimeInput').datetimepicker({
+                format: 'LT'
+            });
+
+            $('#addDateInput').datetimepicker({
+                format: 'DD/MM/YYYY',
+                onChange: setDay("addDay")
+            });
+
+            $('#addDateInput').on('dp.change', function (e) {
+                console.log(e.date);
+                setDay('addDay', e.date);
+            })
         }
+        //Used to Control the Day (changes Based on the date Input
+        function setDay(id, date){
+            var day = moment(date);
+            $('#'+id).val(day.format("dddd"));
+        }
+
 
         function validateAdd(){
             console.log('validateAdd');
@@ -113,12 +121,29 @@
 
             return pass;
         }
+        function validateEdit(){
+            console.log('Validate Edit');
+            var pass = true;
+            //Each can only be exited when return false;
+            $('#editTaskModal').find('.form-control').each(function(){
+                if(this.value.length == 0 && this.id != 'editRecurType'){
+                    pass = false;
+                    new PNotify({
+                        type: 'error',
+                        title: 'Error Editing!',
+                        text: 'Please Ensure that all fields are filled in!'
+                    });
+                    return pass;
+                }
+            });
+
+            return pass;
+        }
+
 
         function addTask(){
             if(validateAdd()){
                 console.log('Add Task');
-                var form = document.getElementById('addForm');
-                var data = new FormData(form);
                 $.ajax({
                     type:"POST",
                     url: "/Admin/addTask/",
@@ -126,23 +151,78 @@
                     success: function (data) {
                         console.log('sucess');
                         new PNotify({
-                        type: 'success',
-                        title: 'Task Added Sucessfully!',
+                            type: 'success',
+                            title: 'Task Added Sucessfully!',
                         });
                     },
                     error: function(error){
                         console.log('fail');
                         new PNotify({
-                        type: 'error',
-                        title: 'Error Adding!',
-                        text: error
+                            type: 'error',
+                            title: 'Error Adding!',
+                            text: error.toString()
                         });
                     }
                 });
 
                 $('#addTaskModal').modal('hide');
-
             }
+        }
+
+        function editTask(){
+            if(validateEdit()){
+                console.log('Edit Task');
+                $.ajax({
+                    type:"POST",
+                    url: "/Admin/editTask/",
+                    data:$('#editForm').serialize(),
+                    success: function (data) {
+                        console.log('success');
+                        new PNotify({
+                            type: 'success',
+                            title: 'Task Edited Sucessfully!',
+                        });
+                    },
+                    error: function(error){
+                        console.log('fail');
+                        new PNotify({
+                            type: 'error',
+                            title: 'Error Adding!',
+                            text: error.toString()
+                        });
+                    }
+                });
+
+                $('#editTaskModal').modal('hide');
+            }
+        }
+
+
+        function loadEditTask(id){
+            $('#editId').val(id);
+            $.ajax({
+                type:"GET",
+                url: "/Admin/getTask/"+id,
+                success: function (data) {
+                    $('#editTitle').val(data['title']);
+                    $('#editDescription').val(data['description']);
+                    $('#editCat').val(data['category']);
+                    $('#editRecurType').val(data['recur_type']);
+                    $('#editStart_time').val(data['start_time']);
+                    $('#editDurationHours').val(data['hours']);
+                    $('#editDurationMin').val(data['minutes']);
+                    $('#editDate').val(data['date']);
+                    setDay('editDay',data['date']);
+                },
+                error: function(error){
+                    console.log(error.responseText);
+                    new PNotify({
+                        type: 'error',
+                        title: 'Error Loading Task!',
+                        text: error.responseText
+                    });
+                }
+            });
 
         }
 
