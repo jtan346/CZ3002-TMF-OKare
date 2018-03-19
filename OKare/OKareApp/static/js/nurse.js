@@ -45,6 +45,17 @@ $(document).ready(function(){
                                 title: "There are new help requests !",
                                 text: data[i]['requester'] + " needs help!",
                                 type: "info",
+                                    confirm: {
+        confirm: true,
+        buttons: [{
+            text: 'Ok',
+            addClass: 'btn-primary',
+            click: function(notice) {
+                notice.remove();
+            }
+        },
+        null]
+    },
                             });
                         }
                     }

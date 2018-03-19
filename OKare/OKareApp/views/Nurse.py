@@ -70,11 +70,14 @@ def assignTask():
         # print(i.duration)
         endDate = i.compldt
         dur = i.duration
-        intendedDate = endDate - dur
-        #print("ID:" + str(i.task_id) + " Start Date:" + str(intendedDate.strftime('%d')))
+        intendedDate = endDate - dur + timedelta(hours=8)
+        print(endDate)
+        print(dur)
+        print("ID:" + str(i.task_id) + " Start Date:" + str(intendedDate.strftime('%d')))
         if intendedDate.strftime('%d') == datetime.datetime.today().strftime('%d'):
-            completeIds.append(i.task_id)
+            completeIds.append(i.task.id)
 
+    print("Completed IDs: ")
     print(completeIds)
     toBeAssigned = Task.objects.exclude(id__in=OngoingTask.objects.all().values('task')).exclude(id__in=completeIds).filter(date=date.today()).order_by('start_time')
 
@@ -416,7 +419,7 @@ def complete_task(request):
     if request.method =="POST":
         try:
             assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
-            duration = datetime.datetime.now(datetime.timezone.utc) - assigned_task.assigned_datetime + timedelta(hours=8)
+            duration = datetime.datetime.now(datetime.timezone.utc) - assigned_task.assigned_datetime
             completed_task = CompletedTask(task=assigned_task.task, date=assigned_task.task.date,
                                            nurse=assigned_task.nurse, duration=duration)
             completed_task.save()
