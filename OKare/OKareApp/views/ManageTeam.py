@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from collections import namedtuple
 import json
-
+from django.template import loader
 
 # Create your views here.
 def index(request):
@@ -216,3 +216,27 @@ def addpatienttoteam(request):
 
     return HttpResponse("success")
     pass
+
+def addteam(request):
+    template = loader.get_template('administrator/add_team.html')
+    page_name = 'Add Team'    #Fill in here
+
+
+    context = {
+        'page_name': page_name,
+
+    }
+    return HttpResponse(template.render(context, request))
+
+def addteamtodb(request):
+    print("TEST")
+    if request.POST:
+        print("TEST2")
+        ward_no = request.POST['ward_no']
+        team_name = request.POST['team_name']
+        print(ward_no)
+
+        team = Teams(name=team_name, ward=ward_no)
+
+        team.save()
+        return HttpResponse('successful')
