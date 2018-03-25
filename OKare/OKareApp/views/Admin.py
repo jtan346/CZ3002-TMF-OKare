@@ -178,7 +178,6 @@ def editTask(Request):
 
 
 def getTask(Request, id):
-    print("We Here BOI")
     task = Task.objects.get(id=id)
     duration = task.duration
     hours = duration.total_seconds() // 3600
@@ -198,6 +197,17 @@ def getTask(Request, id):
     }
 
     return JsonResponse(data,safe=False)
+
+
+
+def deleteTask(Request, id):
+    try:
+        task = Task.objects.get(id=id)
+    except(KeyError):
+        return JsonResponse({"success": False, "error": "Error Occurred Problems check key names!"})
+    else:
+        task.delete()
+        return JsonResponse({"success": True})
 
 
 

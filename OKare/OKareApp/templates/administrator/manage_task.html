@@ -166,6 +166,7 @@
                 });
 
                 $('#addTaskModal').modal('hide');
+                setTimeout(reDisplay,600);
             }
         }
 
@@ -192,9 +193,60 @@
                         });
                     }
                 });
-
                 $('#editTaskModal').modal('hide');
+                setTimeout(reDisplay,500);
             }
+        }
+
+        function initDeleteModal(){
+            console.log("Init Delete Modal");
+            var title = $('#editTitle').val();
+            $('#deleteModalTitle').html('Delete '+title);
+        }
+
+        function reDisplay(){
+            var id = $('#taskList').find('.panel-heading').attr('id');
+            console.log(id);
+            $.ajax({
+                type:"POST",
+                url: "/Admin/get_patient_tasks/",
+                data:{'id':id},
+                success: function (data) {
+                    console.log("redisplay pass!");
+                    $("#taskList").find("div").html(data);
+                },
+                error: function(data){
+                    console.log('redisplay fail');
+                }
+            });
+
+
+        }
+
+        function deleteTask(){
+            var id = $('#editId').val();
+            $.ajax({
+                type:"GET",
+                url: "/Admin/deleteTask/"+id,
+                success: function (data) {
+                    new PNotify({
+                        type: 'success',
+                        title: 'Task Deleted',
+                        text: "Task is successfully Deleted!"
+                    });
+                },
+                error: function(error){
+                    console.log(error.responseText);
+                    new PNotify({
+                        type: 'error',
+                        title: 'Error Loading Task!',
+                        text: error.responseText
+                    });
+                }
+            });
+            $('#deleteTaskModal').modal('hide');
+            $('#editTaskModal').modal('hide');
+            setTimeout(reDisplay,500);
         }
 
 

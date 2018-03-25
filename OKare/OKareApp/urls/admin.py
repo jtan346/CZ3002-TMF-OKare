@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^addTask/', Admin.addTask, name="Add_Task"),
     url(r'^editTask/', Admin.editTask, name="Edit_Task"),
     url(r'^getTask/(?P<id>[\w-]+)$', Admin.getTask, name="Get_Task"),
+    url(r'^deleteTask/(?P<id>[\w-]+)$', Admin.deleteTask, name="Delete_Task"),
     url(r'^get_category_pie_data/', Admin.getCatData, name="Get_Cat_Data"),
     url(r'^get_manage_team_info/', ManageTeam.returnteaminfo, name="ManageTeam_returnteaminfo"),
     url(r'^get_nurse_with_no_team_info/', ManageTeam.returnnursewithnoteam, name="ManageTeam_nursewithnoteam"),
