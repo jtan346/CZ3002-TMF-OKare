@@ -58,7 +58,7 @@ def viewNurseProfile(request, nurse_id):
 def addNurseView(request):
     template = loader.get_template('nurse/add_nurse.html')
 
-    assignTask()
+    #assignTask()
     # lmaotest()
 
     lmao = CompletedTask.objects.filter(task_id='29')
@@ -477,7 +477,7 @@ def complete_task(request):
     if request.method =="POST":
         try:
             assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
-            duration = datetime.datetime.now(datetime.timezone.utc) - assigned_task.assigned_datetime
+            duration = datetime.datetime.now() - assigned_task.assigned_datetime
             print(duration)
             completed_task = CompletedTask(task=assigned_task.task, date=assigned_task.task.date,
                                            nurse=assigned_task.nurse, duration=duration)
@@ -485,6 +485,7 @@ def complete_task(request):
             assigned_task.delete()
             #assignTask()
         except(Exception):
+            print(Exception)
             return HttpResponse("FAILURE")
         else:
             return HttpResponse("SUCCESS")
@@ -507,7 +508,7 @@ def add_help_request(request):
 @login_required
 @user_passes_test(is_nurse)
 def list_unread_help_request(request):
-    assignTask()
+    #assignTask()
     account = request.user.account
     help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True).exclude(
         id__in=Notification.objects.filter(reader=account, read_type="Help Requested").values('help_request'))
