@@ -205,3 +205,16 @@ class Notification(models.Model):
 
     def __str__(self):
         return "reader: {} for help request {}".format(self.reader.fullname(), self.help_request.id)
+
+class NotificationBell(models.Model):
+    types = (
+        ("Broadcast", "Broadcast"), #To All Nurses/Admins
+        ("Response", "Response"),   #When my Help Request is responded to (Single Nurse Target)
+        ("Request", "Request"),     #When there is new Help Request (Broadcast to all Nurses)
+        ("Task", "Task")            #When there is a new Task assigned (From ongoingtask, single target)
+    ),
+    target = models.ForeignKey(Account, null=True, blank=True), #Notification for Target (Single) Nurse, when type = Response, else null
+    task = models.ForeignKey(Task, null=True, blank=True), #Only for ongoing task and help request, can be null
+    type = models.CharField(choices=types, max_length=100, null=True, blank=True),
+    title = models.CharField(max_length=100, null=True, blank=True),
+    status = models.BooleanField(default=True) #Set to false if notification is over by event (i.e. when help request is fulfilled or task is completed

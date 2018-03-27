@@ -15,6 +15,7 @@ import json
 from django.core import serializers
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.hashers import make_password, check_password
+from django.views.generic.list import ListView
 
 def is_nurse(user):
     return user.account.type == "Nurse"
@@ -458,7 +459,8 @@ def index(request):
     assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
     context = { 'assigned_task':assigned_task,
                 'name': request.user.first_name,
-                'usertype': request.user.account.type}
+                'usertype': request.user.account.type,
+                'accountid': request.user.account.nric}
 
     return render(request,'nurse/index.html', context)
 
@@ -609,3 +611,74 @@ def accept_help_request(request):
     help_request.save()
     return HttpResponse("OKAY")
 
+class nurseNotifications(ListView):
+    template_name = 'nurse/ui_components/notificationBell.html'
+
+    def get_queryset(self):
+        dataRec = self.kwargs['slug']
+        data2 = dataRec.replace('-', ' ').split(' ')
+        curAccount = Account.objects.filter(nric=data2[0]).get()
+        print(curAccount)
+
+        myNotifications = NotificationBell.objects.filter(type="Broadcast", status=True) | NotificationBell.objects.filter(type="Request", status=True) | NotificationBell.objects.filter(target=curAccount, status=True)
+
+        return myNotifications
+
+    def get_context_data(self, **kwargs):
+
+        dataRec = self.kwargs['slug']
+        data2 = dataRec.replace('-', ' ').split(' ')
+        curAccount = Account.objects.filter(nric=data2[0]).get()
+        print(curAccount)
+
+        myNotifications = NotificationBell.objects.filter(type="Broadcast", status=True) | NotificationBell.objects.filter(type="Request", status=True) | NotificationBell.objects.filter(target=curAccount, status=True)
+
+        context = {
+            'myNotifications': myNotifications,  #All notifications
+        }
+        return context
+
+def updateNotiCount(request):
+    print("updateNotiCount")
+    request.session['unreadNotifications'] = 0
+    return HttpResponse('')
+
+#upon system start (currently should have no notifications at startup) populate Notification Model
+def initNotifications(request):
+
+    #At startup, there should only be new (Ongoing) Tasks after assignation by algorithm, no help requests or broadcasts.
+
+    allOngoingTasks = OngoingTask.objects.all()
+
+    for n in allOngoingTasks:
+        newNoti = NotificationBell(type="Task", target=n.nurse, task=n.task, title="New Task")
+        newNoti.save()
+
+    return HttpResponse('')
+
+#upon login (Where to put this?) get number of UNREAD notifications
+def initUserNotifications(request):
+    curAccount = request.user
+    myNotifications = []
+
+    #What are notifications: All Help Requests that are active currently (None at startup), and new tasks assigned (None at startup)
+
+    #Get user's ID as OngoingTasks are tagged by Nurse (Account)
+    curTask = OngoingTask.objects.filter(nurse=request.user).first()
+
+    if curTask:
+        myNotifications.append(curTask)
+
+    #Get all help requests currently active (No response/etc)
+    #for you sc:
+
+
+
+    #If I have have requested help (active help request), tell me who has responded to it
+    #for you sc
+
+
+    #upon login, this is the number of UNREAD notifications
+    request.session['unreadNotifications'] = myNotifications.count()
+
+    return HttpResponse('')

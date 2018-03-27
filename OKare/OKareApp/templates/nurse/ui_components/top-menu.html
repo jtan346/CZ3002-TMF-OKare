@@ -1,55 +1,35 @@
+<script>
+//Function to refresh div and pull from django
+
+$('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}");
+
+setInterval(function(){
+    $('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}");
+    console.log("reloading!");
+},10000);
+
+//Function for updating Noti Count after clicking Bell
+
+function updateNotiCount() {
+    //console.log("{{outstandingCount}}");
+    $.ajax({
+        type: 'POST', //GET, POST, PUT or DELETE
+        url: '/Nurse/updateNotiCount/',
+        data: {},
+        success: function (msg) {
+            //On Successful service call
+            //alert(accountType+"'s response (Has Comment: "+ MOHAhasComment +") for "+curPlanID+ " has been saved!");
+            console.log("Calling updateNotiCount in Django");
+        }
+        //csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+    });
+}
+
+</script>
+
 <ul class="nav navbar-top-links navbar-right">
     <!-- /.dropdown -->
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-messages">
-            <li>
-                <a href="#">
-                    <div>
-                        <strong>John Smith</strong>
-                        <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                    </div>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a href="#">
-                    <div>
-                        <strong>John Smith</strong>
-                        <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                    </div>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a href="#">
-                    <div>
-                        <strong>John Smith</strong>
-                        <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                    </div>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a class="text-center" href="#">
-                    <strong>Read Alerts</strong>
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </li>
-        </ul>
-        <!-- /.dropdown-messages -->
-    </li>
+	{% include "../ui_components/notificationBell.html" %}
     <!-- /.dropdown -->
     <li class="dropdown">
         <a href="{% url 'logout' %}"><i class="fa fa-power-off fa-fw"></i> Logout</a>

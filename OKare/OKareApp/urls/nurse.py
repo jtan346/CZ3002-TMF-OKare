@@ -1,5 +1,7 @@
 from django.conf.urls import url
 from OKareApp.views import Nurse
+from django.views.generic import TemplateView
+
 
 urlpatterns = [
     #SC/Joey - Nurse Homepage
@@ -49,4 +51,9 @@ urlpatterns = [
     #Ben/Haode - Add new patient or nurse
     url(r'^add_patient_into_db/$', Nurse.addPatient, name="add_patient_into_db"),
     url(r'^add_nurse_into_db/$', Nurse.addNurse, name="add_nurse_into_db"),
+
+    #Testing for Noti
+    url(r'^updateNotiCount/', Nurse.updateNotiCount),
+    url(r'^notificationBell/(?P<slug>[\w-]+)/$', Nurse.nurseNotifications.as_view(), name='notificationBell'), #slug = my account id
+
 ]

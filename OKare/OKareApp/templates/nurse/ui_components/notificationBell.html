@@ -1,0 +1,31 @@
+<li class="dropdown" id="alertBellNotification">
+    <a class="dropdown-toggle" data-toggle="dropdown" onclick="updateNotiCount();">
+        {% if unread > 0 %}
+            <span class="badge badge-pill badge-warning" id="change1">{{ unread }}</span>
+        {% endif %}
+        <i class="fa fa-bell fa-fw"></i>
+        <i class="fa fa-caret-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-messages">
+
+        <strong class="dropdown-header" style="margin-top:10px">Recent Notifications</strong>
+
+        <li class="divider"></li>
+
+        <li>
+            <a href="#">
+                <div>
+                    <strong>John Smith</strong>
+                    <span class="pull-right text-muted">
+                                    <em>Yesterday</em>
+                                </span>
+                </div>
+                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+            </a>
+        </li>
+
+        <li class="divider"></li>
+        <strong class="dropdown-header" style="margin-top:10px">Last Updated: </strong>
+    </ul>
+    <!-- /.dropdown-messages -->
+</li>
