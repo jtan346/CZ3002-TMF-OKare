@@ -41,7 +41,9 @@
                 'street' : document.getElementById('street').value,
                 'city' : document.getElementById('city').value,
                 'state' : document.getElementById('state').value,
-                'zip_code' : document.getElementById('zipCode').value
+                'zip_code' : document.getElementById('zipCode').value,
+	            'user_name': document.getElementById('user_name').value,
+	            'pass_word': document.getElementById('pass_word').value
             };
 
             $('#alert').hide(0);
@@ -80,7 +82,7 @@
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
     <li class="breadcrumb-item"><a href="/Nurse/view_nurse">View Nurse</a></li>
-    <li class="breadcrumb-item active"></li>
+    <li class="breadcrumb-item active">{{ page_name }}</li>
 {% endblock breadcrumb %}
 
 {% block content %}
@@ -140,6 +142,23 @@
                         </div>
                     </div>
 
+	                <hr>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Username</span>
+                                <input id="user_name" name="street" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Password</span>
+                                <input id="pass_word" name="city" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+
                     <hr>
 
                     <div class="row">
@@ -169,6 +188,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
                 <div class="hidden-md hidden-lg"><br></div>
             </form>

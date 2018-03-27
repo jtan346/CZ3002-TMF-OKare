@@ -16,12 +16,10 @@
             <li>
                 <div class="article-container" style="color:#ffffff; height:120px; border:1px;">
                   <div class="article col-md-6" style="margin-top:15px;">
-                        <img src="{{STATIC_URL}}img/profile_picture.svg"  id ="profilePic" alt = "image" style="height:100%;"/>
+                        <img src="{{STATIC_URL}}img/profile_picture.svg" id ="profilePic" alt = "image" style="max-height:5em;"/>
                   </div>
-                  <div class="article col-md-6" style="margin-top:20px; color: black; padding: 0px;">
-	                  <p>Welcome,</p>
-	                  <p>{{ user_name }}</p>
-	                  <p>{{ user_type }}</p>
+                  <div class="article col-md-6" style="margin-top:20px; color: black    ;">
+	                  <p>Welcome,   {{ name }}        {{ usertype }}</p>
                   </div>
                 </div>
             </li>
@@ -36,6 +34,9 @@
             </li>
             <li>
                 <a href="{% url 'view_team_tasklist' %}"><i class="fa fa-users fa-fw"></i>Teams</a>
+            </li>
+            <li>
+                <a href="{% url 'list_help_request' %}"><i class="fa fa-users fa-fw"></i>Help Requests</a>
             </li>
         </ul>
     </div>

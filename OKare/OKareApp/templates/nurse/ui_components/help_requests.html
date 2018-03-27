@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-info" id="created_request_table_panel">
+            <div class="panel-heading">
+               <h3 class="panel-title"> Help requests for your current task </h3>
+            </div>
+            <div class="panel-body table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="table-team-created">
+                    <thead>
+                        <tr>
+                            <th>Help Request ID</th>
+                            <th>Status</th>
+                            <th>Time created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for help_request in created_help_requests %}
+                        <tr>
+                            <td>{{ help_request.id }} </td>
+                            <td>
+                                {% if help_request.status == None %}
+                                No one has accepted this help request
+                                {% else %}
+                                    {{ help_request.status }}
+                                {% endif %}
+                            </td>
+                            <td>{{ task.time_created }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-info" id="allowed_request_table_panel">
+            <div class="panel-heading">
+               <h3 class="panel-title"> List of current help requests in your team </h3>
+            </div>
+            <div class="panel-body table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="table-team-allowed">
+                    <thead>
+                        <tr>
+                            <th>Help Request ID</th>
+                            <th>Request Initiator</th>
+                            <th>Task Title</th>
+                            <th>Time Requested</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for help_request in allowed_help_requests %}
+                        <tr>
+                            <td>{{ help_request.id }} </td>
+                            <td>{{ help_request.requester.fullname }}</td>
+                            <td>{{ help_request.task.title }}</td>
+                            <td>{{ help_request.time_created }}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" onclick="accept_request({{ help_request.id }})">
+                                    Help your colleague!
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

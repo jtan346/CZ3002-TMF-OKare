@@ -1,136 +1,4 @@
-{% extends 'base.html' %}
-{% block page_stylesheets %}
-    <style type="text/css">
-        body {
-            background-color: #f8f8f8;
-        }
-        .input-group-addon {
-            min-width: 100px;
-        }
-        #page-wrapper
-        {
-            padding-top: 30px;
-            padding-bottom: 30px;
-        }
-
-        hr{
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        .field-name
-        {
-            color: #586069 !important
-        }
-
-        .field-value
-        {
-
-        }
-
-        .field-wrapper:after
-        {
-
-        }
-    </style>
-{% endblock page_stylesheets %}
-
-{% block page_javascripts %}
-	<script src="/static/js/jquery.dataTables.min.js"></script>
-	<script src="/static/js/dataTables.bootstrap.min.js"></script>
-		<script src="/static/js/Chart.bundle.min.js"></script>
-
-	<script src="/static/js/nurse.js"></script>
-    <script>
-
-        $(document).ready(function(){
-            setTimeout(render_current_task,30000);
-            $("#btnCreateRequest").click(create_request);
-
-            $("#btnCompleteTask").click(complete_task);
-
-            initGraphs();
-        });
-
-        function create_request(){
-               $.ajax({
-                    type:"POST",
-                    url:"/Nurse/add_help_request",
-                    success: function(data, status, jqxhr){
-                        console.log(data);
-                        console.log(status);
-                        new PNotify({
-                            title: 'Help Request Sent',
-                            text: 'A new help request for the current task has been sent',
-                            type: 'success'
-                        });
-                    },
-                    error: function(data, status, jqxhr)
-                    {
-                        console.log(data);
-                        console.log(status);
-                    }
-               });
-        }
-
-        function complete_task()
-        {
-            $.ajax({
-                type: "POST",
-                url:"/Nurse/complete_task/",
-                success:function(data, status, jqxhr)
-                {
-                    console.log(data);
-                    if(data === "SUCCESS")
-                    {
-                        new PNotify({
-                            title: 'Task is completed',
-                            text: 'Your task is indicated as complete',
-                            type: 'success'
-                        });
-                        setTimeout(function(){
-                            window.location.reload();
-                        },4000);
-                    }
-                    else
-                    {
-                         console.log(data);
-                         new PNotify({
-                            title: 'Unable to mark task as complete',
-                            text: "We couldn't mark your task as complete, please contact the adminstrator",
-                            type: 'error'
-                         });
-                    }
-                },
-                error: function(data, status, jqxhr)
-                {
-                       new PNotify({
-                            title: "Can't connect",
-                            text: "We couldn't connect to the server",
-                            type: 'error'
-                       });
-                }
-            });
-
-        }
-
-        function render_current_task()
-        {
-            $.ajax({
-                type: "POST",
-                url:"/Nurse/list_help_request",
-                success:function(data, status, jqxhr)
-                {
-                    $("#wrapper").html(data);
-                    $("#btnCreateRequest").click(create_request);
-                    $("#btnCompleteTask").click(complete_task);
-                     initGraphs()
-                }
-            });
-        }
-
-	function initGraphs() {
-		console.log("Load");
+<script>
         var data2 = {
             labels: ["a", "b", "c", "d", "e", "f", "g"],
             datasets: [
@@ -144,7 +12,8 @@
             ]
         };
 
-
+        $(document).ready(function () {
+            try {
                 var ctx1 = document.getElementById("triage1").getContext('2d');
                 var myChart = new Chart(ctx1, {
                     type: 'bar',
@@ -222,27 +91,12 @@
                         }
                     }
                 });
+            }
+            catch (err) {
+            }
+        });
 
-
-    }
-
-    </script>
-{% endblock page_javascripts %}
-
-{% block sidebar %}
-    {% include 'nurse/ui_components/sidebar.html' %}
-{% endblock sidebar %}
-
-{% block topmenu %}
-    {% include 'nurse/ui_components/top-menu.html' %}
-{% endblock topmenu %}
-
-<!-- Add the page hierarchy here -->
-{% block breadcrumb %}
-    <!--<li class="breadcrumb-item active">{{ page_name }}</li>-->
-{% endblock breadcrumb %}
-
-{% block content %}
+</script>
 
 {% if assigned_task == none %}
 <div class="panel panel-success">
@@ -386,10 +240,3 @@
     </div>
 </div>
 {% endif %}
-{% endblock content %}
-
-
-
-
-
-

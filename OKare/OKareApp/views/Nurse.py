@@ -13,6 +13,7 @@ from datetime import timedelta, date
 import calendar
 import json
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
 
 def listNurses(request):
     template = loader.get_template('nurse/list_nurse.html')
@@ -44,17 +45,92 @@ def viewNurseProfile(request, nurse_id):
 
 def addNurseView(request):
     template = loader.get_template('nurse/add_nurse.html')
+
+    assignTask()
+    # lmaotest()
+
+    lmao = CompletedTask.objects.filter(task_id='29')
+    for i in lmao:
+        print(i.compldt)
+
     context = {
-                'page_name': "Adding a Nurse",
+                'page_name': "Add Nurse",
                }
     return HttpResponse(template.render(context, request))
+
+def assignTask():
+
+    allCompleteTasks = CompletedTask.objects.all()
+
+    #Get all tasks that are not completed/ongoing and need to be started (time < now)
+
+    completeIds = []
+    for i in allCompleteTasks:
+        # print(i.compldt)
+        # print(i.duration)
+        endDate = i.compldt
+        dur = i.duration
+        intendedDate = endDate - dur + timedelta(hours=8)
+        print(endDate)
+        print(dur)
+        print("ID:" + str(i.task_id) + " Start Date:" + str(intendedDate.strftime('%d')))
+        if intendedDate.strftime('%d') == datetime.datetime.today().strftime('%d'):
+            completeIds.append(i.task.id)
+
+    print("Completed IDs: ")
+    print(completeIds)
+    toBeAssigned = Task.objects.exclude(id__in=OngoingTask.objects.all().values('task')).exclude(id__in=completeIds).filter(date=date.today()).order_by('start_time')
+
+    #Emulate Task Queue
+
+    taskQueue = []
+
+    for a in toBeAssigned:
+        print(a.id, a.start_time, datetime.datetime.now().time(), a.start_time < datetime.datetime.now().time())
+        if a.start_time < datetime.datetime.now().time():
+            taskQueue.append(a)
+
+    #print(len(taskQueue))
+
+    for i in taskQueue:
+        #DO THE ASSIGNING GOD
+        #GOD SAID LET THERE BE TASKS FOR YOU SLAVE
+        #assign i to a nurse
+
+        # Find free nurse(s) in team where patient is from:
+        patient = Patient.objects.filter(nric=i.patient_id).get()
+
+        # Requery every round because free nurses must be updated, just assign to first nurse in queryset if any
+        freeNurses = Account.objects.exclude(nric__in=OngoingTask.objects.all().values('nurse_id')).filter(type='Nurse').filter(team_id=patient.team_id)
+        #print(patient.team_id)
+
+        #Only if got free nurses in team god
+        if freeNurses:
+            print("Free Nurse ID: " + str(freeNurses[0].nric))
+            print("Task ID: " + str(i.id))
+            ongoingtask = OngoingTask(assigned_datetime=datetime.datetime.now(), nurse_id=freeNurses[0].nric, task_id=i.id)
+            ongoingtask.save()
+
+    chek = OngoingTask.objects.all()
+    for bla in chek:
+        print(bla)
+
+def lmaotest():
+    #delete task 29 from ongoing and put into completed
+    tasktodel = OngoingTask.objects.filter(task_id='29').get()
+    print("HERE" + str(tasktodel.task_id))
+    nownow = str(datetime.datetime.today())
+    print(nownow) #wtf
+    compltask = CompletedTask(duration=datetime.timedelta(minutes=30), date=datetime.date.today(), compldt=datetime.datetime.today(), nurse_id=tasktodel.nurse_id, task_id=tasktodel.task_id)
+    compltask.save()
+    tasktodel.delete()
 
 def addNurse(request):
     if request.POST:
         print(request.POST)
+        #alidate nric
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
-
         nric = request.POST['nric']
         date_of_birth = request.POST['date_of_birth']
         street = request.POST['street']
@@ -62,10 +138,22 @@ def addNurse(request):
         state = request.POST['state']
         zip_code = request.POST['zip_code']
         phone_no = request.POST['phone_no']
+        user_name = request.POST['user_name']
+        pass_word = request.POST['pass_word']
 
-        nurse = Account(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=date_of_birth,
-                        street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="",
-                        team_id=1)
+        user = User.objects.create_user(username=user_name,
+                                        email='testtest@testetst.com',
+                                        password=pass_word,
+                                        first_name=first_name,
+                                        last_name=last_name)
+
+        #added user get id
+
+        addeduser = User.objects.filter(username=user_name).get()
+
+        nurse = Account(nric=nric, date_of_birth=date_of_birth,
+                        street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="Nurse",
+                        team_id=1,user_id=addeduser.id)
 
         nurse.save()
 
@@ -135,7 +223,7 @@ def viewPatientProfile(request, patient_id):
 def addPatientView(request):
     template = loader.get_template('nurse/add_patient.html')
     context = {
-                'page_name': "Adding a Patient",
+                'page_name': "Add Patient",
                }
     return HttpResponse(template.render(context, request))
 
@@ -153,7 +241,7 @@ def addPatient(request):
         zip_code = request.POST['zip_code']
         phone_no = request.POST['phone_no']
 
-        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=date_of_birth,
+        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=datetime.datetime.today(),
                           ward=ward, bed=bed, street=street, city=city, state=state, zip_code=zip_code,
                           phoneNo=phone_no, team_id=1)
 
@@ -316,54 +404,152 @@ def generateProductivityReport(request, nurse_id):
 
 def view_team_tasklist(request):
     #team is from nurse's team, retrieved from user, awaiting completion of login
-    team = 1
-    team_tasks = Task.object.fliter(patient__team__in=team)
-    context = { "team_tasks": team_tasks }
+    team_tasks = Task.objects.filter(start_time__gte=datetime.datetime.now(), patient__team=request.user.account.team).exclude(~Q(date__day=datetime.datetime.now().day), Q(recur_type='Monthly') | Q(recur_type__isnull=True))
+    context = { "team_tasks": team_tasks,
+                'name': request.user.first_name,
+                'usertype': request.user.account.type
+                }
     return render(request,'nurse/team_tasklist.html',context)
 
-#ListView
-class TeamTaskList(ListView):
-    context_object_name="team_tasks"
-    template_name = 'nurse/team_tasklist.html'
-    #model=
-    #queryset=
 
-    def get_queryset(self):
-        today = datetime.now().date()
-        #first, filter start_time greater or equal to the current time - gets all tasks whose start time
-        #then , exclude those task date's day is not before today's day and
-        return Task.objects.filter(start_time__gte=datetime.now(), patient__team__in=[1]).exclude(~Q(date__day=datetime.now().day), Q(recur_type='Monthly') | Q(recur_type__isnull=True))
-
-        #return Task.objects.filter(start_time__gte=datetime.now(), patient__team__in=[1]).exclude(recur_type="Monthly",date__day__lt=today.day,date__day__gt=today.day).exclude(recur_type="Weekly", day__iexact=today.weekday()).exclude(id__in=OngoingTask.objects.all().values_list('task__id', flat=True))
-#       user = self.request.
-#       return Tasks.object.filter(patient__team__in=self.)
-
+@login_required(login_url='/login/')
 def index(request):
-    #assigned_task = OngoingTask.objects.filter(nurse=request)[0]
-    assigned_task = OngoingTask.objects.filter(nurse=Account.objects.get(nric="S9232342G")).first()
-    context = { 'assigned_task':assigned_task }
+    assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
+    context = { 'assigned_task':assigned_task,
+                'name': request.user.first_name,
+                'usertype': request.user.account.type}
+
     return render(request,'nurse/index.html', context)
+
+def current_task(request):
+    assigned_task = OngoingTask.objects.filter(nurse=request.user).first()
+    context = { 'assigned_task':assigned_task }
+    return render(request,'nurse/ui_components/current_task.html', context)
+
+
+def complete_task(request):
+    if request.method =="POST":
+        try:
+            assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
+            duration = datetime.datetime.now(datetime.timezone.utc) - assigned_task.assigned_datetime
+            completed_task = CompletedTask(task=assigned_task.task, date=assigned_task.task.date,
+                                           nurse=assigned_task.nurse, duration=duration)
+            completed_task.save()
+            assigned_task.delete()
+            #assignTask()
+        except(Exception):
+            return HttpResponse("FAILURE")
+        else:
+            return HttpResponse("SUCCESS")
+
 
 def add_help_request(request):
     if request.method == "POST":
         try:
-            account = get_object_or_404(Account, nric="S9232342G")
-            task = OngoingTask.objects.get(nurse=account).task
-            help_request = HelpRequest(requester=account, helper=None, task=task)
-            # help_request.save()
+            account = request.user.account
+            current_task = OngoingTask.objects.get(nurse=account)
+            help_request = HelpRequest(requester=account, helper=None, task=current_task.task, ongoing_task=current_task)
+            help_request.save()
         except(KeyError, Account.DoesNotExist):
             return HttpResponse("Failure")
         else:
             return HttpResponse("Success")
 
-def list_help_request(request):
-    account = get_object_or_404(Account, nric="S9232342G")
-    help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account))
+#list help requests lists all the help requests for a person to accept
+def list_unread_help_request(request):
+    assignTask()
+    account = request.user.account
+    help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True).exclude(
+        id__in=Notification.objects.filter(reader=account, read_type="Help Requested").values('help_request'))
+
+    print(help_requests)
+    for help_request in help_requests:
+        i_read_this = Notification(reader=account, help_request=help_request, read_type="Help Requested")
+        i_read_this.save()
+
     context = { 'help_requests' : help_requests }
-    return JsonResponse(context)
+    # this gives you a list of dicts
+    raw_data = serializers.serialize('python', help_requests)
+    # now extract the inner `fields` dicts
+    actual_data = [d['fields'] for d in raw_data]
 
+    for request in actual_data:
+        nric = request['requester']
+        request['requester'] = Account.objects.get(nric=nric).fullname()
+        del request['time_created']
+
+    # and now dump to JSON
+    return JsonResponse(actual_data,safe=False)
+
+def list_allowed_help_requests(request):
+    account = request.user.account
+    allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True).\
+        exclude(helper=account)
+
+    try:
+        ongoing_task = OngoingTask.objects.get(nurse=account)
+        created_help_requests = HelpRequest.objects.filter(requester=account, ongoing_task=ongoing_task)
+    except (OngoingTask.DoesNotExist):
+        created_help_requests = None
+
+    context = {
+        'created_help_requests' : created_help_requests,
+        'allowed_help_requests' : allowed_help_requests
+    }
+
+    return render(request, 'nurse/help_requests.html', context)
+
+def reload_allowed_help_requests(request):
+    account = request.user.account
+    allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True).\
+        exclude(ongoing_task__in=HelpRequest.objects.filter(helper=account).values('ongoing_task'))
+
+    try:
+        ongoing_task = OngoingTask.objects.get(nurse=account)
+        created_help_requests = HelpRequest.objects.filter(requester=account, ongoing_task=ongoing_task)
+    except (OngoingTask.DoesNotExist):
+        created_help_requests = None
+
+    context = {
+        'created_help_requests' : created_help_requests,
+        'allowed_help_requests' : allowed_help_requests
+    }
+
+    return render(request, 'nurse/ui_components/help_requests.html', context)
+
+#check help request returns a list of help requests initiated by the account to see if they are acepted
 def check_help_request(request):
-    pass
+    account = request.user.account
+    try:
+        ongoing_task = OngoingTask.objects.get(nurse=account)
+        help_requests = HelpRequest.objects.filter(requester=account, acknowledgement=False, helper__isnull=False, ongoing_task=ongoing_task).\
+            exclude(id__in=Notification.objects.filter(reader=account, read_type="Help Accepted").values('help_request'))
 
+        for help_request in help_requests:
+            i_read_this = Notification(reader=account, help_request=help_request, read_type="Help Accepted")
+            i_read_this.save()
 
+        # .update(acknowledgement=True)
+        # this gives you a list of dicts
+        raw_data = serializers.serialize('python', help_requests)
+        # now extract the inner `fields` dicts
+        actual_data = [d['fields'] for d in raw_data]
+
+        for request in actual_data:
+            nric = request['helper']
+            request['helper'] = Account.objects.get(nric=nric).fullname()
+            del request['time_created']
+    except(Exception):
+        actual_data = {}
+
+    # and now dump to JSON
+    return JsonResponse(actual_data,safe=False)
+
+def accept_help_request(request):
+    account = request.user.account
+    help_request_id = request.POST.get("id")
+    help_request = HelpRequest.objects.get(id=help_request_id)
+    help_request.helper = account
+    help_request.save()
+    return HttpResponse("OKAY")
 

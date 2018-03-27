@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}{{ page_name }}{% endblock title %}
+
+{% block page_stylesheets %}
+    <style type="text/css">
+        body {
+            background-color: #f8f8f8;
+        }
+        .input-group-addon {
+            min-width: 100px;
+        }
+        .textarea-message {
+            width: 100%;
+            resize: vertical;
+        }
+    </style>
+{% endblock page_stylesheets %}
+
+{% block page_javascripts %}
+    <script>
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                var csrfToken = getCookie('csrftoken');
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            }
+        });
+
+        function discard() {
+            if (confirm('Are you sure you want to discard all changes?')) {
+                window.location.reload();
+            } else {
+
+            }
+        }
+
+        function submit() {
+            console.log("LOLFUCK");
+            var data = {
+                'ward_no' : document.getElementById('ward_no').value,
+                'team_name' : document.getElementById('team_name').value
+
+            };
+
+            $('#alert').hide(0);
+            $('#input').hide(500);
+
+            $.ajax({
+                url: '/Admin/addteamtodb/',
+                type: 'POST',
+                data: data,
+                success: function (msg) {
+                    if (msg=="successful") {
+                        $('#input').show(500);
+                        $('#alert').show(500);
+                    }
+                    else {
+                        alert("An error has occurred!");
+                    }
+                },
+                error: function (msg, status, jqxhr) {
+                    {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
+                }
+            });
+        }
+    </script>
+{% endblock page_javascripts %}
+
+{% block sidebar %}
+    {% include 'nurse/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+    {% include 'nurse/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+<!-- Add the page hierarchy here -->
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
+    <li class="breadcrumb-item active">{{ page_name }}</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Add Team</h1>
+        </div>
+    </div>
+
+    <div id="alert" class="row" style="display: none">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Success!</strong> Changes has been successfully saved!
+            </div>
+        </div>
+    </div>
+
+    <div id="input">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
+            </div>
+
+            <form id="input_form" method="post"> {% csrf_token %}
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Team Name</span>
+                                <input id="team_name" name="Teamname" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Ward</span>
+                                <input id="ward_no" name="first_name" class="form-control" placeholder="" type="text" value="">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+
+        <div id="SaveDiscard" class="row">
+            <div class="col-md-2 col-md-offset-8">
+                <button type="button" class="btn btn-success btn-block" onclick="submit()">Save</button>
+            </div>
+            <div class="hidden-md hidden-lg"><br></div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

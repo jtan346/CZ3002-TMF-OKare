@@ -22,5 +22,7 @@ urlpatterns = [
     url(r'^add_nurse_to_team/', ManageTeam.addnursetoteam, name="ManageTeam_addnursetoteam"),
     url(r'^get_patient_in_team/', ManageTeam.getpatientinteam, name="ManageTeam_getpatientinteam"),
     url(r'^get_patient_with_no_team_info/', ManageTeam.getpatientwithnoteaminfo, name="ManageTeam_getpatientwithnoteaminfo"),
-    url(r'^add_patient_to_team/', ManageTeam.addpatienttoteam, name="ManageTeam_addpatienttoteam")
+    url(r'^add_patient_to_team/', ManageTeam.addpatienttoteam, name="ManageTeam_addpatienttoteam"),
+    url(r'^add_team/', ManageTeam.addteam, name="addteam"),
+    url(r'^addteamtodb/', ManageTeam.addteamtodb, name="addteamtodb")
 ]
