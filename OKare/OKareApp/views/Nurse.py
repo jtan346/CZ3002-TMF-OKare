@@ -136,6 +136,8 @@ def lmaotest():
     compltask.save()
     tasktodel.delete()
 
+@login_required
+@user_passes_test(is_nurse)
 def addNurse(request):
     if request.POST:
         print(request.POST)
@@ -171,6 +173,8 @@ def addNurse(request):
 
         return HttpResponse('successful')
 
+@login_required
+@user_passes_test(is_nurse)
 def updateNurseDetail(request):
     if request.POST:
         try:
@@ -255,6 +259,8 @@ def addPatientView(request):
                }
     return HttpResponse(template.render(context, request))
 
+@login_required
+@user_passes_test(is_nurse)
 def addPatient(request):
     if request.POST:
         nric = request.POST['nric']
@@ -278,6 +284,8 @@ def addPatient(request):
         patient.save()
         return HttpResponse('successful')
 
+@login_required
+@user_passes_test(is_nurse)
 def updatePatientDetail(request):
     if request.POST:
         try:
@@ -318,6 +326,8 @@ def updatePatientDetail(request):
         else:
             return HttpResponse('successful')
 
+@login_required
+@user_passes_test(is_nurse)
 def generateProductivityReport(request, nurse_id):
     template = loader.get_template('nurse/productivity_report.html')
 
@@ -452,17 +462,21 @@ def index(request):
 
     return render(request,'nurse/index.html', context)
 
-def current_task(request):
-    assigned_task = OngoingTask.objects.filter(nurse=request.user).first()
+@login_required
+@user_passes_test(is_nurse)
+def list_current_task(request):
+    assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
     context = { 'assigned_task':assigned_task }
     return render(request,'nurse/ui_components/current_task.html', context)
 
-
+@login_required
+@user_passes_test(is_nurse)
 def complete_task(request):
     if request.method =="POST":
         try:
             assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
             duration = datetime.datetime.now(datetime.timezone.utc) - assigned_task.assigned_datetime
+            print(duration)
             completed_task = CompletedTask(task=assigned_task.task, date=assigned_task.task.date,
                                            nurse=assigned_task.nurse, duration=duration)
             completed_task.save()
@@ -473,7 +487,8 @@ def complete_task(request):
         else:
             return HttpResponse("SUCCESS")
 
-
+@login_required
+@user_passes_test(is_nurse)
 def add_help_request(request):
     if request.method == "POST":
         try:
@@ -487,6 +502,8 @@ def add_help_request(request):
             return HttpResponse("Success")
 
 #list help requests lists all the help requests for a person to accept
+@login_required
+@user_passes_test(is_nurse)
 def list_unread_help_request(request):
     assignTask()
     account = request.user.account
@@ -532,6 +549,8 @@ def list_allowed_help_requests(request):
 
     return render(request, 'nurse/help_requests.html', context)
 
+@login_required
+@user_passes_test(is_nurse)
 def reload_allowed_help_requests(request):
     account = request.user.account
     allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True).\
@@ -551,6 +570,8 @@ def reload_allowed_help_requests(request):
     return render(request, 'nurse/ui_components/help_requests.html', context)
 
 #check help request returns a list of help requests initiated by the account to see if they are acepted
+@login_required
+@user_passes_test(is_nurse)
 def check_help_request(request):
     account = request.user.account
     try:
@@ -578,6 +599,8 @@ def check_help_request(request):
     # and now dump to JSON
     return JsonResponse(actual_data,safe=False)
 
+@login_required
+@user_passes_test(is_nurse)
 def accept_help_request(request):
     account = request.user.account
     help_request_id = request.POST.get("id")

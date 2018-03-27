@@ -163,6 +163,8 @@ class HelpRequest(models.Model):
     # '+' prevents the Account from being able to access request and helper
     requester = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
     helper = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, related_name='+', on_delete= models.CASCADE, null=True)
+    #when an ongoing task is deleted, there is no more reference to a task; there is no way to find out the help request was for which task
+    #at this point it can be tied to a completed task but it is simplified to only task. Change to completed task if required
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     time_created =models.DateTimeField(editable=True, null=False)
     ongoing_task = models.ForeignKey(OngoingTask, on_delete=models.SET_NULL, null=True)

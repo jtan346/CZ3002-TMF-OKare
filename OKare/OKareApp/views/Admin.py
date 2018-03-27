@@ -4,7 +4,10 @@ from django.template import loader
 from django.db.models import Count, Avg, Sum
 from OKareApp.models import Account, Patient, CompletedTask, HelpRequest, OngoingTask, Task, Teams
 from datetime import datetime, timedelta
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
+
+
 
 # Create your views here.
 def index(Request):

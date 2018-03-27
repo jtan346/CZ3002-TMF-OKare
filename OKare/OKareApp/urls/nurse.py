@@ -4,6 +4,8 @@ from OKareApp.views import Nurse
 urlpatterns = [
     #SC/Joey - Nurse Homepage
     url(r'^$', Nurse.index, name="Nurse_Index"),
+    # SC/Joey - Nurse Homepage Reloading
+    url(r'^current_task$', Nurse.list_current_task, name="current_task"),
     #SC/Joey - Request's Help Request Creation
     url(r'^add_help_request$', Nurse.add_help_request, name="add_help_request"),
     # SC/Joey - Request's Help Request Checking

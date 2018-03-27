@@ -1067,8 +1067,8 @@
 {
     "model": "auth.user",
     "fields": {
-        "password": "pbkdf2_sha256$36000$L40v7GznUrtc$jfiFPzcYKfVdXTfplaEPZc59XG1l/goVoEybptDKeok=",
-        "last_login": null,
+        "password": "pbkdf2_sha256$100000$MSy7wnqNNMpa$sssz9df5FnX+DmcI2OlLb8tYQduto9hqI5z3qh6UKzM=",
+        "last_login": "2018-03-19T01:58:35.057Z",
         "is_superuser": false,
         "username": "nurse3",
         "first_name": "Sad",
@@ -1707,7 +1707,7 @@
     "model": "auth.user",
     "fields": {
         "password": "pbkdf2_sha256$100000$rzyTOgXVlM1D$OV0svXu4/pvU/ljfSggTF44K/tI5DKhGD3xnFgCXgOs=",
-        "last_login": "2018-03-17T09:46:34.225Z",
+        "last_login": "2018-03-19T02:00:48.368Z",
         "is_superuser": true,
         "username": "admin",
         "first_name": "",
@@ -1740,8 +1740,8 @@
 {
     "model": "auth.user",
     "fields": {
-        "password": "pbkdf2_sha256$100000$wBp0GOXtBHFN$WxfBTiNK0XW02qCIWuO1TsoTaIyoYM4aGBFwL79lWiM=",
-        "last_login": null,
+        "password": "pbkdf2_sha256$100000$b7NPNIZrd6wG$PBPAKKG5tgcixh2/xoV1p8vuW/GAVZsV8HOiJnyjW4k=",
+        "last_login": "2018-03-19T01:58:40.835Z",
         "is_superuser": false,
         "username": "nurse7",
         "first_name": "Bye",
@@ -1768,6 +1768,22 @@
     "fields": {
         "session_data": "YWJmZWJiN2VlNDE3NDRmNmMwOTM5YTY1NDgyM2VjNDkxYmIwZjVjZDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzZjcwZTg1ZjVjZGQyNWZmMzE3ODBhYTk2ZmMyZjMyZDUwZjI4NTBlIn0=",
         "expire_date": "2018-03-29T08:27:43.980Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "4srm6zwj9aifssioebt4gnzc934jtds9",
+    "fields": {
+        "session_data": "YjBkNzQ1YzIzNGQ2ZTY3ZjIxMWM0MzA4MGZjNTBmYWZlZjE4ZjA0Njp7Il9hdXRoX3VzZXJfaWQiOiIzMSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiYzM3NTNkOTA4YzE0MzEzNjA0NGMwYWM0NDYxMDJjMTRjNjU2OGQ0OSJ9",
+        "expire_date": "2018-04-02T01:25:29.120Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "8zb27h4kos5ezj4reu96mgmqk8epfbbl",
+    "fields": {
+        "session_data": "YThiZmJkMTE1ZTIzZDQ1NjI5Nzk5MzhiOGVjZDEwZTZkYmQ4MWU2Yjp7Il9hdXRoX3VzZXJfaWQiOiIxMzAiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6ImMzNzUzZDkwOGMxNDMxMzYwNDRjMGFjNDQ2MTAyYzE0YzY1NjhkNDkifQ==",
+        "expire_date": "2018-04-02T02:00:48.517Z"
     }
 },
 {
@@ -2518,54 +2534,45 @@
     "model": "OKareApp.task",
     "pk": 27,
     "fields": {
-        "title": "An unwanted adhoc task test",
+        "title": "ASE TEST",
         "description": "",
-        "patient": "S4234234G",
+        "patient": "S8456234G",
         "recur_type": null,
         "category": "Misc",
-        "start_time": "12:00:00",
+        "start_time": "10:00:22",
         "date": "2018-03-19",
         "duration": "00:25:00",
-        "day": "5"
+        "day": "0"
     }
 },
 {
     "model": "OKareApp.task",
     "pk": 28,
     "fields": {
-        "title": "An unwanted adhoc task test 2",
+        "title": "ASE UNASSIGNED",
         "description": "",
-        "patient": "S4234234G",
+        "patient": "S7831234G",
         "recur_type": null,
         "category": "Misc",
-        "start_time": "01:00:00",
+        "start_time": "10:00:19",
         "date": "2018-03-19",
         "duration": "00:25:00",
-        "day": "5"
+        "day": "0"
     }
 },
 {
     "model": "OKareApp.task",
     "pk": 29,
     "fields": {
-        "title": "An unwanted adhoc task test 3",
+        "title": "ASE UNASSIGNED 2",
         "description": "",
-        "patient": "S1231234G",
+        "patient": "S7831234G",
         "recur_type": null,
         "category": "Misc",
-        "start_time": "01:20:00",
+        "start_time": "10:00:36",
         "date": "2018-03-19",
         "duration": "00:25:00",
-        "day": "5"
-    }
-},
-{
-    "model": "OKareApp.ongoingtask",
-    "pk": 1,
-    "fields": {
-        "task": 1,
-        "nurse": "S9232342G",
-        "assigned_datetime": "2018-03-18T11:06:20.240Z"
+        "day": "0"
     }
 },
 {
@@ -2601,7 +2608,25 @@
     "fields": {
         "task": 6,
         "nurse": "S9765453G",
-        "assigned_datetime": "2018-03-19T13:57:17.663Z"
+        "assigned_datetime": "2018-03-18T13:57:17.663Z"
+    }
+},
+{
+    "model": "OKareApp.ongoingtask",
+    "pk": 6,
+    "fields": {
+        "task": 27,
+        "nurse": "S9876543A",
+        "assigned_datetime": "2018-03-19T02:04:03.974Z"
+    }
+},
+{
+    "model": "OKareApp.ongoingtask",
+    "pk": 7,
+    "fields": {
+        "task": 28,
+        "nurse": "S9232342G",
+        "assigned_datetime": "2018-03-19T02:06:18.443Z"
     }
 },
 {
@@ -2612,7 +2637,7 @@
         "nurse": "S9234232G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16",
-        "compldt": "2018-03-16T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2623,20 +2648,10 @@
         "nurse": "S9845624G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16",
-        "compldt": "2018-03-16T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
-    "model": "OKareApp.completedtask",
-    "pk": 30,
-    "fields": {
-        "task": 29,
-        "nurse": "S12345678",
-        "duration": "00:00:04.000004",
-        "date": "2018-03-19",
-        "compldt": "2018-03-19T02:57:17.663Z"
-    }
-},{
     "model": "OKareApp.completedtask",
     "pk": 3,
     "fields": {
@@ -2644,7 +2659,7 @@
         "nurse": "S9898898G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16",
-        "compldt": "2018-03-16T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2655,7 +2670,7 @@
         "nurse": "S9765453G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16",
-        "compldt": "2018-03-16T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2666,7 +2681,7 @@
         "nurse": "S9845624G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16",
-        "compldt": "2018-03-16T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2677,7 +2692,7 @@
         "nurse": "S9845624G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16",
-        "compldt": "2018-03-16T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2688,7 +2703,7 @@
         "nurse": "S9765453G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16",
-        "compldt": "2018-03-16T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2699,7 +2714,7 @@
         "nurse": "S9234232G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16",
-        "compldt": "2018-03-16T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2710,7 +2725,7 @@
         "nurse": "S9232342G",
         "duration": "00:00:04.000004",
         "date": "2018-03-16",
-        "compldt": "2018-03-16T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2721,7 +2736,7 @@
         "nurse": "S9765453G",
         "duration": "00:01:04.000004",
         "date": "2018-03-17",
-        "compldt": "2018-03-17T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2732,7 +2747,7 @@
         "nurse": "S9765453G",
         "duration": "00:01:04.000004",
         "date": "2018-03-17",
-        "compldt": "2018-03-17T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2743,7 +2758,7 @@
         "nurse": "S9234232G",
         "duration": "00:02:04.000004",
         "date": "2018-03-17",
-        "compldt": "2018-03-17T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2754,7 +2769,7 @@
         "nurse": "S9234232G",
         "duration": "00:03:04.000004",
         "date": "2018-03-17",
-        "compldt": "2018-03-17T13:57:17.663Z"
+        "compldt": "2018-03-18T18:08:38.581Z"
     }
 },
 {
@@ -2763,19 +2778,20 @@
     "fields": {
         "task": 21,
         "nurse": "S9234232G",
-        "duration": "02:04:04.000004",
-        "date": "2018-03-19",
-        "compldt": "2018-03-19T00:57:17.663Z"
-    }
-},{
-    "model": "OKareApp.completedtask",
-    "pk": 15,
-    "fields": {
-        "task": 20,
-        "nurse": "S9234232G",
         "duration": "00:04:04.000004",
-        "date": "2018-03-19",
-        "compldt": "2018-03-19T00:57:17.663Z"
+        "date": "2018-03-17",
+        "compldt": "2018-03-18T18:08:38.581Z"
+    }
+},
+{
+    "model": "OKareApp.completedtask",
+    "pk": 26,
+    "fields": {
+        "task": 1,
+        "nurse": "S9232342G",
+        "duration": "22:53:59.328566",
+        "date": "2018-03-12",
+        "compldt": "2018-03-19T02:00:19.568Z"
     }
 },
 {
@@ -2785,6 +2801,7 @@
         "requester": "S9898898G",
         "helper": null,
         "task": 1,
+        "time_created": "2018-03-18T18:08:38.581Z",
         "ongoing_task": 4,
         "acknowledgement": false
     }
@@ -2794,9 +2811,10 @@
     "pk": 2,
     "fields": {
         "requester": "S9232342G",
-        "helper": null,
+        "helper": "S9876543A",
         "task": 1,
-        "ongoing_task": 1,
+        "time_created": "2018-03-18T18:08:38.581Z",
+        "ongoing_task": null,
         "acknowledgement": false
     }
 },
@@ -2807,7 +2825,8 @@
         "requester": "S9232342G",
         "helper": null,
         "task": 1,
-        "ongoing_task": 1,
+        "time_created": "2018-03-18T18:08:38.581Z",
+        "ongoing_task": null,
         "acknowledgement": false
     }
 },
@@ -2818,7 +2837,8 @@
         "requester": "S9232342G",
         "helper": "S9898898G",
         "task": 1,
-        "ongoing_task": 1,
+        "time_created": "2018-03-18T18:08:38.581Z",
+        "ongoing_task": null,
         "acknowledgement": false
     }
 },
@@ -2829,7 +2849,8 @@
         "requester": "S9232342G",
         "helper": null,
         "task": 1,
-        "ongoing_task": 1,
+        "time_created": "2018-03-18T18:08:38.581Z",
+        "ongoing_task": null,
         "acknowledgement": false
     }
 },
@@ -2840,44 +2861,102 @@
         "requester": "S9765453G",
         "helper": null,
         "task": 5,
+        "time_created": "2018-03-18T18:08:38.581Z",
         "ongoing_task": 5,
         "acknowledgement": false
     }
 },
 {
-    "model": "OKareApp.helprequestnotification",
-    "pk": 14,
+    "model": "OKareApp.helprequest",
+    "pk": 7,
     "fields": {
-        "read": true,
+        "requester": "S9232342G",
+        "helper": "S9876543A",
+        "task": 1,
+        "time_created": "2018-03-19T01:59:50.876Z",
+        "ongoing_task": null,
+        "acknowledgement": false
+    }
+},
+{
+    "model": "OKareApp.notification",
+    "pk": 8,
+    "fields": {
+        "read_type": "Help Accepted",
+        "reader": "S9232342G",
+        "help_request": 4
+    }
+},
+{
+    "model": "OKareApp.notification",
+    "pk": 9,
+    "fields": {
+        "read_type": "Help Requested",
+        "reader": "S9232342G",
+        "help_request": 1
+    }
+},
+{
+    "model": "OKareApp.notification",
+    "pk": 10,
+    "fields": {
+        "read_type": "Help Requested",
         "reader": "S9876543A",
         "help_request": 1
     }
 },
 {
-    "model": "OKareApp.helprequestnotification",
-    "pk": 15,
+    "model": "OKareApp.notification",
+    "pk": 11,
     "fields": {
-        "read": true,
+        "read_type": "Help Requested",
         "reader": "S9876543A",
         "help_request": 2
     }
 },
 {
-    "model": "OKareApp.helprequestnotification",
-    "pk": 16,
+    "model": "OKareApp.notification",
+    "pk": 12,
     "fields": {
-        "read": true,
+        "read_type": "Help Requested",
         "reader": "S9876543A",
         "help_request": 3
     }
 },
 {
-    "model": "OKareApp.helprequestnotification",
-    "pk": 17,
+    "model": "OKareApp.notification",
+    "pk": 13,
     "fields": {
-        "read": true,
+        "read_type": "Help Requested",
         "reader": "S9876543A",
         "help_request": 5
+    }
+},
+{
+    "model": "OKareApp.notification",
+    "pk": 14,
+    "fields": {
+        "read_type": "Help Accepted",
+        "reader": "S9232342G",
+        "help_request": 2
+    }
+},
+{
+    "model": "OKareApp.notification",
+    "pk": 15,
+    "fields": {
+        "read_type": "Help Requested",
+        "reader": "S9876543A",
+        "help_request": 7
+    }
+},
+{
+    "model": "OKareApp.notification",
+    "pk": 16,
+    "fields": {
+        "read_type": "Help Accepted",
+        "reader": "S9232342G",
+        "help_request": 7
     }
 },
 {
@@ -3980,470 +4059,128 @@
 },
 {
     "model": "admin.logentry",
-    "pk": 62,
-    "fields": {
-        "action_time": "2018-03-18T14:22:17.831Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "5",
-        "object_repr": "HelpRequestNotification object (5)",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 63,
-    "fields": {
-        "action_time": "2018-03-18T14:22:21.683Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "4",
-        "object_repr": "HelpRequestNotification object (4)",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 64,
-    "fields": {
-        "action_time": "2018-03-18T14:22:26.743Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "3",
-        "object_repr": "HelpRequestNotification object (3)",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 65,
-    "fields": {
-        "action_time": "2018-03-18T14:22:31.484Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "2",
-        "object_repr": "HelpRequestNotification object (2)",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 66,
-    "fields": {
-        "action_time": "2018-03-18T14:22:35.243Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "1",
-        "object_repr": "HelpRequestNotification object (1)",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 67,
-    "fields": {
-        "action_time": "2018-03-18T14:22:51.119Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "1",
-        "object_repr": "HelpRequestNotification object (1)",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
     "pk": 68,
     "fields": {
-        "action_time": "2018-03-18T14:51:20.835Z",
+        "action_time": "2018-03-19T01:25:17.222Z",
         "user": [
             "admin"
         ],
         "content_type": [
-            "OKareApp",
-            "helprequest"
+            "auth",
+            "user"
         ],
-        "object_id": "4",
-        "object_repr": "Task: Breakfast | Requester: NRIC: S9232342G | TYPE: Nurse | TEAM: Teams object (4) | Username: nurse3 | Helper: NRIC: S9898898G | TYPE: Nurse | TEAM: Teams object (4) | Username: nurse5 | Ongoing Tas",
+        "object_id": "28",
+        "object_repr": "nurse3",
         "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"helper\"]}}]"
+        "change_message": "[{\"changed\": {\"fields\": [\"password\"]}}]"
     }
 },
 {
     "model": "admin.logentry",
     "pk": 69,
     "fields": {
-        "action_time": "2018-03-18T14:55:02.318Z",
+        "action_time": "2018-03-19T01:25:28.656Z",
         "user": [
             "admin"
         ],
         "content_type": [
-            "OKareApp",
-            "helprequestnotification"
+            "auth",
+            "user"
         ],
-        "object_id": "5",
-        "object_repr": "HelpRequestNotification object (5)",
+        "object_id": "33",
+        "object_repr": "nurse7",
         "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
+        "change_message": "[{\"changed\": {\"fields\": [\"password\"]}}]"
     }
 },
 {
     "model": "admin.logentry",
     "pk": 70,
     "fields": {
-        "action_time": "2018-03-18T15:00:09.847Z",
+        "action_time": "2018-03-19T02:03:29.732Z",
         "user": [
             "admin"
         ],
         "content_type": [
             "OKareApp",
-            "helprequestnotification"
+            "task"
         ],
-        "object_id": "1",
-        "object_repr": "reader: Bye Hello for help request 2",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
+        "object_id": "27",
+        "object_repr": "ID : 27 | Task Title: ASE TEST | Start Time: 10:00:22 | Date: 2018-03-19 | Day: 0 | patient: ANGRY LEE | recur_type: None",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
 },
 {
     "model": "admin.logentry",
     "pk": 71,
     "fields": {
-        "action_time": "2018-03-18T15:19:15.027Z",
+        "action_time": "2018-03-19T02:04:03.976Z",
         "user": [
             "admin"
         ],
         "content_type": [
             "OKareApp",
-            "helprequestnotification"
+            "ongoingtask"
         ],
-        "object_id": "4",
-        "object_repr": "reader: Bye Hello for help request 5",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
+        "object_id": "6",
+        "object_repr": "Ongoing Task - 6 : ASE TEST assigned to S9876543A ",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
 },
 {
     "model": "admin.logentry",
     "pk": 72,
     "fields": {
-        "action_time": "2018-03-18T15:19:19.617Z",
+        "action_time": "2018-03-19T02:04:39.225Z",
         "user": [
             "admin"
         ],
         "content_type": [
             "OKareApp",
-            "helprequestnotification"
+            "task"
         ],
-        "object_id": "3",
-        "object_repr": "reader: Bye Hello for help request 4",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
+        "object_id": "28",
+        "object_repr": "ID : 28 | Task Title: ASE UNASSIGNED | Start Time: 10:00:19 | Date: 2018-03-19 | Day: 0 | patient: FREE LEE | recur_type: None",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
 },
 {
     "model": "admin.logentry",
     "pk": 73,
     "fields": {
-        "action_time": "2018-03-18T15:19:23.945Z",
+        "action_time": "2018-03-19T02:06:18.445Z",
         "user": [
             "admin"
         ],
         "content_type": [
             "OKareApp",
-            "helprequestnotification"
+            "ongoingtask"
         ],
-        "object_id": "2",
-        "object_repr": "reader: Bye Hello for help request 3",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
+        "object_id": "7",
+        "object_repr": "Ongoing Task - 7 : ASE UNASSIGNED assigned to S9232342G ",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
 },
 {
     "model": "admin.logentry",
     "pk": 74,
     "fields": {
-        "action_time": "2018-03-18T15:19:27.961Z",
+        "action_time": "2018-03-19T02:06:47.345Z",
         "user": [
             "admin"
         ],
         "content_type": [
             "OKareApp",
-            "helprequestnotification"
+            "task"
         ],
-        "object_id": "1",
-        "object_repr": "reader: Bye Hello for help request 2",
-        "action_flag": 2,
-        "change_message": "[{\"changed\": {\"fields\": [\"read\"]}}]"
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 75,
-    "fields": {
-        "action_time": "2018-03-18T15:20:06.700Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "5",
-        "object_repr": "reader: Bye Hello for help request 1",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 76,
-    "fields": {
-        "action_time": "2018-03-18T15:20:06.894Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "4",
-        "object_repr": "reader: Bye Hello for help request 5",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 77,
-    "fields": {
-        "action_time": "2018-03-18T15:20:07.086Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "3",
-        "object_repr": "reader: Bye Hello for help request 4",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 78,
-    "fields": {
-        "action_time": "2018-03-18T15:20:07.269Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "2",
-        "object_repr": "reader: Bye Hello for help request 3",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 79,
-    "fields": {
-        "action_time": "2018-03-18T15:20:07.429Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "1",
-        "object_repr": "reader: Bye Hello for help request 2",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 80,
-    "fields": {
-        "action_time": "2018-03-18T15:20:27.420Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "9",
-        "object_repr": "reader: Bye Hello for help request 5",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 81,
-    "fields": {
-        "action_time": "2018-03-18T15:20:27.618Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "8",
-        "object_repr": "reader: Bye Hello for help request 3",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 82,
-    "fields": {
-        "action_time": "2018-03-18T15:20:27.810Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "7",
-        "object_repr": "reader: Bye Hello for help request 2",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 83,
-    "fields": {
-        "action_time": "2018-03-18T15:20:27.993Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "6",
-        "object_repr": "reader: Bye Hello for help request 1",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 84,
-    "fields": {
-        "action_time": "2018-03-18T15:21:49.366Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "13",
-        "object_repr": "reader: Bye Hello for help request 5",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 85,
-    "fields": {
-        "action_time": "2018-03-18T15:21:49.582Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "12",
-        "object_repr": "reader: Bye Hello for help request 3",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 86,
-    "fields": {
-        "action_time": "2018-03-18T15:21:49.774Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "11",
-        "object_repr": "reader: Bye Hello for help request 2",
-        "action_flag": 3,
-        "change_message": ""
-    }
-},
-{
-    "model": "admin.logentry",
-    "pk": 87,
-    "fields": {
-        "action_time": "2018-03-18T15:21:50.040Z",
-        "user": [
-            "admin"
-        ],
-        "content_type": [
-            "OKareApp",
-            "helprequestnotification"
-        ],
-        "object_id": "10",
-        "object_repr": "reader: Bye Hello for help request 1",
-        "action_flag": 3,
-        "change_message": ""
+        "object_id": "29",
+        "object_repr": "ID : 29 | Task Title: ASE UNASSIGNED 2 | Start Time: 10:00:36 | Date: 2018-03-19 | Day: 0 | patient: FREE LEE | recur_type: None",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
 }
 ]
