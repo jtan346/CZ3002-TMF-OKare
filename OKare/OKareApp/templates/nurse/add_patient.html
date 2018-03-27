@@ -2,6 +2,7 @@
 {% block title %}{{ page_name }}{% endblock title %}
 
 {% block page_stylesheets %}
+    <link href="/static/vendor/bootstrap-datepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <style type="text/css">
         body {
             background-color: #f8f8f8;
@@ -17,6 +18,7 @@
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
+    <script src="/static/vendor/bootstrap-datepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script>
         $.ajaxSetup({
             beforeSend: function(xhr, settings) {
@@ -34,6 +36,9 @@
         }
 
         function submit() {
+            $('#alert-success').hide(0);
+            $('#alert-failure').hide(0);
+
             var data = {
                 'nric' : document.getElementById('nric').value,
                 'first_name' : document.getElementById('firstName').value,
@@ -48,27 +53,86 @@
                 'phone_no' : document.getElementById('phoneNo').value,
             };
 
-            $('#alert').hide(0);
-            $('#input').hide(500);
+            var notEmpty = true;
 
-            $.ajax({
-                url: '/Nurse/add_patient_into_db/',
-                type: 'post',
-                data: data,
-                success: function (msg) {
-                    if (msg=="successful") {
-                        $('#input').show(500);
-                        $('#alert').show(500);
+            $.each(data, function(key, value) {
+                    if(value.length === 0) {
+                        notEmpty = false;
                     }
-                    else {
-                        alert("An error has occurred!");
+
+                    if(key === 'nric') {
+                        if (!value.match(/^[a-zA-Z0-9]*$/)) {
+                            $("#nric").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#nric").parent().removeClass("has-error");
+                        }
                     }
-                },
-                error: function (msg, status, jqxhr) {
-                    {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
-                }
-            });
+
+                    if(key === 'first_name') {
+                        if (!value.match(/^[A-z]+$/)) {
+                            $("#firstName").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#firstName").parent().removeClass("has-error");
+                        }
+                    }
+
+                    if(key === 'last_name') {
+                        if (!value.match(/^[A-z]+$/)) {
+                            $("#lastName").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#lastName").parent().removeClass("has-error");
+                        }
+                    }
+
+                    if(key === 'phone_no') {
+                        if (!value.match(/^(0|[1-9][0-9]*)$/)) {
+                            $("#phoneNo").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#phoneNo").parent().removeClass("has-error");
+                        }
+                    }
+                });
+
+            if(notEmpty == true) {
+
+                $('#alert-success').hide(0);
+                $('#input').hide(0);
+
+                $.ajax({
+                    url: '/Nurse/add_patient_into_db/',
+                    type: 'post',
+                    data: data,
+                    success: function (msg) {
+                        if (msg == "successful") {
+                            $('#alert-success').show(500);
+                        }
+                        else {
+                            alert("An error has occurred!");
+                        }
+                    },
+                    error: function (msg, status, jqxhr) {
+                        {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
+                    }
+                });
+            }
+            else {
+                $('#alert-failure').show(0);
+            }
         }
+
+        $(document).ready(function() {
+            $('#dateInput').datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
+        });
     </script>
 {% endblock page_javascripts %}
 
@@ -94,11 +158,18 @@
         </div>
     </div>
 
-    <div id="alert" class="row" style="display: none">
+    <div id="alert-success" class="row" style="display: none">
         <div class="col-md-12">
             <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Success!</strong> Changes has been successfully saved!
+                <strong>Success!</strong> Patient has been successfully added!
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-failure" class="row" style="display: none">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <strong>Invalid Input!</strong> Please validate your inputs again!
             </div>
         </div>
     </div>
@@ -132,9 +203,10 @@
                         <div class="hidden-md hidden-lg"><br></div>
 
                         <div class="col-md-6">
-                            <div class="input-group">
-                                <span class="input-group-addon">Date of Birth</span>
-                                <input id="dateOfBirth" name="date_of_birth" class="form-control" placeholder="YYYY-MM-DD" type="text" value="">
+                            <div class="input-group date" id="dateInput">
+                                <span class="input-group-addon" style="">Date</span>
+                                <input id="dateOfBirth" name="date" class="form-control" value="" type="text"/>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                             <br>
                             <div class="input-group">

@@ -23,7 +23,7 @@ def login_view(request):
             else:
                 return render(request, "login.html", {})
     except ObjectDoesNotExist:
-        messages.error(request,"Error")
+        messages.error(request,"User Not Found")
         return render(request, "login.html", {})
 
 def logout_view(request):
