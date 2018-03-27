@@ -309,10 +309,10 @@
                 </div>
             </div>
             {% for patient in Patients %}
-                <div id="{{ patient.nric }}Panel" class="col-xs-6 col-sm-4 col-lg-1" style="margin:10px 10px">
+                <div id="{{ patient.nric }}Panel" class="col-xs-6 col-md-4 col-lg-1" style="margin:10px 10px">
                     <button class="btn btn-primary btn-lg" id="{{ patient.nric }}btn" onclick="display('{{ patient.nric }}')">
                         <div>
-                            <img src="/static/img/profile_picture.svg" height="100px">
+                            <img src="/static/img/profile_picture.svg" height="80px">
                         </div>
                         <div id="#{{ patient.nric }}Panel" class="name" style="font-size:15px">
                             <b>{{ patient.first_name}}<br>{{ patient.last_name}}</b>

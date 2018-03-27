@@ -117,7 +117,7 @@ class OngoingTask(models.Model):
     #  then the task's date captures the date of creation
     assigned_datetime = models.DateTimeField(auto_now_add=True)
     def timefrom(self):
-        now = datetime.utcnow().replace(tzinfo=timezone.utc)
+        now = datetime.now().replace(tzinfo=timezone.utc)
         difference = (now - datetime.combine(date.today(),self.task.start_time).replace(tzinfo=timezone.utc)).total_seconds()
         #return hours
         if int(difference/3600) >= 1:
@@ -164,7 +164,7 @@ class HelpRequest(models.Model):
     requester = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
     helper = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'}, related_name='+', on_delete= models.CASCADE, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    time_created =models.DateTimeField(auto_now_add=True)
+    time_created =models.DateTimeField(editable=True, null=False)
     ongoing_task = models.ForeignKey(OngoingTask, on_delete=models.SET_NULL, null=True)
     acknowledgement = models.BooleanField(default=False)
 
@@ -176,6 +176,20 @@ class HelpRequest(models.Model):
 
     def __str__(self):
         return "Task: {} | Requester: {} | Helper: {} | Ongoing Tasks: {}".format(self.task.title, self.requester, self.helper, self.ongoing_task)
+
+    def timecreated(self):
+        now = datetime.now().replace(tzinfo=timezone.utc)
+        difference = (now - self.time_created).seconds
+        # return hours
+        if int(difference / 3600) >= 1:
+            return '{} hours ago...'.format(int(difference / 3600))
+        elif int(difference / 60) >= 1:
+            return '{} minutes ago...'.format(int(difference / 60))
+        else:
+            return '{} seconds ago...'.format(int(difference))
+
+    def requestor_name(self):
+        return self.requester.fullname()
 
 
 class Notification(models.Model):

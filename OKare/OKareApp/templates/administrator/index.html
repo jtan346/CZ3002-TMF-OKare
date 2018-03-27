@@ -34,6 +34,66 @@
             });
         }
 
+        //Load Modal for Help Request Select Nurse
+        function loadHRModal(id, helper_id){
+            $('#HRId').val(id);
+            var select = document.getElementById('HRNurse');
+            var option = document.createElement("option");
+            $.ajax({
+                type:"GET",
+                url: "/Admin/get_nurse_teammates/"+helper_id,
+                dataType: 'json',
+                success: function (data) {
+                    $('#HRNurse').find('option').remove();
+
+                    for(i in data){
+                        var option = document.createElement("option");
+                        option.value = data[i]['id'];
+                        option.text = data[i]['name'];
+                        select.add(option);
+                    }
+
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
+        }
+
+        //Assign Nurse to Help Request
+        function hrAssignNurse(){
+            $.ajax({
+                type:"POST",
+                url: "/Admin/assign_nurse_hr/",
+                data:$('#assignNurseHRForm').serialize(),
+                success: function (data) {
+                    console.log('success');
+                    new PNotify({
+                        type: 'success',
+                        title: 'Nurse Assigned Successfully!',
+                    });
+                    //Remove the Report form the panel
+                    var id = $('#HRId').val();
+                    $("#"+id+'HRBtn').remove();
+                    $('#helpRequestModal').modal('hide');
+                    $('#hrCfmTaskModal').modal('hide');
+                },
+                error: function(error){
+                    console.log('fail');
+                    new PNotify({
+                        type: 'error',
+                        title: 'Error Adding!',
+                        text: error.toString()
+                    });
+                }
+            });
+        }
+
+        function reloadHRPanel(){
+            var panel = document.getElementById('helpRequestPanel');
+
+        }
+
     </script>
 {% endblock page_javascripts %}
 
@@ -118,7 +178,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <!-- Ongoing Task Panel -->
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -129,8 +189,8 @@
                     <div class="list-group">
                         {% for OGTask in ongoingTasks %}
                             <a id="{{ OGTask.task.title }}" class="list-group-item">
-                                Task: {{ OGTask.task.title }}  &nbsp&nbsp
-                                Nurse: {{ OGTask.nurse.user.first_name }}
+                                <b>Task:</b> {{ OGTask.task.title }}  &nbsp&nbsp
+                                <b>Nurse:</b> {{ OGTask.nurse.user.first_name }}
                                 {{ OGTask.nurse.user.last_name }}
 
                                 <span class="pull-right text-muted small">
@@ -145,7 +205,14 @@
                 <!-- /.panel-body -->
             </div>
         </div>
-        <div class="col-md-6">
+
+        <!-- HELP REQUEST PANEL -->
+        <div  id="helpRequestPanel" class="col-md-4">
+            {% include 'administrator/ui_components/help_request_panel.html' %}
+        </div>
+
+        <!-- CHART PANEL -->
+        <div class="col-md-4">
             <!-- Category Tasks -->
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -153,11 +220,13 @@
                 </div>
                 <div class="panel-body">
                     <div id="category-pie-chart">
-                        
+
                     </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
         </div>
+
     </div>
+
 {% endblock content %}

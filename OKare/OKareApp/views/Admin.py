@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.template import loader
 from django.db.models import Count, Avg, Sum
-from OKareApp.models import Account,Task, CompletedTask, DailyTriage,Patient,NurseStats, OngoingTask, Teams
+from OKareApp.models import Account, Patient, CompletedTask, HelpRequest, OngoingTask, Task, Teams
 from datetime import datetime, timedelta
 from django.db.models import Q
 
@@ -14,6 +14,7 @@ def index(Request):
     patients = Patient.objects.count()
     completed = CompletedTask.objects.filter(date = datetime.now().date()).count()
     today = datetime.now().date()
+    helpRequest = HelpRequest.objects.filter(helper_id__isnull=True)
 
     dayOfWeek ={
         0: "Monday",
@@ -34,7 +35,8 @@ def index(Request):
         'patients': patients,
         'completed': completed,
         'remaining': remaining,
-        'ongoingTasks':ongoingTasks
+        'ongoingTasks':ongoingTasks,
+        'helpRequest': helpRequest
     }
     return render(Request, 'administrator/index.html', context)
 pass
@@ -208,6 +210,34 @@ def deleteTask(Request, id):
     else:
         task.delete()
         return JsonResponse({"success": True})
+
+
+def getNurseTeammates(Request, id):
+    print(id)
+    nurse = Account.objects.get(nric=id)
+    teammates = Account.objects.filter(team = nurse.team).exclude(nric=id)
+
+    data = []
+    for mate in teammates:
+        data.append({'id':mate.nric,
+                     'name':mate.fullname()
+                     })
+
+    return JsonResponse(data, safe=False)
+
+
+def assignNurseHr(Request):
+    try:
+        id = Request.POST.get('Id')
+        nric = Request.POST.get('Nurse')
+    except(KeyError):
+        return JsonResponse({"success": False, "error": "Error Occurred! Check ID and NRIC"})
+    else:
+        helpRequest = HelpRequest.objects.get(id=id)
+        helpRequest.helper = Account.objects.get(nric=nric)
+        helpRequest.save()
+        return JsonResponse({"success": True})
+
 
 
 

@@ -1,0 +1,65 @@
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        <i class="fa fa-info-circle fa-fw"></i> Current Help Requests
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="list-group">
+            {% for request in helpRequest%}
+                <button id="{{ request.id }}HRBtn"class="list-group-item" data-toggle="modal" data-target="#helpRequestModal" onclick="loadHRModal('{{ request.id }}','{{ request.requester_id }}')">
+                    <b><i class="fa fa-user-md fa-fw"></i> Requester:</b> {{ request.requestor_name }}
+                    <span class="pull-right text-muted small">
+                        <em>{{ request.timecreated }}</em>
+                    </span>
+                </button>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- /.panel-body -->
+</div>
+
+
+<!-- Assign Nurse for Help Request Modal -->
+<div class="modal fade" id="helpRequestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteModalTitle">Assign Nurse to Help Request </h4>
+            </div>
+            <form id='assignNurseHRForm'role="form">
+                <div class="modal-body">
+                    <input id="HRId" name="Id" placeholder="" type="text" style="display:none">
+                    <div class="input-group">
+                        <span class="input-group-addon">Nurse:</span>
+                        <select id="HRNurse" name="Nurse" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#hrCfmTaskModal" >Assign</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Assign Nurse Confirmation Modal -->
+<div class="modal fade" id="hrCfmTaskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="hrCfmModalTitle"><i class="fa fa-exclamation-triangle fa-fw"></i> Confirm Nurse Assignment</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you wish to assign this nurse to the Help Request?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="hrAssignNurse()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
