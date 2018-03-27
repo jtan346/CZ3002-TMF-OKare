@@ -14,6 +14,7 @@ import calendar
 import json
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password, check_password
 
 def listNurses(request):
     template = loader.get_template('nurse/list_nurse.html')
@@ -34,6 +35,7 @@ def listNurses(request):
 def viewNurseProfile(request, nurse_id):
     template = loader.get_template('nurse/view_nurse.html')
     nurse = Account.objects.filter(user_id=nurse_id).get()
+    nurse.date_of_birth = nurse.date_of_birth.strftime('%d/%m/%Y')
     nurse_name = nurse.user.first_name + " " + nurse.user.last_name    # From Models
 
     page_name = str(nurse.user_id) + ": " + nurse_name  # Fill in here
@@ -140,18 +142,19 @@ def addNurse(request):
         phone_no = request.POST['phone_no']
         user_name = request.POST['user_name']
         pass_word = request.POST['pass_word']
+        email = request.POST['email']
+
+        converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
 
         user = User.objects.create_user(username=user_name,
-                                        email='testtest@testetst.com',
+                                        email=email,
                                         password=pass_word,
                                         first_name=first_name,
                                         last_name=last_name)
 
-        #added user get id
-
         addeduser = User.objects.filter(username=user_name).get()
 
-        nurse = Account(nric=nric, date_of_birth=date_of_birth,
+        nurse = Account(nric=nric, date_of_birth=converted_datetime,
                         street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="Nurse",
                         team_id=1,user_id=addeduser.id)
 
@@ -166,12 +169,18 @@ def updateNurseDetail(request):
             last_name = request.POST['last_name']
 
             nric = request.POST['nric']
-            # date_of_birth = request.POST['date_of_birth']
+            date_of_birth = request.POST['date_of_birth']
             street = request.POST['street']
             city = request.POST['city']
             state = request.POST['state']
             zip_code = request.POST['zip_code']
             phone_no = request.POST['phone_no']
+
+            # user_name = request.POST['user_name']
+            pass_word = request.POST['pass_word']
+            email = request.POST['email']
+
+            converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
 
             nurse = Account.objects.get(nric=nric)
 
@@ -180,12 +189,15 @@ def updateNurseDetail(request):
             user.last_name = last_name
 
             # nurse.nric = nric
-            # nurse.date_of_birth = date_of_birth
+            nurse.date_of_birth = converted_datetime
             nurse.street = street
             nurse.city = city
             nurse.state = state
             nurse.zip_code = zip_code
             nurse.phoneNo = phone_no
+
+            user.password = make_password(pass_word)
+            user.email = email
 
             nurse.save()
             user.save()
@@ -211,6 +223,7 @@ def listPatients(request):
 def viewPatientProfile(request, patient_id):
     template = loader.get_template('nurse/view_patient.html')
     patient = Patient.objects.filter(nric=patient_id).get()
+    patient.date_of_birth = patient.date_of_birth.strftime('%d/%m/%Y')
     page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
 
     context = {
@@ -241,7 +254,9 @@ def addPatient(request):
         zip_code = request.POST['zip_code']
         phone_no = request.POST['phone_no']
 
-        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=datetime.datetime.today(),
+        converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+
+        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=converted_datetime,
                           ward=ward, bed=bed, street=street, city=city, state=state, zip_code=zip_code,
                           phoneNo=phone_no, team_id=1)
 
@@ -266,12 +281,12 @@ def updatePatientDetail(request):
             patient = Patient.objects.get(nric=nric)
 
             #Format date..
-            datetimeobj = datetime.datetime.strptime(date_of_birth, "%B %d, %Y")
+            converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
 
             # patient.nric = nric
             patient.first_name = first_name
             patient.last_name = last_name
-            patient.date_of_birth = datetimeobj
+            patient.date_of_birth = converted_datetime
             patient.ward = ward
             patient.bed = bed
             patient.street = street
