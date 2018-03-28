@@ -58,6 +58,7 @@ def viewNurseProfile(request, nurse_id):
 def addNurseView(request):
     template = loader.get_template('nurse/add_nurse.html')
 
+
     #assignTask()
     # lmaotest()
 
@@ -457,6 +458,12 @@ def view_team_tasklist(request):
 @user_passes_test(is_nurse)
 def index(request):
     assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
+
+    if 'unreadNotifications' not in request.session:
+        #initUserNotifications(request)
+        request.session['unreadNotifications'] = getCurrentNotiCount(request)
+        print(request.session['unreadNotifications'])
+
     context = { 'assigned_task':assigned_task,
                 'name': request.user.first_name,
                 'usertype': request.user.account.type,
@@ -619,9 +626,8 @@ class nurseNotifications(ListView):
         dataRec = self.kwargs['slug']
         data2 = dataRec.replace('-', ' ').split(' ')
         curAccount = Account.objects.filter(nric=data2[0]).get()
-        print(curAccount)
 
-        myNotifications = NotificationBell.objects.filter(type="Broadcast", status=True) | NotificationBell.objects.filter(type="Request", status=True) | NotificationBell.objects.filter(target=curAccount, status=True)
+        myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
 
         return myNotifications
 
@@ -630,13 +636,12 @@ class nurseNotifications(ListView):
         dataRec = self.kwargs['slug']
         data2 = dataRec.replace('-', ' ').split(' ')
         curAccount = Account.objects.filter(nric=data2[0]).get()
-        print(curAccount)
-
-        myNotifications = NotificationBell.objects.filter(type="Broadcast", status=True) | NotificationBell.objects.filter(type="Request", status=True) | NotificationBell.objects.filter(target=curAccount, status=True)
+        myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
 
         context = {
             'myNotifications': myNotifications,  #All notifications
         }
+
         return context
 
 def updateNotiCount(request):
@@ -659,27 +664,17 @@ def initNotifications(request):
 
 #upon login (Where to put this?) get number of UNREAD notifications
 def initUserNotifications(request):
-    curAccount = request.user
-    myNotifications = []
-
-    #What are notifications: All Help Requests that are active currently (None at startup), and new tasks assigned (None at startup)
-
-    #Get user's ID as OngoingTasks are tagged by Nurse (Account)
-    curTask = OngoingTask.objects.filter(nurse=request.user).first()
-
-    if curTask:
-        myNotifications.append(curTask)
-
-    #Get all help requests currently active (No response/etc)
-    #for you sc:
-
-
-
-    #If I have have requested help (active help request), tell me who has responded to it
-    #for you sc
-
+    curUser = request.user
+    curAccount = Account.objects.filter(user=curUser)
+    myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
 
     #upon login, this is the number of UNREAD notifications
     request.session['unreadNotifications'] = myNotifications.count()
 
     return HttpResponse('')
+
+def getCurrentNotiCount(request):
+    curUser = request.user
+    curAccount = Account.objects.filter(user=curUser)
+    myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
+    return myNotifications.count()

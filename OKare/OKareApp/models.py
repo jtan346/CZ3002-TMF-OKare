@@ -197,7 +197,7 @@ class HelpRequest(models.Model):
 class Notification(models.Model):
     type = (
         ("Help Requested", "Help Request Read"),
-        ("Help Accepted",  "Help Accepted")
+        ("Help Accepted",  "Help Accepted"),
     )
     read_type = models.CharField(choices=type, max_length=100)
     reader = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
