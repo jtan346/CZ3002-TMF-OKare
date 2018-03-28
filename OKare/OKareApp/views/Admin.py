@@ -4,10 +4,26 @@ from django.template import loader
 
 from django.db.models import Count, Avg, Sum
 from OKareApp.models import Account, Patient, CompletedTask, HelpRequest, OngoingTask, Task, Teams
-from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
-
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.template import loader
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView
+from django.http import Http404
+from django.urls import reverse
+from django.views import generic
+from django.db.models import Q
+from OKareApp.models import *
+import datetime
+import time
+from datetime import timedelta, date, datetime
+import calendar
+import json
+from django.core import serializers
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.hashers import make_password, check_password
+from django.views.generic.list import ListView
 
 
 # Create your views here.
@@ -63,6 +79,7 @@ def managetask(Request):
     }
     return render(Request, 'administrator/manage_task.html', context)
 
+
 def getPatientTasks(Request):
     id = Request.POST.get('id')
     context = {
@@ -105,6 +122,7 @@ def listPatients(Request):
     }
     return render(Request, 'administrator/list_patient.html', context)
 pass
+
 
 def viewPatientProfile(Request, patient_id):
     patient = Patient.objects.filter(nric=patient_id).get()
@@ -205,7 +223,6 @@ def getTask(Request, id):
     return JsonResponse(data,safe=False)
 
 
-
 def deleteTask(Request, id):
     try:
         task = Task.objects.get(id=id)
@@ -242,10 +259,256 @@ def assignNurseHr(Request):
         helpRequest.save()
         return JsonResponse({"success": True})
 
+def is_nurse(user):
+    return user.account.type == "Nurse"
 
 
+@login_required
+@user_passes_test(is_nurse)
+def listNurses(request):
+    template = loader.get_template('administrator/list_nurse.html')
+    page_name = 'View Nurse'    #Fill in here
+
+    nurses = Account.objects.filter(type="Nurse")
+    #user session havn't implement yet, so placeholder
+    user_name="Benjamin"
+    user_type="Nurse"
+    context = {
+        'page_name': page_name,
+        'user_name': user_name,
+        'user_type': user_type,
+        'nurses': nurses,
+    }
+    return HttpResponse(template.render(context, request))
 
 
+@login_required
+@user_passes_test(is_nurse)
+def viewNurseProfile(request, nurse_id):
+    template = loader.get_template('administrator/view_nurse.html')
+    nurse = Account.objects.filter(user_id=nurse_id).get()
+    nurse.date_of_birth = nurse.date_of_birth.strftime('%d/%m/%Y')
+    nurse_name = nurse.user.first_name + " " + nurse.user.last_name    # From Models
+
+    page_name = str(nurse.user_id) + ": " + nurse_name  # Fill in here
+    context = {
+        'page_name': page_name,
+        'nurse': nurse,
+    }
+    return HttpResponse(template.render(context, request))
 
 
+@login_required
+@user_passes_test(is_nurse)
+def addNurseView(request):
+    template = loader.get_template('administrator/add_nurse.html')
 
+
+    #assignTask()
+    # lmaotest()
+
+    lmao = CompletedTask.objects.filter(task_id='29')
+    for i in lmao:
+        print(i.compldt)
+
+    context = {
+                'page_name': "Add Nurse",
+               }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@user_passes_test(is_nurse)
+def addNurse(request):
+    if request.POST:
+        print(request.POST)
+        #alidate nric
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        nric = request.POST['nric']
+        date_of_birth = request.POST['date_of_birth']
+        street = request.POST['street']
+        city = request.POST['city']
+        state = request.POST['state']
+        zip_code = request.POST['zip_code']
+        phone_no = request.POST['phone_no']
+        user_name = request.POST['user_name']
+        pass_word = request.POST['pass_word']
+        email = request.POST['email']
+
+        converted_datetime = datetime.strptime(date_of_birth, "%d/%m/%Y")
+
+        user = User.objects.create_user(username=user_name,
+                                        email=email,
+                                        password=pass_word,
+                                        first_name=first_name,
+                                        last_name=last_name)
+
+        addeduser = User.objects.filter(username=user_name).get()
+
+        nurse = Account(nric=nric, date_of_birth=converted_datetime,
+                        street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="Nurse",
+                        team_id=1,user_id=addeduser.id)
+
+        nurse.save()
+
+        return HttpResponse('successful')
+
+
+@login_required
+@user_passes_test(is_nurse)
+def updateNurseDetail(request):
+    if request.POST:
+        try:
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+
+            nric = request.POST['nric']
+            date_of_birth = request.POST['date_of_birth']
+            street = request.POST['street']
+            city = request.POST['city']
+            state = request.POST['state']
+            zip_code = request.POST['zip_code']
+            phone_no = request.POST['phone_no']
+
+            # user_name = request.POST['user_name']
+            pass_word = request.POST['pass_word']
+            email = request.POST['email']
+
+            converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+
+            nurse = Account.objects.get(nric=nric)
+
+            user = nurse.user
+            user.first_name = first_name
+            user.last_name = last_name
+
+            # nurse.nric = nric
+            nurse.date_of_birth = converted_datetime
+            nurse.street = street
+            nurse.city = city
+            nurse.state = state
+            nurse.zip_code = zip_code
+            nurse.phoneNo = phone_no
+
+            user.password = make_password(pass_word)
+            user.email = email
+
+            nurse.save()
+            user.save()
+
+        except(KeyError, Account.DoesNotExist):
+            return HttpResponse('unsuccessful')
+
+        else:
+            return HttpResponse('successful')
+
+
+@login_required
+@user_passes_test(is_nurse)
+def listPatients(request):
+    template = loader.get_template('administrator/list_patient.html')
+    page_name = 'View Patient'    #Fill in here
+
+    patients = Patient.objects.all()
+
+    context = {
+        'page_name': page_name,
+        'patients': patients,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@user_passes_test(is_nurse)
+def viewPatientProfile(request, patient_id):
+    template = loader.get_template('administrator/view_patient.html')
+    patient = Patient.objects.filter(nric=patient_id).get()
+    patient.date_of_birth = patient.date_of_birth.strftime('%d/%m/%Y')
+    page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
+
+    context = {
+                'page_name': page_name,
+                'patient_id': patient_id,
+                'patient': patient,
+               }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@user_passes_test(is_nurse)
+def addPatientView(request):
+    template = loader.get_template('administrator/add_patient.html')
+    context = {
+                'page_name': "Add Patient",
+               }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@user_passes_test(is_nurse)
+def addPatient(request):
+    if request.POST:
+        nric = request.POST['nric']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        date_of_birth = request.POST['date_of_birth']
+        ward = request.POST['ward']
+        bed = request.POST['bed']
+        street = request.POST['street']
+        city = request.POST['city']
+        state = request.POST['state']
+        zip_code = request.POST['zip_code']
+        phone_no = request.POST['phone_no']
+
+        converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+
+        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=converted_datetime,
+                          ward=ward, bed=bed, street=street, city=city, state=state, zip_code=zip_code,
+                          phoneNo=phone_no, team_id=1)
+
+        patient.save()
+        return HttpResponse('successful')
+
+
+@login_required
+@user_passes_test(is_nurse)
+def updatePatientDetail(request):
+    if request.POST:
+        try:
+            nric = request.POST['nric']
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            date_of_birth = request.POST['date_of_birth']
+            ward = request.POST['ward']
+            bed = request.POST['bed']
+            street = request.POST['street']
+            city = request.POST['city']
+            state = request.POST['state']
+            zip_code = request.POST['zip_code']
+            phone_no = request.POST['phone_no']
+
+            patient = Patient.objects.get(nric=nric)
+
+            #Format date..
+            converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+
+            # patient.nric = nric
+            patient.first_name = first_name
+            patient.last_name = last_name
+            patient.date_of_birth = converted_datetime
+            patient.ward = ward
+            patient.bed = bed
+            patient.street = street
+            patient.city = city
+            patient.state = state
+            patient.zip_code = zip_code
+            patient.phoneNo = phone_no
+
+            patient.save()
+
+        except(KeyError, Patient.DoesNotExist):
+            return HttpResponse('unsuccessful')
+
+        else:
+            return HttpResponse('successful')

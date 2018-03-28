@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+{% block title %}{{ page_name }}{% endblock title %}
+
+{% block page_stylesheets %}
+    <link href="/static/vendor/bootstrap-datepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            background-color: #f8f8f8;
+        }
+        .input-group-addon {
+            min-width: 100px;
+        }
+        .textarea-message {
+            width: 100%;
+            resize: vertical;
+        }
+    </style>
+{% endblock page_stylesheets %}
+
+{% block page_javascripts %}
+    <script type="text/javascript">
+        var link = document.createElement('link');
+        link.href = "/static/dist/css/admin.css";
+        link.rel = "stylesheet";
+        document.getElementsByTagName("head")[0].appendChild(link)
+    </script>
+    <script src="/static/vendor/bootstrap-datepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                var csrfToken = getCookie('csrftoken');
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            }
+        });
+
+        function discard() {
+            if (confirm('Are you sure you want to discard all changes?')) {
+                window.location.reload();
+            } else {
+
+            }
+        }
+
+        function submit() {
+            $('#alert-success').hide(0);
+            $('#alert-failure').hide(0);
+
+            var data = {
+                'nric' : document.getElementById('nric').value,
+                'first_name' : document.getElementById('firstName').value,
+                'last_name' : document.getElementById('lastName').value,
+                'date_of_birth' : document.getElementById('dateOfBirth').value,
+                'ward' : document.getElementById('ward').value,
+                'bed' : document.getElementById('bed').value,
+                'street' : document.getElementById('street').value,
+                'city' : document.getElementById('city').value,
+                'state' : document.getElementById('state').value,
+                'zip_code' : document.getElementById('zipCode').value,
+                'phone_no' : document.getElementById('phoneNo').value,
+            };
+
+            var notEmpty = true;
+
+            $.each(data, function(key, value) {
+                    if(value.length === 0) {
+                        notEmpty = false;
+                    }
+
+                    if(key === 'nric') {
+                        if (!value.match(/^[a-zA-Z0-9]*$/)) {
+                            $("#nric").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#nric").parent().removeClass("has-error");
+                        }
+                    }
+
+                    if(key === 'first_name') {
+                        if (!value.match(/^[A-z]+$/)) {
+                            $("#firstName").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#firstName").parent().removeClass("has-error");
+                        }
+                    }
+
+                    if(key === 'last_name') {
+                        if (!value.match(/^[A-z]+$/)) {
+                            $("#lastName").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#lastName").parent().removeClass("has-error");
+                        }
+                    }
+
+                    if(key === 'phone_no') {
+                        if (!value.match(/^(0|[1-9][0-9]*)$/)) {
+                            $("#phoneNo").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#phoneNo").parent().removeClass("has-error");
+                        }
+                    }
+                });
+
+            if(notEmpty == true) {
+
+                $('#alert-success').hide(0);
+                $('#input').hide(0);
+
+                $.ajax({
+                    url: '/Admin/add_patient_into_db/',
+                    type: 'post',
+                    data: data,
+                    success: function (msg) {
+                        if (msg == "successful") {
+                            $('#alert-success').show(500);
+                        }
+                        else {
+                            alert("An error has occurred!");
+                            $('#input').show(0);
+                        }
+                    },
+                    error: function (msg, status, jqxhr) {
+                        {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
+                    }
+                });
+            }
+            else {
+                $('#alert-failure').show(0);
+            }
+        }
+
+        $(document).ready(function() {
+            $('#dateInput').datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
+        });
+    </script>
+{% endblock page_javascripts %}
+
+{% block sidebar %}
+    {% include 'administrator/ui_components/sidebar.html' %}
+{% endblock sidebar %}
+
+{% block topmenu %}
+    {% include 'administrator/ui_components/top-menu.html' %}
+{% endblock topmenu %}
+
+<!-- Add the page hierarchy here -->
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="/Admin">Home</a></li>
+    <li class="breadcrumb-item"><a href="/Admin/view_patient">View Patient</a></li>
+    <li class="breadcrumb-item active">{{ page_name }}</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Patient Name</h1>
+        </div>
+    </div>
+
+    <div id="alert-success" class="row" style="display: none">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <strong>Success!</strong> Patient has been successfully added!
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-failure" class="row" style="display: none">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <strong>Invalid Input!</strong> Please validate your inputs again!
+            </div>
+        </div>
+    </div>
+
+    <div id="input">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
+            </div>
+
+            <form id="input_form" method="post"> {% csrf_token %}
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">NRIC</span>
+                                <input id="nric" name="nric" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">First Name</span>
+                                <input id="firstName" name="first_name" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Last Name</span>
+                                <input id="lastName" name="last_name" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                        </div>
+
+                        <div class="hidden-md hidden-lg"><br></div>
+
+                        <div class="col-md-6">
+                            <div class="input-group date" id="dateInput">
+                                <span class="input-group-addon" style="">Date</span>
+                                <input id="dateOfBirth" name="date" class="form-control" value="" type="text"/>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Ward</span>
+                                <input id="ward" name="ward" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Bed</span>
+                                <input id="bed" name="bed" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Street</span>
+                                <input id="street" name="street" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">City</span>
+                                <input id="city" name="city" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">State</span>
+                                <input id="state" name="state" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Zip code</span>
+                                <input id="zipCode" name="zip_code" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-addon">Phone No.</span>
+                                <input id="phoneNo" name="phone_no" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden-md hidden-lg"><br></div>
+            </form>
+        </div>
+
+        <br>
+
+        <div id="SaveDiscard" class="row">
+            <div class="col-md-2 col-md-offset-8">
+                <button type="button" class="btn btn-success btn-block" onclick="submit()">Save</button>
+            </div>
+            <div class="hidden-md hidden-lg"><br></div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

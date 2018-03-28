@@ -13,6 +13,12 @@
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
+    <script type="text/javascript">
+        var link = document.createElement('link');
+        link.href = "/static/dist/css/admin.css";
+        link.rel = "stylesheet";
+        document.getElementsByTagName("head")[0].appendChild(link)
+    </script>
     <script src="/static/vendor/bootstrap-datepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script>
         var editing = false;
@@ -21,12 +27,49 @@
             beforeSend: function(xhr, settings) {
                 var csrfToken = getCookie('csrftoken');
                 xhr.setRequestHeader("X-CSRFToken", csrfToken);
-                console.log("CSRF Token set: " + csrfToken);
             }
         });
 
+        function enableEditing() {
+            editing = true;
+
+            $('input').each(function() {
+                if ($(this).attr('disabled')) {
+                    $(this).removeAttr('disabled');
+                }
+                else {
+                    $(this).attr({
+                        'disabled': 'disabled'
+                    });
+                }
+            });
+
+            $('#nric').attr({
+                'disabled': 'disabled'
+            });
+
+            $('#user_name').attr({
+                'disabled': 'disabled'
+            });
+
+            var x = document.getElementById("SaveDiscard");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+
+            var y = document.getElementById("btnEdit");
+            if (y.style.display === "none") {
+                y.style.display = "block";
+            } else {
+                y.style.display = "none";
+            }
+        }
+
         function discard() {
             if (confirm('Are you sure you want to discard all changes?')) {
+                enableEditing();
                 window.location.reload();
             } else {
 
@@ -37,36 +80,27 @@
             $('#alert-success').hide(0);
             $('#alert-failure').hide(0);
 
-            var data = {
-                'nric' : document.getElementById('nric').value,
-                'first_name' : document.getElementById('firstName').value,
-                'last_name' : document.getElementById('lastName').value,
-                'phone_no' : document.getElementById('mobileNo').value,
-                'date_of_birth' : document.getElementById('dateOfBirth').value,
-                'street' : document.getElementById('street').value,
-                'city' : document.getElementById('city').value,
-                'state' : document.getElementById('state').value,
-                'zip_code' : document.getElementById('zipCode').value,
-                'user_name': document.getElementById('user_name').value,
-                'pass_word': document.getElementById('pass_word').value,
-                'email': document.getElementById('email').value
-            };
+            if (confirm('Are you sure you want to save changes?')) {
+                var data = {
+                    'nric': document.getElementById('nric').value,
+                    'first_name': document.getElementById('firstName').value,
+                    'last_name': document.getElementById('lastName').value,
+                    'phone_no': document.getElementById('mobileNo').value,
+                    'date_of_birth': document.getElementById('dateOfBirth').value,
+                    'street': document.getElementById('street').value,
+                    'city': document.getElementById('city').value,
+                    'state': document.getElementById('state').value,
+                    'zip_code': document.getElementById('zipCode').value,
+                    'user_name': document.getElementById('user_name').value,
+                    'pass_word': document.getElementById('pass_word').value,
+                    'email': document.getElementById('email').value
+                };
 
-            var notEmpty = true;
+                var notEmpty = true;
 
-            $.each(data, function(key, value) {
+                $.each(data, function(key, value) {
                     if(value.length === 0 && key !== 'pass_word') {
                         notEmpty = false;
-                    }
-
-                    if(key === 'nric') {
-                        if (!value.match(/^[a-zA-Z0-9]*$/)) {
-                            $("#nric").parent().addClass("has-error");
-                            notEmpty = false;
-                        }
-                        else {
-                            $("#nric").parent().removeClass("has-error");
-                        }
                     }
 
                     if(key === 'first_name') {
@@ -110,54 +144,59 @@
                     }
                 });
 
-            if(notEmpty == true) {
-
-                $('#alert-success').hide(0);
-                $('#input').hide(0);
-
-                $.ajax({
-                    url: '/Nurse/add_nurse_into_db/',
-                    type: 'post',
-                    data: data,
-                    success: function (msg) {
-                        if (msg == "successful") {
-                            $('#alert-success').show(500);
+                if(notEmpty === true) {
+                    $.ajax({
+                        url: '/Nurse/update_nurse/',
+                        type: 'post',
+                        data: data,
+                        success: function (msg) {
+                            if (msg == "successful") {
+                                $('#alert-success').show(500);
+                            }
+                            else {
+                                alert("An error has occurred!");
+                            }
+                        },
+                        error: function (msg, status, jqxhr) {
+                            {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
                         }
-                        else {
-                            alert("An error has occurred!");
-                        }
-                    },
-                    error: function (msg, status, jqxhr) {
-                        {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
-                    }
-                });
-            }
-            else {
-                $('#alert-failure').show(0);
+                    });
+                }
+                else {
+                    $('#alert-failure').show(0);
+                }
             }
         }
 
         $(document).ready(function() {
+            $('input').each(function() {
+                $(this).attr({
+                    'disabled': 'disabled'
+                });
+            });
+
             $('#dateInput').datetimepicker({
                 format: 'DD/MM/YYYY'
             });
+
+            $('#dateOfBirth').val('{{ nurse.date_of_birth }}');
         });
     </script>
 {% endblock page_javascripts %}
 
 {% block sidebar %}
-    {% include 'nurse/ui_components/sidebar.html' %}
+    {% include 'administrator/ui_components/sidebar.html' %}
 {% endblock sidebar %}
 
 {% block topmenu %}
-    {% include 'nurse/ui_components/top-menu.html' %}
+    {% include 'administrator/ui_components/top-menu.html' %}
 {% endblock topmenu %}
 
 <!-- Add the page hierarchy here -->
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
-    <li class="breadcrumb-item"><a href="/Nurse/view_nurse">View Nurse</a></li>
-    <li class="breadcrumb-item active">{{ page_name }}</li>
+    <li class="breadcrumb-item"><a href="/Admin">Home</a></li>
+    <li class="breadcrumb-item"><a href="/Admin/view_nurse">View Nurse</a></li>
+    <li class="breadcrumb-item active">{{ nurse.user_id }}: {{ nurse.user.first_name }} {{ nurse.user.last_name }}</li>
 {% endblock breadcrumb %}
 
 {% block content %}
@@ -170,7 +209,7 @@
     <div id="alert-success" class="row" style="display: none">
         <div class="col-md-12">
             <div class="alert alert-success alert-dismissible" role="alert">
-                <strong>Success!</strong> Nurse has been successfully added!
+                <strong>Success!</strong> Changes has been successfully saved!
             </div>
         </div>
     </div>
@@ -190,22 +229,22 @@
             </div>
 
             <form action="" method="post"> {% csrf_token %}
-                <div class="col-md-10">
+                <div class="col-md-9">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">NRIC</span>
-                                <input id="nric" name="nric" class="form-control" placeholder="" type="text" value="">
+                                <input id="nric" name="nric" class="form-control" placeholder="" type="text" value="{{ nurse.nric }}" disabled>
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">First Name</span>
-                                <input id="firstName" name="first_name" class="form-control" placeholder="" type="text" value="">
+                                <input id="firstName" name="first_name" class="form-control" placeholder="" type="text" value="{{ nurse.user.first_name }}" disabled>
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">Last Name</span>
-                                <input id="lastName" name="last_name" class="form-control" placeholder="" type="text" value="">
+                                <input id="lastName" name="last_name" class="form-control" placeholder="" type="text" value="{{ nurse.user.last_name }}" disabled>
                             </div>
                         </div>
 
@@ -214,7 +253,7 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Mobile no.</span>
-                                <input id="mobileNo" name="phone_no" class="form-control" placeholder="" type="text" value="">
+                                <input id="mobileNo" name="phone_no" class="form-control" placeholder="" type="text" value="{{ nurse.phoneNo }}" disabled>
                             </div>
                             <br>
                             <div class="input-group date" id="dateInput">
@@ -231,7 +270,7 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Username</span>
-                                <input id="user_name" name="user_name" class="form-control" placeholder="" type="text" value="">
+                                <input id="user_name" name="user_name" class="form-control" placeholder="" type="text" value="{{ nurse.user.username }}">
                             </div>
                             <br>
                             <div class="input-group">
@@ -243,7 +282,7 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Email</span>
-                                <input id="email" name="email" class="form-control" placeholder="" type="email" value="">
+                                <input id="email" name="email" class="form-control" placeholder="" type="email" value="{{ nurse.user.email }}">
                             </div>
                             <br>
                         </div>
@@ -255,12 +294,12 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Street</span>
-                                <input id="street" name="street" class="form-control" placeholder="" type="text" value="">
+                                <input id="street" name="street" class="form-control" placeholder="" type="text" value="{{ nurse.street }}" disabled>
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">City</span>
-                                <input id="city" name="city" class="form-control" placeholder="" type="text" value="">
+                                <input id="city" name="city" class="form-control" placeholder="" type="text" value="{{ nurse.city }}" disabled>
                             </div>
                             <br>
                         </div>
@@ -268,33 +307,43 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">State</span>
-                                <input id="state" name="state" class="form-control" placeholder="" type="text" value="">
+                                <input id="state" name="state" class="form-control" placeholder="" type="text" value="{{ nurse.state }}" disabled>
                             </div>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-addon">Zip code</span>
-                                <input id="zipCode" name="zip_code" class="form-control" placeholder="" type="text" value="">
+                                <input id="zipCode" name="zip_code" class="form-control" placeholder="" type="text" value="{{ nurse.zip_code }}" disabled>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-
                 <div class="hidden-md hidden-lg"><br></div>
+
+                <div class="col-md-1">
+                    <button id="btnEdit" class="btn btn-default" type="button" onclick="enableEditing()">Edit</button>
+                </div>
             </form>
         </div>
 
         <br>
 
-        <div id="SaveDiscard" class="row">
-            <div class="col-md-2 col-md-offset-8">
+        <div id="SaveDiscard" class="row" style="display: none;">
+            <div class="col-md-2 col-md-offset-7">
                 <button type="button" class="btn btn-success btn-block" onclick="submit()">Save</button>
             </div>
             <div class="hidden-md hidden-lg"><br></div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
             </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2><a href="/Nurse/productivity_report/{{ nurse.user_id }}">Performance</a></h2>
         </div>
     </div>
 {% endblock content %}

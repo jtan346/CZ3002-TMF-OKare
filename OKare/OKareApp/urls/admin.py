@@ -26,5 +26,25 @@ urlpatterns = [
     url(r'^get_patient_with_no_team_info/', ManageTeam.getpatientwithnoteaminfo, name="ManageTeam_getpatientwithnoteaminfo"),
     url(r'^add_patient_to_team/', ManageTeam.addpatienttoteam, name="ManageTeam_addpatienttoteam"),
     url(r'^add_team/', ManageTeam.addteam, name="addteam"),
-    url(r'^addteamtodb/', ManageTeam.addteamtodb, name="addteamtodb")
+    url(r'^addteamtodb/', ManageTeam.addteamtodb, name="addteamtodb"),
+
+    #Ben/Haode - List/View Patient Profiles
+    url(r'^view_patient/$', Admin.listPatients, name="list_patient"),
+    url(r'^view_patient/(?P<patient_id>[\w-]+)$', Admin.viewPatientProfile, name="view_patient"),
+
+    #Ben/HaoDe - List/View Nurse Profiles
+    url(r'^view_nurse/$', Admin.listNurses, name="list_nurse"),
+    url(r'^view_nurse/(?P<nurse_id>[\w-]+)$', Admin.viewNurseProfile, name="view_nurse"),
+
+    #Ben/Haode - Updating patient or nurse details
+    url(r'^update_patient/$', Admin.updatePatientDetail, name="update_patient_detail"),
+    url(r'^update_nurse/$', Admin.updateNurseDetail, name="update_nurse_detail"),
+
+    #Ben/Haode - View for adding new patient or nurse details
+    url(r'^add_nurse/', Admin.addNurseView, name="add_nurse_view"),
+    url(r'^add_patient/', Admin.addPatientView, name="add_patient_view"),
+
+    #Ben/Haode - Add new patient or nurse
+    url(r'^add_patient_into_db/$', Admin.addPatient, name="add_patient_into_db"),
+    url(r'^add_nurse_into_db/$', Admin.addNurse, name="add_nurse_into_db")
 ]

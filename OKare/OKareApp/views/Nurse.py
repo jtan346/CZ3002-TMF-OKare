@@ -20,56 +20,6 @@ from django.views.generic.list import ListView
 def is_nurse(user):
     return user.account.type == "Nurse"
 
-@login_required
-@user_passes_test(is_nurse)
-def listNurses(request):
-    template = loader.get_template('nurse/list_nurse.html')
-    page_name = 'View Nurse'    #Fill in here
-
-    nurses = Account.objects.filter(type="Nurse")
-    #user session havn't implement yet, so placeholder
-    user_name="Benjamin"
-    user_type="Nurse"
-    context = {
-        'page_name': page_name,
-        'user_name': user_name,
-        'user_type': user_type,
-        'nurses': nurses,
-    }
-    return HttpResponse(template.render(context, request))
-
-@login_required
-@user_passes_test(is_nurse)
-def viewNurseProfile(request, nurse_id):
-    template = loader.get_template('nurse/view_nurse.html')
-    nurse = Account.objects.filter(user_id=nurse_id).get()
-    nurse.date_of_birth = nurse.date_of_birth.strftime('%d/%m/%Y')
-    nurse_name = nurse.user.first_name + " " + nurse.user.last_name    # From Models
-
-    page_name = str(nurse.user_id) + ": " + nurse_name  # Fill in here
-    context = {
-        'page_name': page_name,
-        'nurse': nurse,
-    }
-    return HttpResponse(template.render(context, request))
-
-@login_required
-@user_passes_test(is_nurse)
-def addNurseView(request):
-    template = loader.get_template('nurse/add_nurse.html')
-
-
-    #assignTask()
-    # lmaotest()
-
-    lmao = CompletedTask.objects.filter(task_id='29')
-    for i in lmao:
-        print(i.compldt)
-
-    context = {
-                'page_name': "Add Nurse",
-               }
-    return HttpResponse(template.render(context, request))
 
 def assignTask():
 
@@ -130,6 +80,7 @@ def assignTask():
     for bla in chek:
         print(bla)
 
+
 def lmaotest():
     #delete task 29 from ongoing and put into completed
     tasktodel = OngoingTask.objects.filter(task_id='29').get()
@@ -140,90 +91,6 @@ def lmaotest():
     compltask.save()
     tasktodel.delete()
 
-@login_required
-@user_passes_test(is_nurse)
-def addNurse(request):
-    if request.POST:
-        print(request.POST)
-        #alidate nric
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        nric = request.POST['nric']
-        date_of_birth = request.POST['date_of_birth']
-        street = request.POST['street']
-        city = request.POST['city']
-        state = request.POST['state']
-        zip_code = request.POST['zip_code']
-        phone_no = request.POST['phone_no']
-        user_name = request.POST['user_name']
-        pass_word = request.POST['pass_word']
-        email = request.POST['email']
-
-        converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
-
-        user = User.objects.create_user(username=user_name,
-                                        email=email,
-                                        password=pass_word,
-                                        first_name=first_name,
-                                        last_name=last_name)
-
-        addeduser = User.objects.filter(username=user_name).get()
-
-        nurse = Account(nric=nric, date_of_birth=converted_datetime,
-                        street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="Nurse",
-                        team_id=1,user_id=addeduser.id)
-
-        nurse.save()
-
-        return HttpResponse('successful')
-
-@login_required
-@user_passes_test(is_nurse)
-def updateNurseDetail(request):
-    if request.POST:
-        try:
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-
-            nric = request.POST['nric']
-            date_of_birth = request.POST['date_of_birth']
-            street = request.POST['street']
-            city = request.POST['city']
-            state = request.POST['state']
-            zip_code = request.POST['zip_code']
-            phone_no = request.POST['phone_no']
-
-            # user_name = request.POST['user_name']
-            pass_word = request.POST['pass_word']
-            email = request.POST['email']
-
-            converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
-
-            nurse = Account.objects.get(nric=nric)
-
-            user = nurse.user
-            user.first_name = first_name
-            user.last_name = last_name
-
-            # nurse.nric = nric
-            nurse.date_of_birth = converted_datetime
-            nurse.street = street
-            nurse.city = city
-            nurse.state = state
-            nurse.zip_code = zip_code
-            nurse.phoneNo = phone_no
-
-            user.password = make_password(pass_word)
-            user.email = email
-
-            nurse.save()
-            user.save()
-
-        except(KeyError, Account.DoesNotExist):
-            return HttpResponse('unsuccessful')
-
-        else:
-            return HttpResponse('successful')
 
 @login_required
 @user_passes_test(is_nurse)
@@ -238,6 +105,7 @@ def listPatients(request):
         'patients': patients,
     }
     return HttpResponse(template.render(context, request))
+
 
 @login_required
 @user_passes_test(is_nurse)
@@ -254,39 +122,6 @@ def viewPatientProfile(request, patient_id):
                }
     return HttpResponse(template.render(context, request))
 
-@login_required
-@user_passes_test(is_nurse)
-def addPatientView(request):
-    template = loader.get_template('nurse/add_patient.html')
-    context = {
-                'page_name': "Add Patient",
-               }
-    return HttpResponse(template.render(context, request))
-
-@login_required
-@user_passes_test(is_nurse)
-def addPatient(request):
-    if request.POST:
-        nric = request.POST['nric']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        date_of_birth = request.POST['date_of_birth']
-        ward = request.POST['ward']
-        bed = request.POST['bed']
-        street = request.POST['street']
-        city = request.POST['city']
-        state = request.POST['state']
-        zip_code = request.POST['zip_code']
-        phone_no = request.POST['phone_no']
-
-        converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
-
-        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=converted_datetime,
-                          ward=ward, bed=bed, street=street, city=city, state=state, zip_code=zip_code,
-                          phoneNo=phone_no, team_id=1)
-
-        patient.save()
-        return HttpResponse('successful')
 
 @login_required
 @user_passes_test(is_nurse)
@@ -329,6 +164,7 @@ def updatePatientDetail(request):
 
         else:
             return HttpResponse('successful')
+
 
 @login_required
 @user_passes_test(is_nurse)
@@ -460,12 +296,14 @@ def view_team_tasklist(request):
 @user_passes_test(is_nurse)
 def index(request):
     assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
+    curUser = request.user
+    curAccount = Account.objects.filter(user=curUser).get()
     assignTask()
     if 'unreadNotifications' not in request.session:
         #initUserNotifications(request)
-        request.session['unreadNotifications'] = getCurrentNotiCount(request.user)
+        request.session['unreadNotifications'] = getCurrentNotiCount(curAccount.nric)
         request.session['readNotifications'] = 0
-        request.session['currentNotifications'] = getCurrentNotiCount(request.user)
+        request.session['currentNotifications'] = getCurrentNotiCount(curAccount.nric)
         print("Init Notification Count:" + str(request.session['unreadNotifications']))
 
     context = { 'assigned_task':assigned_task,
@@ -689,6 +527,6 @@ def initUserNotifications(request):
     return HttpResponse('')
 
 def getCurrentNotiCount(userid):
-    curAccount = Account.objects.filter(nric=userid)
+    curAccount = Account.objects.filter(nric=userid).get()
     myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
     return myNotifications.count()
