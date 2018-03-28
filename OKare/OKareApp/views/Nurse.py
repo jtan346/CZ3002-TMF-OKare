@@ -99,6 +99,7 @@ def assignTask():
     taskQueue = []
 
     for a in toBeAssigned:
+        print("to be assigned:")
         print(a.id, a.start_time, datetime.datetime.now().time(), a.start_time < datetime.datetime.now().time())
         if a.start_time < datetime.datetime.now().time():
             taskQueue.append(a)
@@ -114,9 +115,10 @@ def assignTask():
         patient = Patient.objects.filter(nric=i.patient_id).get()
 
         # Requery every round because free nurses must be updated, just assign to first nurse in queryset if any
-        freeNurses = Account.objects.exclude(nric__in=OngoingTask.objects.all().values('nurse_id')).filter(type='Nurse').filter(team_id=patient.team_id)
+        print("PATIENT: " + str(patient.team_id))
+        freeNurses = Account.objects.exclude(nric__in=OngoingTask.objects.all().values('nurse__nric')).filter(type='Nurse').filter(team_id=patient.team_id)
         #print(patient.team_id)
-
+        #print(freeNurses)
         #Only if got free nurses in team god
         if freeNurses:
             print("Free Nurse ID: " + str(freeNurses[0].nric))
@@ -458,11 +460,13 @@ def view_team_tasklist(request):
 @user_passes_test(is_nurse)
 def index(request):
     assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
-
+    assignTask()
     if 'unreadNotifications' not in request.session:
         #initUserNotifications(request)
-        request.session['unreadNotifications'] = getCurrentNotiCount(request)
-        print(request.session['unreadNotifications'])
+        request.session['unreadNotifications'] = getCurrentNotiCount(request.user)
+        request.session['readNotifications'] = 0
+        request.session['currentNotifications'] = getCurrentNotiCount(request.user)
+        print("Init Notification Count:" + str(request.session['unreadNotifications']))
 
     context = { 'assigned_task':assigned_task,
                 'name': request.user.first_name,
@@ -638,14 +642,25 @@ class nurseNotifications(ListView):
         curAccount = Account.objects.filter(nric=data2[0]).get()
         myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
 
+        self.request.session['currentNotifications'] = getCurrentNotiCount(curAccount)
+
+        if self.request.session['currentNotifications'] > self.request.session['readNotifications']:
+            self.request.session['unreadNotifications'] = self.request.session['currentNotifications'] - self.request.session['readNotifications']
+
+        print("curNotis:" + str(self.request.session['currentNotifications']))
+        print("curUnread:" + str(self.request.session['unreadNotifications']))
+        print("curRead:" + str(self.request.session['readNotifications']))
+
         context = {
             'myNotifications': myNotifications,  #All notifications
+            'unreadNotifications': self.request.session['unreadNotifications'],
         }
 
         return context
 
-def updateNotiCount(request):
+def updateUnreadCount(request):
     print("updateNotiCount")
+    request.session['readNotifications'] += request.session['unreadNotifications']
     request.session['unreadNotifications'] = 0
     return HttpResponse('')
 
@@ -673,8 +688,7 @@ def initUserNotifications(request):
 
     return HttpResponse('')
 
-def getCurrentNotiCount(request):
-    curUser = request.user
-    curAccount = Account.objects.filter(user=curUser)
+def getCurrentNotiCount(userid):
+    curAccount = Account.objects.filter(nric=userid)
     myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
     return myNotifications.count()
