@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.template import loader
+
 from django.db.models import Count, Avg, Sum
 from OKareApp.models import Account, Patient, CompletedTask, HelpRequest, OngoingTask, Task, Teams
 from datetime import datetime, timedelta
@@ -19,17 +20,7 @@ def index(Request):
     today = datetime.now().date()
     helpRequest = HelpRequest.objects.filter(helper_id__isnull=True)
 
-    dayOfWeek ={
-        0: "Monday",
-        1: "Tuesday",
-        2: "Wednesday",
-        3: "Thursday",
-        4: "Friday",
-        5: "Saturday",
-        6: "Sunday"
-    }
-
-    remaining = Task.objects.filter(start_time__gte = datetime.now()).exclude(recur_type = "Monthly", date__day__lt = today.day, date__day__gt = today.day).exclude(recur_type = "Weekly", day__iexact = dayOfWeek[today.weekday()]).exclude(id__in = OngoingTask.objects.all().values_list('task__id', flat=True)).count()
+    remaining = Task.objects.filter(start_time__gte = datetime.now()).exclude(recur_type = "Monthly", date__day__lt = today.day, date__day__gt = today.day).exclude(recur_type = "Weekly", day__iexact = today.weekday()).exclude(id__in = OngoingTask.objects.all().values_list('task__id', flat=True)).count()
 
     ongoingTasks = OngoingTask.objects.all
     context = {
@@ -47,9 +38,19 @@ pass
 
 #Used to Get Number of OutStanding Tasks in each Category
 def getCatData(Request):
-    tasks = Task.objects.exclude(id = OngoingTask.id).exclude(id = CompletedTask).values('cateogry').annotate(catCount=Count('category'))
-
-    data = [tasks]
+    today = datetime.now().date()
+    categories = Task.objects.filter(start_time__gte=datetime.now())\
+        .exclude(recur_type="Monthly",date__day__lt=today.day,date__day__gt=today.day)\
+        .exclude(recur_type="Weekly", day__iexact=today.weekday())\
+        .exclude(id__in=OngoingTask.objects.all().values_list('task__id', flat=True))\
+        .values('category')\
+        .annotate(total=Count('category')).order_by('category')
+    data = []
+    for cat in categories:
+        data.append({
+            'category':cat['category'],
+            'total':cat['total']
+        })
 
     return JsonResponse(data, safe=False)
 pass

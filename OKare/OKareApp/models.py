@@ -180,7 +180,7 @@ class HelpRequest(models.Model):
         return "Task: {} | Requester: {} | Helper: {} | Ongoing Tasks: {}".format(self.task.title, self.requester, self.helper, self.ongoing_task)
 
     def timecreated(self):
-        now = datetime.now().replace(tzinfo=timezone.utc)
+        now = datetime.now()
         difference = (now - self.time_created).seconds
         # return hours
         if int(difference / 3600) >= 1:

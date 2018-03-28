@@ -11,28 +11,10 @@
         var link = document.createElement('link');
         link.href = "/static/dist/css/admin.css";
         link.rel = "stylesheet";
-        document.getElementsByTagName("head")[0].appendChild(link)
-
-        function categoryPiechartInit(){
-            $.ajax({
-                type:"GET",
-                url: "/Admin/get_category_pie_data/",
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data)
-                    new Morris.DonutSegment({
-                        element:'category-pie-chart',
-
-                        data:{
-
-                        }
-                    });
-                },
-                error: function(data){
-                    console.log(data);
-                }
-            });
-        }
+        document.getElementsByTagName("head")[0].appendChild(link);
+        $(document).ready(function(){
+            loadCatChart();
+        });
 
         //Load Modal for Help Request Select Nurse
         function loadHRModal(id, helper_id){
@@ -89,9 +71,55 @@
             });
         }
 
-        function reloadHRPanel(){
-            var panel = document.getElementById('helpRequestPanel');
+        function loadCatChart(){
+            var ctx = document.getElementById("category-pie-chart").getContext('2d');
+            $.ajax({
+                type:"GET",
+                url: "/Admin/get_category_pie_data/",
+                dataType: 'json',
+                success: function (data) {
+                    var labels = [];
+                    var dat = [];
+                    for(i in data){
+                        console.log(data[i]);
+                        labels.push(data[i]["category"]);
+                        dat.push(data[i]["total"]);
+                    }
+                    console.log(labels);
+                    console.log(dat);
+                    var myChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                data: dat,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        }
+                    });
 
+
+                },
+                error: function(data){
+                    console.log(data);
+                }
+            });
         }
 
     </script>
@@ -180,7 +208,7 @@
     <div class="row">
         <div class="col-md-4">
             <!-- Ongoing Task Panel -->
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <i class="fa fa-spinner fa-fw"></i> Ongoing Tasks
                 </div>
@@ -214,14 +242,14 @@
         <!-- CHART PANEL -->
         <div class="col-md-4">
             <!-- Category Tasks -->
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
-                    <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Category of Remaining Tasks
                 </div>
                 <div class="panel-body">
-                    <div id="category-pie-chart">
+                    <canvas id="category-pie-chart">
 
-                    </div>
+                    </canvas>
                 </div>
                 <!-- /.panel-body -->
             </div>
