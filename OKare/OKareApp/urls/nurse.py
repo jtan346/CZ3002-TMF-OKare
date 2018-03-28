@@ -53,7 +53,7 @@ urlpatterns = [
     url(r'^add_nurse_into_db/$', Nurse.addNurse, name="add_nurse_into_db"),
 
     #Testing for Noti
-    url(r'^updateNotiCount/', Nurse.updateNotiCount),
+    url(r'^updateNotiCount/', Nurse.updateUnreadCount),
     url(r'^notificationBell/(?P<slug>[\w-]+)/$', Nurse.nurseNotifications.as_view(), name='notificationBell'), #slug = my account id
 
 ]
