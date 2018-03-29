@@ -55,11 +55,11 @@ pass
 #Used to Get Number of OutStanding Tasks in each Category
 def getCatData(Request):
     today = datetime.now().date()
-    categories = Task.objects.filter(start_time__gte=datetime.now())\
-        .exclude(recur_type="Monthly",date__day__lt=today.day,date__day__gt=today.day)\
-        .exclude(recur_type="Weekly", day__iexact=today.weekday())\
-        .exclude(id__in=OngoingTask.objects.all().values_list('task__id', flat=True))\
-        .values('category')\
+    categories = Task.objects.filter(start_time__gte=datetime.now()) \
+        .exclude(recur_type="Monthly",date__day__lt=today.day,date__day__gt=today.day) \
+        .exclude(recur_type="Weekly", day__iexact=today.weekday()) \
+        .exclude(id__in=OngoingTask.objects.all().values_list('task__id', flat=True)) \
+        .values('category') \
         .annotate(total=Count('category')).order_by('category')
     data = []
     for cat in categories:
@@ -128,10 +128,10 @@ def viewPatientProfile(Request, patient_id):
     patient = Patient.objects.filter(nric=patient_id).get()
     page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
     context = {
-                'page_name': page_name,
-                'patient_id': patient_id,
-                'patient': patient,
-               }
+        'page_name': page_name,
+        'patient_id': patient_id,
+        'patient': patient,
+    }
     return render(Request, 'administrator/view_patient.html', context)
 
 
@@ -312,8 +312,8 @@ def addNurseView(request):
         print(i.compldt)
 
     context = {
-                'page_name': "Add Nurse",
-               }
+        'page_name': "Add Nurse",
+    }
     return HttpResponse(template.render(context, request))
 
 
@@ -338,21 +338,26 @@ def addNurse(request):
 
         converted_datetime = datetime.strptime(date_of_birth, "%d/%m/%Y")
 
-        user = User.objects.create_user(username=user_name,
-                                        email=email,
-                                        password=pass_word,
-                                        first_name=first_name,
-                                        last_name=last_name)
+        if Account.objects.filter(nric=nric).exists():
+            return HttpResponse('duplicated_nric')
+        else:
+            if User.objects.filter(username=user_name).exists():
+                return HttpResponse('duplicated_username')
+            else:
+                user = User.objects.create_user(username=user_name,
+                                                email=email,
+                                                password=pass_word,
+                                                first_name=first_name,
+                                                last_name=last_name)
 
-        addeduser = User.objects.filter(username=user_name).get()
+                addeduser = User.objects.filter(username=user_name).get()
 
-        nurse = Account(nric=nric, date_of_birth=converted_datetime,
-                        street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="Nurse",
-                        team_id=1,user_id=addeduser.id)
+                nurse = Account(nric=nric, date_of_birth=converted_datetime,
+                                street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="Nurse",
+                                team_id=1,user_id=addeduser.id)
 
-        nurse.save()
-
-        return HttpResponse('successful')
+                nurse.save()
+                return HttpResponse('successful')
 
 
 @login_required
@@ -428,10 +433,10 @@ def viewPatientProfile(request, patient_id):
     page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
 
     context = {
-                'page_name': page_name,
-                'patient_id': patient_id,
-                'patient': patient,
-               }
+        'page_name': page_name,
+        'patient_id': patient_id,
+        'patient': patient,
+    }
     return HttpResponse(template.render(context, request))
 
 
@@ -440,8 +445,8 @@ def viewPatientProfile(request, patient_id):
 def addPatientView(request):
     template = loader.get_template('administrator/add_patient.html')
     context = {
-                'page_name': "Add Patient",
-               }
+        'page_name': "Add Patient",
+    }
     return HttpResponse(template.render(context, request))
 
 
@@ -461,14 +466,20 @@ def addPatient(request):
         zip_code = request.POST['zip_code']
         phone_no = request.POST['phone_no']
 
-        converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+        converted_datetime = datetime.strptime(date_of_birth, "%d/%m/%Y")
 
-        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=converted_datetime,
-                          ward=ward, bed=bed, street=street, city=city, state=state, zip_code=zip_code,
-                          phoneNo=phone_no, team_id=1)
+        if Patient.objects.filter(nric=nric).exists():
+            return HttpResponse('duplicated_nric')
+        else:
+            if Patient.objects.filter(bed=bed, ward=ward).exists():
+                return HttpResponse('duplicated_bed')
+            else:
+                patient = Patient.objects.create(nric=nric, first_name=first_name, last_name=last_name,
+                                                 date_of_birth=converted_datetime, ward=ward, bed=bed, street=street,
+                                                 city=city, state=state, zip_code=zip_code, phoneNo=phone_no)
 
-        patient.save()
-        return HttpResponse('successful')
+                patient.save()
+                return HttpResponse('successful')
 
 
 @login_required
