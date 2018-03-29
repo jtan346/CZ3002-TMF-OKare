@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url,include
+from OKareApp.views import Login
 
 urlpatterns = [
+    url(r'^$', Login.login_view, name='login'),
     url(r'^admin/', admin.site.urls),
     url(r'^Nurse/',include('OKareApp.urls.nurse')),
     url(r'^Admin/',include('OKareApp.urls.admin')),
