@@ -296,9 +296,6 @@ def assignNurseHr(Request):
         helpRequest.save()
         return JsonResponse({"success": True})
 
-def is_nurse(user):
-    return user.account.type == "Nurse"
-
 
 @login_required
 @user_passes_test(is_admin)

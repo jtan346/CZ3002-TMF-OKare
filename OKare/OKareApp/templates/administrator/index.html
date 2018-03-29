@@ -6,7 +6,12 @@
     </style>
 {% endblock page_stylesheets %}
 
+{% block breadcrumb %}
+	<li class="breadcrumb-item active">Home</li>
+{% endblock breadcrumb %}
+
 {% block page_javascripts %}
+    <script src="/static/js/admin.js"></script>
     <script type="text/javascript">
         var link = document.createElement('link');
         link.href = "/static/dist/css/admin.css";

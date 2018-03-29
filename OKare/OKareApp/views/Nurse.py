@@ -332,7 +332,7 @@ def add_help_request(request):
         try:
             account = request.user.account
             current_task = OngoingTask.objects.get(nurse=account)
-            help_request = HelpRequest(requester=account, helper=None, task=current_task.task, ongoing_task=current_task)
+            help_request = HelpRequest(requester=account, helper=None, task=current_task.task, ongoing_task=current_task, time_created=datetime.datetime.now())
             help_request.save()
         except(KeyError, Account.DoesNotExist):
             return HttpResponse("Failure")
@@ -451,22 +451,18 @@ class nurseNotifications(ListView):
     template_name = 'nurse/ui_components/notificationBell.html'
 
     def get_queryset(self):
-        dataRec = self.kwargs['slug']
-        data2 = dataRec.replace('-', ' ').split(' ')
-        curAccount = Account.objects.filter(nric=data2[0]).get()
-
-        myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
-
+        myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=self.request.user.account))
         return myNotifications
 
     def get_context_data(self, **kwargs):
+        myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=self.request.user.account))
 
         dataRec = self.kwargs['slug']
         data2 = dataRec.replace('-', ' ').split(' ')
         curAccount = Account.objects.filter(nric=data2[0]).get()
         myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
 
-        self.request.session['currentNotifications'] = getCurrentNotiCount(curAccount.nric)
+        self.request.session['currentNotifications'] = myNotifications.count()
 
         if self.request.session['currentNotifications'] > self.request.session['readNotifications']:
             self.request.session['unreadNotifications'] = self.request.session['currentNotifications'] - self.request.session['readNotifications']
@@ -500,17 +496,7 @@ def initNotifications(request):
         newNoti.save()
 
     return HttpResponse('')
-
-#upon login (Where to put this?) get number of UNREAD notifications
-def initUserNotifications(request):
-    curUser = request.user
-    curAccount = Account.objects.filter(user=curUser)
-    myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
-
-    #upon login, this is the number of UNREAD notifications
-    request.session['unreadNotifications'] = myNotifications.count()
-
-    return HttpResponse('')
+)
 
 def getCurrentNotiCount(userid):
     print(userid)
