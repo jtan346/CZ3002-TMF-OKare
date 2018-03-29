@@ -9,26 +9,32 @@
             min-width: 100px;
         }
     </style>
-	<link href="/static/css/bootstrap-datatables.css" rel="stylesheet">
+	<link href="/static/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 {% endblock page_stylesheets %}
 
 {% block page_javascripts %}
 	<script src="/static/js/jquery.dataTables.min.js"></script>
-	<script src="/static/js/dataTables.bootstrap.min.js"></script>
 	<script src="/static/js/nurse.js"></script>
+    <script type="text/javascript">
+        var link = document.createElement('link');
+        link.href = "/static/dist/css/admin.css";
+        link.rel = "stylesheet";
+        document.getElementsByTagName("head")[0].appendChild(link)
+    </script>
+
 {% endblock page_javascripts %}
 
 {% block sidebar %}
-    {% include 'nurse/ui_components/sidebar.html' %}
+    {% include 'administrator/ui_components/sidebar.html' %}
 {% endblock sidebar %}
 
 {% block topmenu %}
-    {% include 'nurse/ui_components/top-menu.html' %}
+    {% include 'administrator/ui_components/top-menu.html' %}
 {% endblock topmenu %}
 
 <!-- Add the page hierarchy here -->
 {% block breadcrumb %}
-	<li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
+	<li class="breadcrumb-item"><a href="/Admin">Home</a></li>
     <li class="breadcrumb-item active">{{ page_name }}</li>
 {% endblock breadcrumb %}
 
@@ -38,7 +44,7 @@
         <div class="card-header">
 	        <div class="form-row col-md-3" style="">Nurse Listing</div>
 	        <div class="form-row col-md-2" style="float:right;">
-		        <button class="btn btn-block" onclick="location.href = '/Nurse/add_nurse';">
+		        <button class="btn btn-block" onclick="location.href = '/Admin/add_nurse';">
 			        Add Nurse
 		        </button>
 		    </div>
@@ -61,10 +67,10 @@
 		            <tbody>
 		                {% for n in nurses %}
 		                <tr>
-			                <td><a href = "/Nurse/view_nurse/{{ n.user_id }}">Picture Here</a></td>
-			                <td><a href = "/Nurse/view_nurse/{{ n.user_id }}">{{ n.user_id }}</a></td>
-			                <td><a href = "/Nurse/view_nurse/{{ n.user_id }}">{{ n.user.first_name}} {{ n.user.last_name }}</a></td>
-			                <td><a href = "/Nurse/view_nurse/{{ n.user_id }}">{{ n.nric }}</a></td>
+			                <td><a href = "/Admin/view_nurse/{{ n.user_id }}">Picture Here</a></td>
+			                <td><a href = "/Admin/view_nurse/{{ n.user_id }}">{{ n.user_id }}</a></td>
+			                <td><a href = "/Admin/view_nurse/{{ n.user_id }}">{{ n.user.first_name}} {{ n.user.last_name }}</a></td>
+			                <td><a href = "/Admin/view_nurse/{{ n.user_id }}">{{ n.nric }}</a></td>
 			                <td>{{ n.type }}</td>
 			                <td><a href = "#">{{ n.team_id }}</a></td>
 			                <td><a href = "#">Test</a></td>

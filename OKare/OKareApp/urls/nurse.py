@@ -29,28 +29,15 @@ urlpatterns = [
     # SC/Joey - Nurse's Complete Task
     url(r'^complete_task/', Nurse.complete_task, name="complete_task"),
 
-    #Ben/HaoDe - List/View Nurse Profiles
-    url(r'^view_nurse/$', Nurse.listNurses, name="list_nurse"),
-    url(r'^view_nurse/(?P<nurse_id>[\w-]+)$', Nurse.viewNurseProfile, name="view_nurse"),
-
     #Ben/Haode - List/View Patient Profiles
     url(r'^view_patient/$', Nurse.listPatients, name="list_patient"),
     url(r'^view_patient/(?P<patient_id>[\w-]+)$', Nurse.viewPatientProfile, name="view_patient"),
 
+    # Ben/Haode - Updating patient or nurse details
+    url(r'^update_patient/$', Nurse.updatePatientDetail, name="update_patient_detail"),
+
     #Ben/Haode - Generate Productivity Report
     url(r'productivity_report/(?P<nurse_id>[\w-]+)', Nurse.generateProductivityReport, name="generate_productivity_report"),
-
-    #Ben/Haode - Updating patient or nurse details
-    url(r'^update_patient/$', Nurse.updatePatientDetail, name="update_patient_detail"),
-    url(r'^update_nurse/$', Nurse.updateNurseDetail, name="update_nurse_detail"),
-
-    #Ben/Haode - View for adding new patient or nurse details
-    url(r'^add_nurse/', Nurse.addNurseView, name="add_nurse_view"),
-    url(r'^add_patient/', Nurse.addPatientView, name="add_patient_view"),
-
-    #Ben/Haode - Add new patient or nurse
-    url(r'^add_patient_into_db/$', Nurse.addPatient, name="add_patient_into_db"),
-    url(r'^add_nurse_into_db/$', Nurse.addNurse, name="add_nurse_into_db"),
 
     #Testing for Noti
     url(r'^updateNotiCount/', Nurse.updateUnreadCount),
