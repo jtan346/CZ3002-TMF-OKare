@@ -237,7 +237,7 @@
                 </div>
                 <div class="panel-body">
                     {% for nurse in lowNurse %}
-                    <button id="{{ nurse.nric }}LPBtn"class="btn-danger list-group-item" style="background-color:orangered;color:white" onclick="loadHRModal('{{ nurse.nric }}')">
+                    <button onclick="window.location.href='/Admin/productivity_report/{{ nurse.nric }}'" id="{{ nurse.nric }}LPBtn"class="btn-danger list-group-item" style="background-color:orangered;color:white" onclick="loadHRModal('{{ nurse.nric }}')">
                         <b><i class="fa fa-user-md fa-fw"></i> Nurse:</b> {{ nurse.name }} <b>Task Completed: </b>{{ nurse.total }}
                         <span class="pull-right text-muted small" style="color:white">
                                 <b>Team: </b>{{ nurse.team }}

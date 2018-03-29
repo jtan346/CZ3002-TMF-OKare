@@ -52,9 +52,8 @@ def index(Request):
 
     #Create dict
     nurseTotals = CompletedTask.objects.filter(date__month=((today.month - 1) % 13)).values('nurse','nurse__team_id','nurse__team__name').annotate(total=Count('id')).order_by('nurse')
-    print(nurseTotals)
-    lowNurse = []
 
+    lowNurse = []
     for obj in nurseTotals:
         if obj['total'] < (teamTaskAverages[obj['nurse__team_id']]*0.9):
             lowNurse.append({'nric':obj['nurse'],
