@@ -206,32 +206,18 @@
     </div>
     <!-- /.row -->
     <div class="row">
+
+        <!-- CHART PANEL -->
         <div class="col-md-7">
-            <!-- Ongoing Task Panel -->
-            <div class="panel panel-primary">
+            <!-- Category Tasks -->
+            <div class="panel panel-info">
                 <div class="panel-heading">
-                    <i class="fa fa-spinner fa-fw"></i> Ongoing Tasks
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Category of Remaining Tasks
                 </div>
-                <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div class="list-group">
-                        {% for OGTask in ongoingTasks %}
-                            <button id="{{ OGTask.task.title }}" class="list-group-item">
-                            <div class="col-xs-6">
-                                <b>Task:</b> {{ OGTask.task.title }}<br>
-                                <b>Nurse:</b> {{ OGTask.nurse.user.first_name }}
-                                {{ OGTask.nurse.user.last_name }}
-                            </div>
-                            <div class="col-xs-6" style="text-align: right;">
-                                <span class="pull-right text-muted small">
-                                    <em>
-                                        {{ OGTask.timefrom }}
-                                    </em>
-                                </span>
-                            </div>
-                            </button>
-                        {% endfor %}
-                    </div>
+                    <canvas id="category-pie-chart">
+
+                    </canvas>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -242,17 +228,55 @@
             {% include 'administrator/ui_components/help_request_panel.html' %}
         </div>
 
-        <!-- CHART PANEL -->
+        <!-- LOW PRODUCTIVITY NURSE PANEL -->
         <div class="col-md-5">
             <!-- Category Tasks -->
-            <div class="panel panel-info">
+            <div class="panel panel-danger">
                 <div class="panel-heading">
-                    <i class="fa fa-bar-chart-o fa-fw"></i> Category of Remaining Tasks
+                    <i class="fa fa-exclamation-triangle fa-fw"></i> Low Productivity Nurses
                 </div>
                 <div class="panel-body">
-                    <canvas id="category-pie-chart">
+                    {% for nurse in lowNurse %}
+                    <button id="{{ nurse.nric }}LPBtn"class="btn-danger list-group-item" style="background-color:orangered;color:white" onclick="loadHRModal('{{ nurse.nric }}')">
+                        <b><i class="fa fa-user-md fa-fw"></i> Nurse:</b> {{ nurse.name }} <b>Task Completed: </b>{{ nurse.total }}
+                        <span class="pull-right text-muted small" style="color:white">
+                                <b>Team: </b>{{ nurse.team }}
+                        </span>
+                    </button>
+                    {% endfor %}
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
 
-                    </canvas>
+
+
+        <div class="col-md-12">
+            <!-- Ongoing Task Panel -->
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <i class="fa fa-spinner fa-fw"></i> Ongoing Tasks
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="list-group">
+                        {% for OGTask in ongoingTasks %}
+                            <button id="{{ OGTask.task.title }}" class="list-group-item">
+                                <div class="col-xs-6">
+                                    <b>Task:</b> {{ OGTask.task.title }}<br>
+                                    <b>Nurse:</b> {{ OGTask.nurse.user.first_name }}
+                                    {{ OGTask.nurse.user.last_name }}
+                                </div>
+                                <div class="col-xs-6" style="text-align: right;">
+                                <span class="pull-right text-muted small">
+                                    <em>
+                                        {{ OGTask.timefrom }}
+                                    </em>
+                                </span>
+                                </div>
+                            </button>
+                        {% endfor %}
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>

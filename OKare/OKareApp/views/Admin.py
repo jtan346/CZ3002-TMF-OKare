@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.template import loader
-
 from django.db.models import Count, Avg, Sum
-from OKareApp.models import Account, Patient, CompletedTask, HelpRequest, OngoingTask, Task, Teams
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -13,17 +11,17 @@ from django.views.generic import ListView
 from django.http import Http404
 from django.urls import reverse
 from django.views import generic
-from django.db.models import Q
 from OKareApp.models import *
-import datetime
-import time
-from datetime import timedelta, date, datetime
+from datetime import timedelta, date, datetime, time
 import calendar
 import json
 from django.core import serializers
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.generic.list import ListView
+from django.db.models import F
+
+from django.db.models import OuterRef, Subquery
 
 
 # Create your views here.
@@ -38,17 +36,57 @@ def index(Request):
 
     remaining = Task.objects.filter(start_time__gte = datetime.now()).exclude(recur_type = "Monthly", date__day__lt = today.day, date__day__gt = today.day).exclude(recur_type = "Weekly", day__iexact = today.weekday()).exclude(id__in = OngoingTask.objects.all().values_list('task__id', flat=True)).count()
 
-    ongoingTasks = OngoingTask.objects.all
+    # Team Productivity Report
+    teamTaskAverages = {}
+
+    #Store the Average of each team in dict
+    for team in Teams.objects.all():
+        teamTaskAverages[team.id] = \
+            CompletedTask.objects.filter(nurse_id__team_id=team.id, date__month=((today.month - 1) % 13)).values(
+                'nurse').annotate(total=Count(id)).aggregate(avg=Avg('total'))['avg']
+
+    #Create dict
+    nurseTotals = CompletedTask.objects.filter(date__month=((today.month - 1) % 13)).values('nurse','nurse__team_id','nurse__team__name').annotate(total=Count('id')).order_by('nurse')
+    print(nurseTotals)
+    lowNurse = []
+
+    for obj in nurseTotals:
+        if obj['total'] < (teamTaskAverages[obj['nurse__team_id']]*0.9):
+            lowNurse.append({'nric':obj['nurse'],
+                             'name': Account.objects.get(nric=obj['nurse']).fullname(),
+                             'total':obj['total'],
+                             'team': obj['nurse__team__name']
+                             })
+
+
+
+    print(lowNurse)
     context = {
         'id': id,
         'activeNurses': activeNurses,
         'patients': patients,
         'completed': completed,
         'remaining': remaining,
-        'ongoingTasks':ongoingTasks,
-        'helpRequest': helpRequest
+        'ongoingTasks': OngoingTask.objects.all(),
+        'helpRequest': helpRequest,
+        'lowNurse': lowNurse
     }
     return render(Request, 'administrator/index.html', context)
+pass
+
+
+def stufftest():
+    today = datetime.now().date()
+    # Team Productivity Report
+    teamTaskAverages = {}
+    for team in Teams.objects.all():
+        teamTaskAverages[team.id] = \
+        CompletedTask.objects.filter(nurse_id__team_id=team.id, date__month=((today.month - 1) % 13)).values(
+            'nurse').annotate(total=Count(id)).aggregate(avg=Avg('total'))['avg']
+
+    nurseTotals = CompletedTask.objects.filter(date__month=((today.month - 1) % 13)).values_list('nurse').annotate(
+        total=Count('id')).filter(total__lt=teamTaskAverages[nurse_id__team_id])
+    print(nurseTotals)
 pass
 
 
