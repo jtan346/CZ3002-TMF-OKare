@@ -293,6 +293,11 @@
     {% include 'administrator/ui_components/top-menu.html' %}
 {% endblock topmenu %}
 
+{% block breadcrumb %}
+	<li class="breadcrumb-item"><a href="/Admin">Home</a></li>
+    <li class="breadcrumb-item active">Manage Tasks</li>
+{% endblock breadcrumb %}
+
 {% block content %}
     <div class="row">
         <div id="patientPanel" class="panel panel-primary col-xs-12">

@@ -713,7 +713,10 @@
 
     </script>
 {% endblock page_javascripts %}
-
+{% block breadcrumb %}
+	<li class="breadcrumb-item"><a href="/Admin">Home</a></li>
+    <li class="breadcrumb-item active">Manage Teams</li>
+{% endblock breadcrumb %}
 
 {% block sidebar %}
     {% include 'administrator/ui_components/sidebar.html' %}
