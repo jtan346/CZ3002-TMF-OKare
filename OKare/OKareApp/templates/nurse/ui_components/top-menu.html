@@ -1,10 +1,10 @@
 <script>
 //Function to refresh div and pull from django
 
-$('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}");
+$('#alertBellNotification').load("/Nurse/notificationBell/");
 
 setInterval(function(){
-    $('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}");
+    $('#alertBellNotification').load("/Nurse/notificationBell/");
     console.log("reloading!");
 },10000);
 
@@ -17,11 +17,8 @@ function updateNotiCount() {
         url: '/Nurse/updateNotiCount/',
         data: {},
         success: function (msg) {
-            //On Successful service call
-            //alert(accountType+"'s response (Has Comment: "+ MOHAhasComment +") for "+curPlanID+ " has been saved!");
             console.log("Calling updateNotiCount in Django");
         }
-        //csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
     });
 }
 
