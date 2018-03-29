@@ -281,16 +281,8 @@ def view_team_tasklist(request):
 @user_passes_test(is_nurse)
 def index(request):
     assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
-    curUser = request.user
-    #print("herehere:" + str(curUser))
-    curAccount = Account.objects.filter(user__username=curUser).get()
     assignTask()
-    if 'unreadNotifications' not in request.session:
-        #initUserNotifications(request)
-        request.session['unreadNotifications'] = getCurrentNotiCount(curAccount.nric)
-        request.session['readNotifications'] = 0
-        request.session['currentNotifications'] = getCurrentNotiCount(curAccount.nric)
-        print("Init Notification Count:" + str(request.session['unreadNotifications']))
+
 
     context = { 'assigned_task':assigned_task,
                 'name': request.user.first_name,
@@ -496,10 +488,13 @@ def initNotifications(request):
         newNoti.save()
 
     return HttpResponse('')
-)
+
 
 def getCurrentNotiCount(userid):
     print(userid)
     curAccount = Account.objects.filter(nric=userid).get()
     myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
     return myNotifications.count()
+
+#Unread Notifications moved to login Manager
+

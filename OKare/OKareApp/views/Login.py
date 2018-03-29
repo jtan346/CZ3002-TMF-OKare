@@ -19,9 +19,17 @@ def login_view(request):
                     myNotifications = NotificationBell.objects.filter(status=True).filter(
                         Q(type="Broadcast") | Q(type="Request") | Q(target=request.user.account))
 
-                    # upon login, this is the number of UNREAD notifications
-                    request.session['unreadNotifications'] = myNotifications.count()
-                    request.session['readNotifications'] = 0
+
+                    if 'unreadNotifications' not in request.session:
+                        # initUserNotifications(request)
+                        request.session['unreadNotifications'] = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=request.user.account)).count()
+                        request.session['readNotifications'] = 0
+                        request.session['currentNotifications'] = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=request.user.account)).count()
+
+                        print("Init unread Notification Count:" + str(request.session['unreadNotifications']))
+                        print("Init read Notification Count:" + str(request.session['readNotifications']))
+                        print("Init current Notification Count:" + str(request.session['currentNotifications']))
+
                     if user.account.type=="Nurse":
                         return HttpResponseRedirect("/Nurse")
                     elif user.account.type=="Admin":
