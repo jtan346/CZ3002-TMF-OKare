@@ -44,6 +44,8 @@
         function submit() {
             $('#alert-success').hide(0);
             $('#alert-failure').hide(0);
+            $('#alert-failure-duplicated-nric').hide(0);
+            $('#alert-failure-duplicated-bed').hide(0);
 
             var data = {
                 'nric' : document.getElementById('nric').value,
@@ -59,55 +61,59 @@
                 'phone_no' : document.getElementById('phoneNo').value,
             };
 
-            var notEmpty = true;
+            var notValid = true;
 
             $.each(data, function(key, value) {
-                    if(value.length === 0) {
-                        notEmpty = false;
-                    }
+                if(value.length === 0) {
+                    notValid = false;
+                }
 
-                    if(key === 'nric') {
-                        if (!value.match(/^[a-zA-Z0-9]*$/)) {
-                            $("#nric").parent().addClass("has-error");
-                            notEmpty = false;
-                        }
-                        else {
-                            $("#nric").parent().removeClass("has-error");
-                        }
+                if(key === 'nric') {
+                    if (!value.match(/^[a-zA-Z0-9]*$/)) {
+                        $("#nric").parent().addClass("has-error");
+                        notValid = false;
                     }
-
-                    if(key === 'first_name') {
-                        if (!value.match(/^[A-z]+$/)) {
-                            $("#firstName").parent().addClass("has-error");
-                            notEmpty = false;
-                        }
-                        else {
-                            $("#firstName").parent().removeClass("has-error");
-                        }
+                    else {
+                        $("#nric").parent().removeClass("has-error");
                     }
+                }
 
-                    if(key === 'last_name') {
-                        if (!value.match(/^[A-z]+$/)) {
-                            $("#lastName").parent().addClass("has-error");
-                            notEmpty = false;
-                        }
-                        else {
-                            $("#lastName").parent().removeClass("has-error");
-                        }
+                if(key === 'first_name') {
+                    if (!value.match(/^[A-z]+$/)) {
+                        $("#firstName").parent().addClass("has-error");
+                        notValid = false;
                     }
-
-                    if(key === 'phone_no') {
-                        if (!value.match(/^(0|[1-9][0-9]*)$/)) {
-                            $("#phoneNo").parent().addClass("has-error");
-                            notEmpty = false;
-                        }
-                        else {
-                            $("#phoneNo").parent().removeClass("has-error");
-                        }
+                    else {
+                        $("#firstName").parent().removeClass("has-error");
                     }
-                });
+                }
 
-            if(notEmpty == true) {
+                if(key === 'last_name') {
+                    if (!value.match(/^[A-z]+$/)) {
+                        $("#lastName").parent().addClass("has-error");
+                        notValid = false;
+                    }
+                    else {
+                        $("#lastName").parent().removeClass("has-error");
+                    }
+                }
+
+                if(key === 'phone_no') {
+                    if (!value.match(/^(0|[1-9][0-9]*)$/)) {
+                        $("#phoneNo").parent().addClass("has-error");
+                        notValid = false;
+                    }
+                    else if (value.length !== 8) {
+                        $("#phoneNo").parent().addClass("has-error");
+                        notValid = false;
+                    }
+                    else {
+                        $("#phoneNo").parent().removeClass("has-error");
+                    }
+                }
+            });
+
+            if(notValid == true) {
 
                 $('#alert-success').hide(0);
                 $('#input').hide(0);
@@ -119,6 +125,14 @@
                     success: function (msg) {
                         if (msg == "successful") {
                             $('#alert-success').show(500);
+                        }
+                        else if (msg == "duplicated_nric") {
+                            $('#alert-failure-duplicated-nric').show(0);
+                            $('#input').show(0);
+                        }
+                        else if (msg == "duplicated_bed") {
+                            $('#alert-failure-duplicated-bed').show(0);
+                            $('#input').show(0);
                         }
                         else {
                             alert("An error has occurred!");
@@ -181,6 +195,22 @@
         </div>
     </div>
 
+    <div id="alert-failure-duplicated-nric" class="row" style="display: none">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <strong>Duplicated NRIC!</strong> User with this NRIC already exist in the database!
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-failure-duplicated-bed" class="row" style="display: none">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <strong>Duplicated Ward/Bed!</strong> The bed in this ward is currently assigned to another patient!
+            </div>
+        </div>
+    </div>
+
     <div id="input">
         <div class="row">
             <div class="col-md-2">
@@ -211,7 +241,7 @@
 
                         <div class="col-md-6">
                             <div class="input-group date" id="dateInput">
-                                <span class="input-group-addon" style="">Date</span>
+                                <span class="input-group-addon" style="">DoB</span>
                                 <input id="dateOfBirth" name="date" class="form-control" value="" type="text"/>
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>

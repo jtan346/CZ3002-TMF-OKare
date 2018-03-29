@@ -24,6 +24,11 @@ from django.db.models import F
 from django.db.models import OuterRef, Subquery
 
 
+def is_admin(user):
+    return user.account.type == "Admin"
+
+@login_required
+@user_passes_test(is_admin)
 # Create your views here.
 def index(Request):
     #Id will get from session once login completed
@@ -57,9 +62,6 @@ def index(Request):
                              'total':obj['total'],
                              'team': obj['nurse__team__name']
                              })
-
-
-
     print(lowNurse)
     context = {
         'id': id,
@@ -74,30 +76,16 @@ def index(Request):
     return render(Request, 'administrator/index.html', context)
 pass
 
-
-def stufftest():
-    today = datetime.now().date()
-    # Team Productivity Report
-    teamTaskAverages = {}
-    for team in Teams.objects.all():
-        teamTaskAverages[team.id] = \
-        CompletedTask.objects.filter(nurse_id__team_id=team.id, date__month=((today.month - 1) % 13)).values(
-            'nurse').annotate(total=Count(id)).aggregate(avg=Avg('total'))['avg']
-
-    nurseTotals = CompletedTask.objects.filter(date__month=((today.month - 1) % 13)).values_list('nurse').annotate(
-        total=Count('id')).filter(total__lt=teamTaskAverages[nurse_id__team_id])
-    print(nurseTotals)
-pass
-
-
+@login_required
+@user_passes_test(is_admin)
 #Used to Get Number of OutStanding Tasks in each Category
 def getCatData(Request):
     today = datetime.now().date()
-    categories = Task.objects.filter(start_time__gte=datetime.now())\
-        .exclude(recur_type="Monthly",date__day__lt=today.day,date__day__gt=today.day)\
-        .exclude(recur_type="Weekly", day__iexact=today.weekday())\
-        .exclude(id__in=OngoingTask.objects.all().values_list('task__id', flat=True))\
-        .values('category')\
+    categories = Task.objects.filter(start_time__gte=datetime.now()) \
+        .exclude(recur_type="Monthly",date__day__lt=today.day,date__day__gt=today.day) \
+        .exclude(recur_type="Weekly", day__iexact=today.weekday()) \
+        .exclude(id__in=OngoingTask.objects.all().values_list('task__id', flat=True)) \
+        .values('category') \
         .annotate(total=Count('category')).order_by('category')
     data = []
     for cat in categories:
@@ -109,7 +97,8 @@ def getCatData(Request):
     return JsonResponse(data, safe=False)
 pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def managetask(Request):
     patients = Patient.objects.all
     context = {
@@ -117,7 +106,8 @@ def managetask(Request):
     }
     return render(Request, 'administrator/manage_task.html', context)
 
-
+@login_required
+@user_passes_test(is_admin)
 def getPatientTasks(Request):
     id = Request.POST.get('id')
     context = {
@@ -127,7 +117,8 @@ def getPatientTasks(Request):
     return render(Request, 'administrator/ui_components/task_panel.html', context)
     pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def manageteam(Request):
     all_teams = Teams.objects.all()
     context = {
@@ -138,7 +129,8 @@ def manageteam(Request):
     return render(Request, 'administrator/manageteam.html', context)
 pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def returnTeamInfo(Request):
     crisis_id = Request.POST.get("name")
     # getAgency = Crisis.objects.get(id = crisis_id)
@@ -151,7 +143,8 @@ def returnTeamInfo(Request):
     return JsonResponse(response_data)
 pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def listPatients(Request):
     patients = Patient.objects.all()
     context = {
@@ -161,18 +154,20 @@ def listPatients(Request):
     return render(Request, 'administrator/list_patient.html', context)
 pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def viewPatientProfile(Request, patient_id):
     patient = Patient.objects.filter(nric=patient_id).get()
     page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
     context = {
-                'page_name': page_name,
-                'patient_id': patient_id,
-                'patient': patient,
-               }
+        'page_name': page_name,
+        'patient_id': patient_id,
+        'patient': patient,
+    }
     return render(Request, 'administrator/view_patient.html', context)
 
-
+@login_required
+@user_passes_test(is_admin)
 def addTask(Request):
     try:
         nric = Request.POST.get('Nric');
@@ -206,7 +201,8 @@ def addTask(Request):
         task.save()
         return JsonResponse({"success": True})
 
-
+@login_required
+@user_passes_test(is_admin)
 def editTask(Request):
     try:
         title = Request.POST.get('Title');
@@ -238,7 +234,8 @@ def editTask(Request):
 
         return JsonResponse({"success": True})
 
-
+@login_required
+@user_passes_test(is_admin)
 def getTask(Request, id):
     task = Task.objects.get(id=id)
     duration = task.duration
@@ -260,7 +257,8 @@ def getTask(Request, id):
 
     return JsonResponse(data,safe=False)
 
-
+@login_required
+@user_passes_test(is_admin)
 def deleteTask(Request, id):
     try:
         task = Task.objects.get(id=id)
@@ -270,7 +268,8 @@ def deleteTask(Request, id):
         task.delete()
         return JsonResponse({"success": True})
 
-
+@login_required
+@user_passes_test(is_admin)
 def getNurseTeammates(Request, id):
     print(id)
     nurse = Account.objects.get(nric=id)
@@ -284,7 +283,8 @@ def getNurseTeammates(Request, id):
 
     return JsonResponse(data, safe=False)
 
-
+@login_required
+@user_passes_test(is_admin)
 def assignNurseHr(Request):
     try:
         id = Request.POST.get('Id')
@@ -302,7 +302,7 @@ def is_nurse(user):
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def listNurses(request):
     template = loader.get_template('administrator/list_nurse.html')
     page_name = 'View Nurse'    #Fill in here
@@ -321,7 +321,7 @@ def listNurses(request):
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def viewNurseProfile(request, nurse_id):
     template = loader.get_template('administrator/view_nurse.html')
     nurse = Account.objects.filter(user_id=nurse_id).get()
@@ -337,7 +337,7 @@ def viewNurseProfile(request, nurse_id):
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def addNurseView(request):
     template = loader.get_template('administrator/add_nurse.html')
 
@@ -350,13 +350,13 @@ def addNurseView(request):
         print(i.compldt)
 
     context = {
-                'page_name': "Add Nurse",
-               }
+        'page_name': "Add Nurse",
+    }
     return HttpResponse(template.render(context, request))
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def addNurse(request):
     if request.POST:
         print(request.POST)
@@ -376,25 +376,30 @@ def addNurse(request):
 
         converted_datetime = datetime.strptime(date_of_birth, "%d/%m/%Y")
 
-        user = User.objects.create_user(username=user_name,
-                                        email=email,
-                                        password=pass_word,
-                                        first_name=first_name,
-                                        last_name=last_name)
+        if Account.objects.filter(nric=nric).exists():
+            return HttpResponse('duplicated_nric')
+        else:
+            if User.objects.filter(username=user_name).exists():
+                return HttpResponse('duplicated_username')
+            else:
+                user = User.objects.create_user(username=user_name,
+                                                email=email,
+                                                password=pass_word,
+                                                first_name=first_name,
+                                                last_name=last_name)
 
-        addeduser = User.objects.filter(username=user_name).get()
+                addeduser = User.objects.filter(username=user_name).get()
 
-        nurse = Account(nric=nric, date_of_birth=converted_datetime,
-                        street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="Nurse",
-                        team_id=1,user_id=addeduser.id)
+                nurse = Account(nric=nric, date_of_birth=converted_datetime,
+                                street=street, city=city, state=state, zip_code=zip_code, phoneNo=phone_no, type="Nurse",
+                                team_id=1,user_id=addeduser.id)
 
-        nurse.save()
-
-        return HttpResponse('successful')
+                nurse.save()
+                return HttpResponse('successful')
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def updateNurseDetail(request):
     if request.POST:
         try:
@@ -443,7 +448,7 @@ def updateNurseDetail(request):
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def listPatients(request):
     template = loader.get_template('administrator/list_patient.html')
     page_name = 'View Patient'    #Fill in here
@@ -458,7 +463,7 @@ def listPatients(request):
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def viewPatientProfile(request, patient_id):
     template = loader.get_template('administrator/view_patient.html')
     patient = Patient.objects.filter(nric=patient_id).get()
@@ -466,25 +471,25 @@ def viewPatientProfile(request, patient_id):
     page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
 
     context = {
-                'page_name': page_name,
-                'patient_id': patient_id,
-                'patient': patient,
-               }
+        'page_name': page_name,
+        'patient_id': patient_id,
+        'patient': patient,
+    }
     return HttpResponse(template.render(context, request))
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def addPatientView(request):
     template = loader.get_template('administrator/add_patient.html')
     context = {
-                'page_name': "Add Patient",
-               }
+        'page_name': "Add Patient",
+    }
     return HttpResponse(template.render(context, request))
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def addPatient(request):
     if request.POST:
         nric = request.POST['nric']
@@ -499,18 +504,24 @@ def addPatient(request):
         zip_code = request.POST['zip_code']
         phone_no = request.POST['phone_no']
 
-        converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+        converted_datetime = datetime.strptime(date_of_birth, "%d/%m/%Y")
 
-        patient = Patient(nric=nric, first_name=first_name, last_name=last_name, date_of_birth=converted_datetime,
-                          ward=ward, bed=bed, street=street, city=city, state=state, zip_code=zip_code,
-                          phoneNo=phone_no, team_id=1)
+        if Patient.objects.filter(nric=nric).exists():
+            return HttpResponse('duplicated_nric')
+        else:
+            if Patient.objects.filter(bed=bed, ward=ward).exists():
+                return HttpResponse('duplicated_bed')
+            else:
+                patient = Patient.objects.create(nric=nric, first_name=first_name, last_name=last_name,
+                                                 date_of_birth=converted_datetime, ward=ward, bed=bed, street=street,
+                                                 city=city, state=state, zip_code=zip_code, phoneNo=phone_no)
 
-        patient.save()
-        return HttpResponse('successful')
+                patient.save()
+                return HttpResponse('successful')
 
 
 @login_required
-@user_passes_test(is_nurse)
+@user_passes_test(is_admin)
 def updatePatientDetail(request):
     if request.POST:
         try:
@@ -550,3 +561,7 @@ def updatePatientDetail(request):
 
         else:
             return HttpResponse('successful')
+
+
+
+

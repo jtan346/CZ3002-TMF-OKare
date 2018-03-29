@@ -6,10 +6,16 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.core import serializers
 from collections import namedtuple
+from django.contrib.auth.decorators import login_required, user_passes_test
 import json
 from django.template import loader
 
+
+def is_admin(user):
+    return user.account.type == "Admin"
 # Create your views here.
+@login_required
+@user_passes_test(is_admin)
 def index(request):
     # Id will get from session once login completed
     id = 1
@@ -29,7 +35,8 @@ def index(request):
     return render(request, 'administrator/manageteam.html', context)
     pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def returnteaminfo(request):
     team_id = request.POST.get("teamId")
     nurs_objs = Account.objects.filter(team_id=team_id, type="Nurse")
@@ -54,7 +61,8 @@ def returnteaminfo(request):
     return JsonResponse(json.dumps(response_data), safe=False)
     pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def returnnursewithnoteam(request):
     Tid = request.POST.get("teamId")
     nurs_objs = Account.objects.filter(type="Nurse", team__isnull=True)
@@ -69,7 +77,8 @@ def returnnursewithnoteam(request):
     return JsonResponse(json.dumps(response_data), safe=False)
     pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def removenursefromteam(request):
     jsondata = request.POST.get("data")
     print(jsondata)
@@ -97,7 +106,8 @@ def removenursefromteam(request):
     return HttpResponse("success")
     pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def addnursetoteam(request):
 
     teamid = request.POST.get("teamid")
@@ -127,7 +137,8 @@ def addnursetoteam(request):
     return HttpResponse("success")
     pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def getpatientinteam(request):
     Tid = request.POST.get("teamId")
     patient_obj = Patient.objects.filter(team_id=Tid)
@@ -143,7 +154,8 @@ def getpatientinteam(request):
     return JsonResponse(json.dumps(response_data), safe=False)
     pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def getpatientwithnoteaminfo(request):
     Tid = request.POST.get("teamId")
     patient_obj = Patient.objects.filter(team__isnull=True)
@@ -158,6 +170,8 @@ def getpatientwithnoteaminfo(request):
     return JsonResponse(json.dumps(response_data), safe=False)
     pass
 
+@login_required
+@user_passes_test(is_admin)
 def removepatientfromteam(request):
     jsondata = request.POST.get("data")
     a = "nop"
@@ -185,7 +199,8 @@ def removepatientfromteam(request):
     return HttpResponse("success")
     pass
 
-
+@login_required
+@user_passes_test(is_admin)
 def addpatienttoteam(request):
     teamid = request.POST.get("teamid")
     wardno = request.POST.get("wardno")
@@ -217,6 +232,8 @@ def addpatienttoteam(request):
     return HttpResponse("success")
     pass
 
+@login_required
+@user_passes_test(is_admin)
 def addteam(request):
     template = loader.get_template('administrator/add_team.html')
     page_name = 'Add Team'    #Fill in here
@@ -228,6 +245,8 @@ def addteam(request):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
+@user_passes_test(is_admin)
 def addteamtodb(request):
     print("TEST")
     if request.POST:
