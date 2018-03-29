@@ -206,7 +206,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-7">
             <!-- Ongoing Task Panel -->
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -216,17 +216,20 @@
                 <div class="panel-body">
                     <div class="list-group">
                         {% for OGTask in ongoingTasks %}
-                            <a id="{{ OGTask.task.title }}" class="list-group-item">
-                                <b>Task:</b> {{ OGTask.task.title }}  &nbsp&nbsp
+                            <button id="{{ OGTask.task.title }}" class="list-group-item">
+                            <div class="col-xs-6">
+                                <b>Task:</b> {{ OGTask.task.title }}<br>
                                 <b>Nurse:</b> {{ OGTask.nurse.user.first_name }}
                                 {{ OGTask.nurse.user.last_name }}
-
+                            </div>
+                            <div class="col-xs-6" style="text-align: right;">
                                 <span class="pull-right text-muted small">
                                     <em>
                                         {{ OGTask.timefrom }}
                                     </em>
                                 </span>
-                            </a>
+                            </div>
+                            </button>
                         {% endfor %}
                     </div>
                 </div>
@@ -235,12 +238,12 @@
         </div>
 
         <!-- HELP REQUEST PANEL -->
-        <div  id="helpRequestPanel" class="col-md-4">
+        <div  id="helpRequestPanel" class="col-md-5">
             {% include 'administrator/ui_components/help_request_panel.html' %}
         </div>
 
         <!-- CHART PANEL -->
-        <div class="col-md-4">
+        <div class="col-md-5">
             <!-- Category Tasks -->
             <div class="panel panel-info">
                 <div class="panel-heading">
