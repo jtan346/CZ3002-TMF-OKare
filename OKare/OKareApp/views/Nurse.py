@@ -76,21 +76,6 @@ def assignTask():
             ongoingtask = OngoingTask(assigned_datetime=datetime.datetime.now(), nurse_id=freeNurses[0].nric, task_id=i.id)
             ongoingtask.save()
 
-    chek = OngoingTask.objects.all()
-    for bla in chek:
-        print(bla)
-
-
-def lmaotest():
-    #delete task 29 from ongoing and put into completed
-    tasktodel = OngoingTask.objects.filter(task_id='29').get()
-    print("HERE" + str(tasktodel.task_id))
-    nownow = str(datetime.datetime.today())
-    print(nownow) #wtf
-    compltask = CompletedTask(duration=datetime.timedelta(minutes=30), date=datetime.date.today(), compldt=datetime.datetime.today(), nurse_id=tasktodel.nurse_id, task_id=tasktodel.task_id)
-    compltask.save()
-    tasktodel.delete()
-
 
 @login_required
 @user_passes_test(is_nurse)
@@ -297,7 +282,8 @@ def view_team_tasklist(request):
 def index(request):
     assigned_task = OngoingTask.objects.filter(nurse=request.user.account).first()
     curUser = request.user
-    curAccount = Account.objects.filter(user=curUser).get()
+    #print("herehere:" + str(curUser))
+    curAccount = Account.objects.filter(user__username=curUser).get()
     assignTask()
     if 'unreadNotifications' not in request.session:
         #initUserNotifications(request)
@@ -480,7 +466,7 @@ class nurseNotifications(ListView):
         curAccount = Account.objects.filter(nric=data2[0]).get()
         myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
 
-        self.request.session['currentNotifications'] = getCurrentNotiCount(curAccount)
+        self.request.session['currentNotifications'] = getCurrentNotiCount(curAccount.nric)
 
         if self.request.session['currentNotifications'] > self.request.session['readNotifications']:
             self.request.session['unreadNotifications'] = self.request.session['currentNotifications'] - self.request.session['readNotifications']
@@ -527,6 +513,7 @@ def initUserNotifications(request):
     return HttpResponse('')
 
 def getCurrentNotiCount(userid):
+    print(userid)
     curAccount = Account.objects.filter(nric=userid).get()
     myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
     return myNotifications.count()
