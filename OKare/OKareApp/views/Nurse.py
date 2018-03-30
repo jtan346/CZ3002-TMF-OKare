@@ -15,11 +15,14 @@ import json
 from django.core import serializers
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic.list import ListView
 
 def is_nurse(user):
-    return user.account.type == "Nurse"
-
+    try:
+        return user.account.type == "Nurse"
+    except(Exception):
+        return False
 
 def assignTask():
 
@@ -345,8 +348,17 @@ def accept_help_request(request):
     notification_bell.save()
     return HttpResponse("OKAY")
 
-class nurseNotifications(ListView):
+class nurseNotifications(LoginRequiredMixin,UserPassesTestMixin, ListView):
     template_name = 'nurse/ui_components/notificationBell.html'
+
+    def test_func(self):
+        try:
+            dataRec = self.kwargs['slug']
+            data2 = dataRec.replace('-', ' ').split(' ')
+            account = Account.objects.filter(nric=data2[0]).get()
+            return account.type == "Nurse"
+        except(Exception):
+            return False
 
     def get_queryset(self):
         myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | Q(type="Request")  | Q(target=self.request.user.account))

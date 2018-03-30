@@ -226,7 +226,8 @@ class NotificationBell(models.Model):
         ("Broadcast", "Broadcast"), #To All Nurses/Admins
         ("Response", "Response"),   #When my Help Request is responded to (Single Nurse Target)
         ("Request", "Request"),     #When there is new Help Request (Broadcast to all Nurses)
-        ("Task", "Task")            #When there is a new Task assigned (From ongoingtask, single target)
+        ("Task", "Task"),      #When there is a new Task assigned (From ongoingtask, single target)
+        ("Assignment", "Assignment") #if a helper is forcibly assigned, then target is set to the request's helper
     )
     target = models.ForeignKey(Account, null=True, blank=True, on_delete=models.CASCADE) #Notification for Target (Single) Nurse, when type = Response, else null
     task = models.ForeignKey(Task, null=True, blank=True, on_delete=models.CASCADE) #Only for ongoing task and help request, can be null
