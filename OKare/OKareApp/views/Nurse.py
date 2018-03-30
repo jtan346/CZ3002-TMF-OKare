@@ -452,11 +452,11 @@ def check_help_request(request):
 def accept_help_request(request):
     account = request.user.account
     help_request_id = request.POST.get("id")
-    help_request = HelpRequest.objects.get(id=help_request_id)
+    help_request = HelpRequest.objects.filter(id=help_request_id).get()
     help_request.helper = account
     help_request.save()
     NotificationBell.objects.filter(type="Request", task=help_request.task).update(status=False)
-    notification_bell = NotificationBell(type="Response", target=help_request.requester,title="Your request was accepted")
+    notification_bell = NotificationBell(type="Response", target=help_request.requester, title="Your request was accepted")
     notification_bell.save()
     return HttpResponse("OKAY")
 
@@ -472,8 +472,7 @@ class nurseNotifications(ListView):
         dataRec = self.kwargs['slug']
         data2 = dataRec.replace('-', ' ').split(' ')
         curAccount = Account.objects.filter(nric=data2[0]).get()
-        myNotifications = NotificationBell.objects.filter(status=True)\
-            .filter(Q(type="Broadcast") | ( Q(type="Request") & ~Q(help_request__requester=curAccount) & Q(help_request__requester__team=curAccount.team)| Q(target=curAccount)))
+        myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | ( Q(type="Request") & ~Q(help_request__requester=curAccount) & Q(help_request__requester__team=curAccount.team)| Q(target=curAccount)))
 
         self.request.session['currentNotifications'] = myNotifications.count()
 
@@ -487,6 +486,7 @@ class nurseNotifications(ListView):
         context = {
             'myNotifications': myNotifications,  #All notifications
             'unreadNotifications': self.request.session['unreadNotifications'],
+            'curTime': datetime.datetime.now()
         }
 
         return context

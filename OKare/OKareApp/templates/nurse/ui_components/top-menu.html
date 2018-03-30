@@ -1,8 +1,8 @@
 <script>
 //Function to refresh div and pull from django
 
-$('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}/");
 
+$('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}/");
 setInterval(function(){
     $('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}/");
     console.log("reloading!");
@@ -18,6 +18,9 @@ function updateNotiCount() {
         data: {},
         success: function (msg) {
             console.log("Calling updateNotiCount in Django");
+            //if(document.getElementById('change1'))
+                document.getElementById('change1').innerHTML = '';
+            $('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}/");
         }
     });
 }

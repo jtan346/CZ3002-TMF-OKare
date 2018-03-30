@@ -10,22 +10,27 @@
 
         <strong class="dropdown-header" style="margin-top:10px">Recent Notifications</strong>
 
-        <li class="divider"></li>
 
-        <li>
-            <a href="#">
-                <div>
-                    <strong>John Smith</strong>
-                    <span class="pull-right text-muted">
-                                    <em>Yesterday</em>
-                                </span>
-                </div>
-                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-            </a>
-        </li>
 
+	    {% if myNotifications %}
+		    {% for n in myNotifications %}
+		    <li class="divider"></li>
+	        <li>
+	            <a href="#">
+	                <div>
+	                    <strong>{{ n.type }}</strong>
+	                    <span class="pull-right text-muted">
+	                                    <em>{{ n.time }}</em>
+	                                </span>
+	                </div>
+					<div>{{ n.title }}</div>
+	                <div>{{ n.task.title }}</div>
+	            </a>
+	        </li>
+		    {% endfor %}
+		{% endif %}
         <li class="divider"></li>
-        <strong class="dropdown-header" style="margin-top:10px">Last Updated: </strong>
+        <strong class="dropdown-header" style="margin-top:10px">Last Updated: {{ curTime }}</strong>
     </ul>
     <!-- /.dropdown-messages -->
 </li>

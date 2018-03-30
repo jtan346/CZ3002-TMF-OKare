@@ -234,5 +234,6 @@ class NotificationBell(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
     status = models.BooleanField(default=True) #Set to false if notification is over by event (i.e. when help request is fulfilled or task is completed
     help_request = models.OneToOneField(HelpRequest, null=True,blank=True,on_delete=models.CASCADE) #Null if not a help_request
+    time = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return "Type: {} : | target: {} | task: {}".format(self.type,self.target,self.task)
