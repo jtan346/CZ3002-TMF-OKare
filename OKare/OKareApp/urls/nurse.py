@@ -36,8 +36,6 @@ urlpatterns = [
     # Ben/Haode - Updating patient or nurse details
     url(r'^update_patient/$', Nurse.updatePatientDetail, name="update_patient_detail"),
 
-    #Ben/Haode - Generate Productivity Report
-    url(r'productivity_report/(?P<nurse_id>[\w-]+)', Nurse.generateProductivityReport, name="generate_productivity_report"),
 
     #Testing for Noti
     url(r'^updateNotiCount/', Nurse.updateUnreadCount),

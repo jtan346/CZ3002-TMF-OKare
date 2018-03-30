@@ -45,5 +45,9 @@ urlpatterns = [
 
     #Ben/Haode - Add new patient or nurse
     url(r'^add_patient_into_db/$', Admin.addPatient, name="add_patient_into_db"),
-    url(r'^add_nurse_into_db/$', Admin.addNurse, name="add_nurse_into_db")
+    url(r'^add_nurse_into_db/$', Admin.addNurse, name="add_nurse_into_db"),
+
+#Ben/Haode - Generate Productivity Report
+    url(r'productivity_report/(?P<nurse_id>[\w-]+)', Admin.generateProductivityReport, name="generate_productivity_report"),
+
 ]

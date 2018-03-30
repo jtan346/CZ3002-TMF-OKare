@@ -7,12 +7,12 @@
 	<script src="/static/js/jspdf.debug.js"></script>
 	<script src="/static/js/html2canvas.min.js"></script>
 	<script>
-		var graph1_raw = {{ graph1data|safe }};
+		var graph1_raw = {{ graphData|safe }};
 		//console.log(graph1_raw);
 		graph1_labels = [];
 		graph1_tasksCompleted = [];
 		graph1_avgTasksCompleted = [];
-		for(var i = graph1_raw.length-1; i >= 0; i--){
+		for(var i = 0; i < graph1_raw.length-1; i++){
 		    graph1_labels.push(graph1_raw[i].date);
 		    graph1_tasksCompleted.push(graph1_raw[i].tasks_completed);
 		    graph1_avgTasksCompleted.push(graph1_raw[i].avg_tasks_completed);
@@ -36,8 +36,8 @@
                 }
 			]
 		};
-
-		var graph2_raw = {{ graph2data|safe }};
+		/*
+		var graph2_raw = {{ graphData|safe }};
 		console.log(graph2_raw);
 		graph2_labels = [];
 		graph2_taskDur = [];
@@ -75,12 +75,12 @@
 	                    data: graph2_avgAllDur
 	                }
 				]
-			};
+			};*/
 
 		$( document ).ready(function() {
 			var ctx1 = document.getElementById("graph1").getContext('2d');
 			var myChart = new Chart(ctx1, {
-			    type: 'bar',
+			    type: 'line',
 			    data: data1,
 			    options: {
 			        title: {
@@ -103,7 +103,7 @@
 						}
 			    }
 			});
-
+			/*
 			var ctx2 = document.getElementById("graph2").getContext('2d');
 			var myChart = new Chart(ctx2, {
 			    type: 'bar',
@@ -128,7 +128,7 @@
 							}]
 						}
 			    }
-			});
+			});*/
 		});
 
 		//Test
@@ -239,14 +239,14 @@
     </div>
 
 	<div class="form-row col-md-12" style="height: 300px; margin-bottom:15px" >
-		<div class="form-row col-md-6" style="height: 300px;">
+		<div class="form-row col-md-12" style="height: 300px;">
 			<canvas id="graph1" style="height:100%; width:100%;">
 			</canvas>
 	    </div>
-		<div class="form-row col-md-6" style="height: 300px;">
+		<!--<div class="form-row col-md-6" style="height: 300px;">
 			<canvas id="graph2" style="height:100%; width:100%;">
 			</canvas>
-	    </div>
+	    </div>-->
 	</div>
 
 	<div class="form-row col-md-12" style="margin-bottom:15px;">
