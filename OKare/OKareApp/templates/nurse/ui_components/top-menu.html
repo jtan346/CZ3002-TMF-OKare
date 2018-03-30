@@ -1,10 +1,10 @@
 <script>
 //Function to refresh div and pull from django
 
-$('#alertBellNotification').load("/Nurse/notificationBell/");
+$('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}/");
 
 setInterval(function(){
-    $('#alertBellNotification').load("/Nurse/notificationBell/");
+    $('#alertBellNotification').load("/Nurse/notificationBell/{{ accountid }}/");
     console.log("reloading!");
 },10000);
 

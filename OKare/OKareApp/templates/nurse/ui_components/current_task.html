@@ -16,7 +16,7 @@
     <div class="panel-body">
         <div class="row field-wrapper">
             <div class="col-sm-1 field-name">
-                <p>Description</p>
+                <p>Description:</p>
             </div>
             <div class="col-sm-11">
                 <p>{{ assigned_task.task.title }} </p>
@@ -25,7 +25,7 @@
         <hr>
         <div class="row field-wrapper">
             <div class="col-sm-1 field-name">
-                <p>Start Time</p>
+                <p>Start Time:</p>
             </div>
             <div class="col-sm-11">
                 <p>{{ assigned_task.task.start_time }}</p>
@@ -34,10 +34,10 @@
         <hr>
         <div class="row field-wrapper">
             <div class="col-sm-1 field-name">
-                <p>Duration</p>
+                <p>Duration:</p>
             </div>
             <div class="col-sm-11">
-                <p>{{ assigned_task.task.duration }}</p>
+                <p>{{ assigned_task.task.readable_duration }}</p>
             </div>
         </div>
     </div>

@@ -41,6 +41,6 @@ urlpatterns = [
 
     #Testing for Noti
     url(r'^updateNotiCount/', Nurse.updateUnreadCount),
-    url(r'^notificationBell/$', Nurse.nurseNotifications.as_view(), name='notificationBell'), #slug = my account id
+    url(r'^notificationBell/(?P<slug>[\w]+)/$', Nurse.nurseNotifications.as_view(), name='notificationBell'), #slug = my account id
 
 ]

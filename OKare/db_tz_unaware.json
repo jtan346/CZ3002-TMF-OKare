@@ -641,7 +641,7 @@
 {
     "model": "auth.user",
     "fields": {
-        "password": "pbkdf2_sha256$36000$qla6f3efG6Rp$v32FsnRArWuB2TNz9pocV1AJIYarIEZMfbY5ZPaGkuU=",
+        "password": "pbkdf2_sha256$100000$MSy7wnqNNMpa$sssz9df5FnX+DmcI2OlLb8tYQduto9hqI5z3qh6UKzM=",
         "last_login": null,
         "is_superuser": false,
         "username": "nurse1",

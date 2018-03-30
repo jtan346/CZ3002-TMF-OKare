@@ -57,6 +57,12 @@ function poll_requests(){
                             null]
                         },
                     });
+                    console.log("deciding help request table on PNofity");
+                    if(window.location == "/Nurse/list_help_request")
+                    {
+                        console.log("reloading help request table on PNofity");
+                        reload_help_request_table();
+                    }
                 }
             }
         },

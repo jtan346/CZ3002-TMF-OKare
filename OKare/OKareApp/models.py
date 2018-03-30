@@ -109,6 +109,20 @@ class Task(models.Model):
     def __str__(self):
         return "ID : {} | Task Title: {} | Start Time: {} | Date: {} | Day: {} | patient: {} | recur_type: {}".format(self.id, self.title, self.start_time,self.date, self.day, self.patient, self.recur_type)
 
+    def readable_duration(self):
+        duration_string = ""
+        if self.duration.days > 0:
+            duration_string += "{} Days, ".format(self.duration.days)
+
+        #double slash(//) to apply integer division
+        if self.duration.seconds//3600 > 0:
+            hours = self.duration.seconds // 3600
+            duration_string += "{} hours & ".format(hours)
+
+        mins = (self.duration.seconds % 3600) / 60
+        duration_string += "{} mins est".format(mins)
+        return duration_string
+
 class OngoingTask(models.Model):
     task = models.OneToOneField(Task, on_delete=models.CASCADE)
     nurse = models.OneToOneField(Account, limit_choices_to={'type': 'Nurse'}, on_delete=models.CASCADE)
@@ -129,6 +143,7 @@ class OngoingTask(models.Model):
 
     def __str__(self):
         return "Ongoing Task - {} : {} assigned to {} ".format(self.id, self.task.title, self.nurse.nric)
+
 
 
 class DailyTriage(models.Model):
@@ -177,7 +192,7 @@ class HelpRequest(models.Model):
             return self.helper.fullname()
 
     def __str__(self):
-        return "Task: {} | Requester: {} | Helper: {} | Ongoing Tasks: {}".format(self.task.title, self.requester, self.helper, self.ongoing_task)
+        return "ID: {} | Task: {} | Requester: {} | Helper: [{}] | Ongoing Tasks: {}".format(self.id, self.task.title, self.requester.fullname() + " - Team: " + str(self.requester.team.id), self.helper, self.ongoing_task)
 
     def timecreated(self):
         now = datetime.now()
@@ -218,3 +233,6 @@ class NotificationBell(models.Model):
     type = models.CharField(choices=types, max_length=100, null=True, blank=True)
     title = models.CharField(max_length=100, null=True, blank=True)
     status = models.BooleanField(default=True) #Set to false if notification is over by event (i.e. when help request is fulfilled or task is completed
+    help_request = models.OneToOneField(HelpRequest, null=True,blank=True,on_delete=models.CASCADE) #Null if not a help_request
+    def __str__(self):
+        return "Type: {} : | target: {} | task: {}".format(self.type,self.target,self.task)

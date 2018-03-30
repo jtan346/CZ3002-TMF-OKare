@@ -136,7 +136,6 @@
         }
 
         function initGraphs() {
-          console.log("Load");
           var data2 = {
             labels: ["a", "b", "c", "d", "e", "f", "g"],
             datasets: [
@@ -151,8 +150,8 @@
         };
 
         var chart_1_container = document.getElementById("triage1");
-        var chart_2_container = document.getElementById("triage1");
-        var chart_3_container = document.getElementById("triage1");
+        var chart_2_container = document.getElementById("triage2");
+        var chart_3_container = document.getElementById("triage3");
 
 
         if(ctx1 && ctx2 && ctx3)
@@ -297,7 +296,7 @@
                 <p>Duration</p>
             </div>
             <div class="col-sm-11">
-                <p>{{ assigned_task.task.duration }}</p>
+                <p>{{ assigned_task.task.readable_duration }}</p>
             </div>
         </div>
     </div>
