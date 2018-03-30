@@ -294,9 +294,12 @@ def assignNurseHr(Request):
         helpRequest = HelpRequest.objects.get(id=id)
         helpRequest.helper = Account.objects.get(nric=nric)
         helpRequest.save()
+        #notify requester and helper
+        notification_bell = NotificationBell(type="Task", target=helpRequest.helper, title="You have been Assigned to help "+str(helpRequest.requester)+"! Please Proceed to help your teammates!")
+        notification_bell.save()
+        notification_bell2 = NotificationBell(type="Response", target=helpRequest.requester,title="Your request was accepted")
+        notification_bell2.save()
         return JsonResponse({"success": True})
-
-
 @login_required
 @user_passes_test(is_admin)
 def listNurses(request):
