@@ -70,7 +70,8 @@ def index(Request):
         'remaining': remaining,
         'ongoingTasks': OngoingTask.objects.all(),
         'helpRequest': helpRequest,
-        'lowNurse': lowNurse
+        'lowNurse': lowNurse,
+        'accountid': Request.user.account.nric
     }
     return render(Request, 'administrator/index.html', context)
 pass
@@ -101,7 +102,8 @@ pass
 def managetask(Request):
     patients = Patient.objects.all
     context = {
-        'Patients': patients
+        'Patients': patients,
+        'accountid': Request.user.account.nric
     }
     return render(Request, 'administrator/manage_task.html', context)
 
@@ -111,7 +113,8 @@ def getPatientTasks(Request):
     id = Request.POST.get('id')
     context = {
         "tasks":Task.objects.filter(patient_id = id),
-        "patient": Patient.objects.get(nric = id)
+        "patient": Patient.objects.get(nric = id),
+        'accountid': Request.user.account.nric
     }
     return render(Request, 'administrator/ui_components/task_panel.html', context)
     pass
@@ -121,7 +124,8 @@ def getPatientTasks(Request):
 def manageteam(Request):
     all_teams = Teams.objects.all()
     context = {
-        'teams': all_teams
+        'teams': all_teams,
+        'accountid': Request.user.account.nric,
     }
 
     # return HttpResponse(leads_as_json, content_type='json')
@@ -148,7 +152,8 @@ def listPatients(Request):
     patients = Patient.objects.all()
     context = {
         'patients': patients,
-        'updateTime': datetime.now().time()
+        'updateTime': datetime.now().time(),
+        'accountid': Request.user.account.nric,
     }
     return render(Request, 'administrator/list_patient.html', context)
 pass
@@ -162,6 +167,7 @@ def viewPatientProfile(Request, patient_id):
         'page_name': page_name,
         'patient_id': patient_id,
         'patient': patient,
+        'accountid': Request.user.account.nric,
     }
     return render(Request, 'administrator/view_patient.html', context)
 
@@ -315,6 +321,7 @@ def listNurses(request):
         'user_name': user_name,
         'user_type': user_type,
         'nurses': nurses,
+        'accountid': request.user.account.nric,
     }
     return HttpResponse(template.render(context, request))
 
@@ -331,6 +338,7 @@ def viewNurseProfile(request, nurse_id):
     context = {
         'page_name': page_name,
         'nurse': nurse,
+        'accountid': request.user.account.nric,
     }
     return HttpResponse(template.render(context, request))
 
@@ -350,6 +358,7 @@ def addNurseView(request):
 
     context = {
         'page_name': "Add Nurse",
+        'accountid': request.user.account.nric,
     }
     return HttpResponse(template.render(context, request))
 
@@ -457,6 +466,7 @@ def listPatients(request):
     context = {
         'page_name': page_name,
         'patients': patients,
+        'accountid': request.user.account.nric,
     }
     return HttpResponse(template.render(context, request))
 
@@ -473,6 +483,7 @@ def viewPatientProfile(request, patient_id):
         'page_name': page_name,
         'patient_id': patient_id,
         'patient': patient,
+        'accountid': request.user.account.nric,
     }
     return HttpResponse(template.render(context, request))
 
@@ -610,121 +621,59 @@ def generateProductivityReport(request, nurse_id):
         'nurse': nurse,
         'tasks': tasks,
         'graphData': json.dumps(graphData), #For Tasks Completed vs Team avg
+        'accountid': request.user.account.nric
     }
     return HttpResponse(template.render(context, request))
 
-def generateProductivityReport2(request, nurse_id):
-    template = loader.get_template('nurse/productivity_report.html')
+class adminNotifications(ListView):
+    template_name = 'administrator/ui_components/notificationBell.html'
 
-    nurse = Account.objects.filter(user_id=nurse_id).get()
-    tasks = CompletedTask.objects.filter(nurse_id=nurse.nric)
+    def test_func(self):
+        try:
+            dataRec = self.kwargs['slug']
+            data2 = dataRec.replace('-', ' ').split(' ')
+            account = Account.objects.filter(nric=data2[0]).get()
+            return account.type == "Admin"
+        except(Exception):
+            return False
 
-    allNurses = Account.objects.filter(team_id=nurse.team_id)
-    allTasks = CompletedTask.objects.filter(nurse_id__in=allNurses).exclude(nurse_id=nurse.nric)
+    def get_queryset(self):
+        dataRec = self.kwargs['slug']
+        data2 = dataRec.replace('-', ' ').split(' ')
+        curAccount = Account.objects.filter(nric=data2[0]).get()
+        myNotifications = NotificationBell.objects.filter(status=True).filter(
+            Q(type="Broadcast") | Q(type="Request") | Q(target=curAccount))
+        return myNotifications
 
-    numNurses = 0
-    for b in allNurses:
-        numNurses += 1
+    def get_context_data(self, **kwargs):
 
-    #Compute values for graph here:
+        dataRec = self.kwargs['slug']
+        data2 = dataRec.replace('-', ' ').split(' ')
+        curAccount = Account.objects.filter(nric=data2[0]).get()
+        myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | (
+                    Q(type="Request") | Q(target=curAccount)))
 
-    #1. Tasks/month for a quarter (4 mths)
+        self.request.session['currentNotifications'] = myNotifications.count()
 
-    today = datetime.today()
-    graph1data = []
-    graph2data = []
+        if self.request.session['currentNotifications'] > self.request.session['readNotifications']:
+            self.request.session['unreadNotifications'] = self.request.session['currentNotifications'] - \
+                                                          self.request.session['readNotifications']
 
-    # ONE WEEK
-    for i in range(0,7):
-        curDate = today-timedelta(days=i)
+        print("curNotis:" + str(self.request.session['currentNotifications']))
+        print("curUnread:" + str(self.request.session['unreadNotifications']))
+        print("curRead:" + str(self.request.session['readNotifications']))
 
-        complTasks = 0
-        #totalDur = datetime.timedelta(0,0,0)
-        totalDur = 0 #in Mins
-
-        allComplTasks = 0
-        avg_tasks_today = 0
-
-        #allTotalDur = datetime.timedelta(0,0,0)
-        allTotalDur = 0 #in Mins
-
-        #Average Tasks: (Tasks not done by THIS NURSE / Nurses in the team -1)
-        for a in allTasks:
-            if a.date == curDate.date():
-
-                #days = a.duration.days
-                #hours = a.duration.seconds // 3600
-                mins = a.duration.seconds % 3600 / 60.0
-
-                #print(days, hours, mins)
-                allTotalDur += mins
-                allComplTasks += 1
-
-        if numNurses-1 > 0:
-            avg_tasks_today = allComplTasks/(numNurses-1)
-        else:
-            avg_tasks_today = 0
-
-        if allComplTasks > 0:
-            avg_duration_today = allTotalDur/allComplTasks
-        else:
-            avg_duration_today = timedelta(0,0,0)
-
-        #Get number of tasks completed by THIS NURSE in the current month
-        for t in tasks:
-            if t.date == curDate.date():
-                #totalDur += t.duration
-                #print(tDur)
-                #print(testDur)
-
-                #days = t.duration.days
-                #hours = t.duration.seconds // 3600.0
-                mins2 = t.duration.seconds % 3600 / 60.0
-
-                #print(days, hours, mins)
-
-                totalDur += mins2
-
-                complTasks += 1
-
-        if complTasks > 0:
-            avgDur = totalDur/complTasks
-        else:
-            avgDur = 0
-
-        graph1dataObj = {
-            "date": str(curDate.date()),
-            "tasks_completed": complTasks,
-            "avg_tasks_completed": avg_tasks_today
+        context = {
+            'myNotifications': myNotifications,  # All notifications
+            'unreadNotifications': self.request.session['unreadNotifications'],
+            'curTime': datetime.now(),
+            'accountid': self.request.user.account.nric
         }
 
-        graph2DataObj = {
-            "date": str(curDate.date()),
-            "avg_duration": str(avgDur),
-            "team_avg_duration": str(avg_duration_today)
-        }
+        return context
 
-        graph2data.append(graph2DataObj)
-
-        #2. Graph 2 - Average Duration/Task (Accumulated over time) over 7 days
-        graph1data.append(graph1dataObj)
-
-        print("end for loop here")
-
-    #3. Graph 3 - Helps against average in team
-
-    allHelps = NurseStats.objects.all() #Lol whatswith this model where de fkey
-
-    page_name = 'Generate Productivity Report: ' + nurse_id + " (" + nurse.user.first_name + ")"
-    context = {
-        'page_name': page_name,
-        'nurse_id': nurse_id,
-        'nurse': nurse,
-        'tasks': tasks,
-        'graph1data': json.dumps(graph1data), #For Tasks Completed vs Team avg
-        'graph2data': json.dumps(graph2data), #For Task Duration vs Team avg
-    }
-    return HttpResponse(template.render(context, request))
-
-
-
+def updateUnreadCount(request):
+    print("updateNotiCount")
+    request.session['readNotifications'] += request.session['unreadNotifications']
+    request.session['unreadNotifications'] = 0
+    return HttpResponse('')

@@ -10,15 +10,13 @@
 
         <strong class="dropdown-header" style="margin-top:10px">Recent Notifications</strong>
 
+
+
 	    {% if myNotifications %}
 		    {% for n in myNotifications %}
 		    <li class="divider"></li>
 	        <li>
-	        {% if n.type == "Request" or n.type == "Response" %}
-	            <a href="{% url 'list_help_request' %}">
-	        {% else %}
-		         <a href="/Nurse/">
-		    {% endif %}
+	            <a href="#">
 	                <div>
 	                    <strong>{{ n.type }}</strong>
 	                    <span class="pull-right text-muted">

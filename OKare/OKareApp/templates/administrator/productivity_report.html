@@ -152,17 +152,17 @@
 {% endblock page_javascripts %}
 
 {% block sidebar %}
-    {% include 'nurse/ui_components/sidebar.html' %}
+    {% include 'administrator/ui_components/sidebar.html' %}
 {% endblock sidebar %}
 
 {% block topmenu %}
-    {% include 'nurse/ui_components/top-menu.html' %}
+    {% include 'administrator/ui_components/top-menu.html' %}
 {% endblock topmenu %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item active"><a href="/Nurse">Home</a></li>
-    <li class="breadcrumb-item active"><a href="/Nurse/view_nurse">View Nurse</a></li>
-    <li class="breadcrumb-item active"><a href="/Nurse/view_nurse/{{ nurse_id }}">{{ nurse_id }}: {{ nurse.user.first_name }} {{ nurse.user.last_name }}</a></li>
+    <li class="breadcrumb-item active"><a href="/Admin">Home</a></li>
+    <li class="breadcrumb-item active"><a href="/Admin/view_nurse">View Nurse</a></li>
+    <li class="breadcrumb-item active"><a href="/Admin/view_nurse/{{ nurse_id }}">{{ nurse_id }}: {{ nurse.user.first_name }} {{ nurse.user.last_name }}</a></li>
     <li class="breadcrumb-item">Productivity Report</li>
 {% endblock breadcrumb %}
 

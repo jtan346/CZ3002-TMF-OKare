@@ -49,5 +49,8 @@ urlpatterns = [
 
 #Ben/Haode - Generate Productivity Report
     url(r'productivity_report/(?P<nurse_id>[\w-]+)', Admin.generateProductivityReport, name="generate_productivity_report"),
+    url(r'^updateNotiCount/', Admin.updateUnreadCount),
+    url(r'^notificationBell/(?P<slug>[\w]+)/$', Admin.adminNotifications.as_view(), name='notificationBell'),
+    # slug = my account id
 
 ]

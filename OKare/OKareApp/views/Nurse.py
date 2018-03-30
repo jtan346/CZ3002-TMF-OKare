@@ -383,7 +383,8 @@ class nurseNotifications(LoginRequiredMixin,UserPassesTestMixin, ListView):
         context = {
             'myNotifications': myNotifications,  #All notifications
             'unreadNotifications': self.request.session['unreadNotifications'],
-            'curTime': datetime.datetime.now()
+            'curTime': datetime.datetime.now(),
+            'accountid': self.request.user.account.nric
         }
 
         return context
