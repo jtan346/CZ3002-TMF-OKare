@@ -26,9 +26,52 @@ $(document).ready(function() {
 } );
 
 $(document).ready(function(){
- setInterval(poll_requests, 3000);
- setInterval(check_requests,3000);
+ setInterval(function(){
+    check_assignment();
+    poll_requests();
+    check_requests();
+ },3000);
 });
+
+function check_assignment()
+{
+    $.ajax({
+        type: "POST",
+        url: "/Nurse/check_assigned_help_request/",
+        success:function(data, status, jqxhr)
+        {
+            console.log("HELP ME");
+            console.log(data);
+            if(data.length > 0)
+            {
+                for(var i = 0; i < data.length; i++)
+                {
+                    new PNotify({
+                        title: "You have been assigned to help your teammate !",
+                        text: data[i]['requester'] + " needs help!",
+                        type: "info",
+                        hide: false,
+                        confirm: {
+                            confirm: true,
+                            buttons: [{
+                                text: 'Ok',
+                                addClass: 'btn-primary',
+                                click: function(notice) {
+                                    notice.remove();
+                                }
+                            },
+                            null]
+                        },
+                    });
+                }
+            }
+        },
+        error: function(data, status, jqxhr)
+        {
+            console.log(data);
+        }
+    });
+}
 
 
 function poll_requests(){
@@ -37,6 +80,8 @@ function poll_requests(){
         url:"/Nurse/unread_help_request",
         success:function(data, status, jqxhr)
         {
+            //console.log("Checking unread help requests");
+            //console.log(data);
             if(data.length > 0)
             {
                 for(var i = 0; i < data.length; i++)

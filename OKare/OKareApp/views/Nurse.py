@@ -337,6 +337,34 @@ def check_help_request(request):
 
 @login_required
 @user_passes_test(is_nurse)
+def check_assigned_help_request(request):
+    account = request.user.account
+    try:
+        help_requests = HelpRequest.objects.filter(id__in=NotificationBell.objects.filter(type="Assignment", target=account, help_request__ongoing_task__in=OngoingTask.objects.all()).values('help_request')).\
+            exclude(id__in=Notification.objects.filter(reader=account, read_type="Help Accepted").values('help_request'))
+
+        for help_request in help_requests:
+            i_read_this = Notification(reader=account, help_request=help_request, read_type="Help Accepted")
+            i_read_this.save()
+
+            # .update(acknowledgement=True)
+            # this gives you a list of dicts
+        raw_data = serializers.serialize('python', help_requests)
+            # now extract the inner `fields` dicts
+        actual_data = [d['fields'] for d in raw_data]
+
+        for help_request in actual_data:
+            nric = help_request['requester']
+            help_request['requester'] = Account.objects.get(nric=nric).fullname()
+            del help_request['time_created']
+
+    except(Exception):
+        actual_data = {}
+
+    return JsonResponse(actual_data,safe=False)
+
+@login_required
+@user_passes_test(is_nurse)
 def accept_help_request(request):
     account = request.user.account
     help_request_id = request.POST.get("id")
@@ -369,7 +397,10 @@ class nurseNotifications(LoginRequiredMixin,UserPassesTestMixin, ListView):
         dataRec = self.kwargs['slug']
         data2 = dataRec.replace('-', ' ').split(' ')
         curAccount = Account.objects.filter(nric=data2[0]).get()
-        myNotifications = NotificationBell.objects.filter(status=True).filter(Q(type="Broadcast") | ( Q(type="Request") & ~Q(help_request__requester=curAccount) & Q(help_request__requester__team=curAccount.team)| Q(target=curAccount)))
+        myNotifications = NotificationBell.objects\
+            .filter(status=True).filter(Q(type="Broadcast") | ( Q(type="Request") & ~Q(help_request__requester=curAccount) & Q(help_request__requester__team=curAccount.team))| Q(target=curAccount) |
+                                        (Q(type="Assignment") & Q(help_request__helper=curAccount) & Q(help_request__ongoing_task__in=OngoingTask.objects.all()))
+                                        )
 
         self.request.session['currentNotifications'] = myNotifications.count()
 

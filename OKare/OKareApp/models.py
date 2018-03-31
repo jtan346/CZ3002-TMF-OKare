@@ -212,7 +212,7 @@ class HelpRequest(models.Model):
 class Notification(models.Model):
     type = (
         ("Help Requested", "Help Request Read"),
-        ("Help Accepted",  "Help Accepted"),
+        ("Help Accepted",  "Help Accepted")
     )
     read_type = models.CharField(choices=type, max_length=100)
     reader = models.ForeignKey(Account, limit_choices_to={'type':'Nurse'},related_name='+', on_delete= models.CASCADE)
@@ -234,7 +234,7 @@ class NotificationBell(models.Model):
     type = models.CharField(choices=types, max_length=100, null=True, blank=True)
     title = models.CharField(max_length=100, null=True, blank=True)
     status = models.BooleanField(default=True) #Set to false if notification is over by event (i.e. when help request is fulfilled or task is completed
-    help_request = models.OneToOneField(HelpRequest, null=True,blank=True,on_delete=models.CASCADE) #Null if not a help_request
+    help_request = models.ForeignKey(HelpRequest, null=True,blank=True,on_delete=models.CASCADE) #Null if not a help_request or assignment
     time = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return "Type: {} : | target: {} | task: {}".format(self.type,self.target,self.task)

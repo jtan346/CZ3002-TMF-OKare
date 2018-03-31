@@ -29,6 +29,9 @@ urlpatterns = [
     # SC/Joey - Nurse's Complete Task
     url(r'^complete_task/', Nurse.complete_task, name="complete_task"),
 
+    # SC/Joey - Nurse's assigned help request
+    url(r'^check_assigned_help_request/', Nurse.check_assigned_help_request, name="check_assigned_help_request"),
+
     #Ben/Haode - List/View Patient Profiles
     url(r'^view_patient/$', Nurse.listPatients, name="list_patient"),
     url(r'^view_patient/(?P<patient_id>[\w-]+)$', Nurse.viewPatientProfile, name="view_patient"),
