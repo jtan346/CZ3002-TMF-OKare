@@ -492,8 +492,11 @@ def viewPatientProfile(request, patient_id):
 @user_passes_test(is_admin)
 def addPatientView(request):
     template = loader.get_template('administrator/add_patient.html')
+    teams = Teams.objects.all()
     context = {
         'page_name': "Add Patient",
+        'teams': teams,
+        'accountid': request.user.account.nric,
     }
     return HttpResponse(template.render(context, request))
 
@@ -513,6 +516,9 @@ def addPatient(request):
         state = request.POST['state']
         zip_code = request.POST['zip_code']
         phone_no = request.POST['phone_no']
+        team = request.POST['team']
+
+        print(team)
 
         converted_datetime = datetime.strptime(date_of_birth, "%d/%m/%Y")
 
@@ -522,7 +528,14 @@ def addPatient(request):
             if Patient.objects.filter(bed=bed, ward=ward).exists():
                 return HttpResponse('duplicated_bed')
             else:
-                patient = Patient.objects.create(nric=nric, first_name=first_name, last_name=last_name,
+                if team != "No Allocation":
+                    theTeam = Teams.objects.filter(name=team).get()
+                    patient = Patient.objects.create(nric=nric, first_name=first_name, last_name=last_name,
+                                                     date_of_birth=converted_datetime, ward=ward, bed=bed,
+                                                     street=street, team=theTeam,
+                                                     city=city, state=state, zip_code=zip_code, phoneNo=phone_no)
+                else:
+                    patient = Patient.objects.create(nric=nric, first_name=first_name, last_name=last_name,
                                                  date_of_birth=converted_datetime, ward=ward, bed=bed, street=street,
                                                  city=city, state=state, zip_code=zip_code, phoneNo=phone_no)
 
