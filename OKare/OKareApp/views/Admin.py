@@ -426,7 +426,7 @@ def updateNurseDetail(request):
             pass_word = request.POST['pass_word']
             email = request.POST['email']
 
-            converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+            converted_datetime = datetime.strptime(date_of_birth, "%d/%m/%Y")
 
             nurse = Account.objects.get(nric=nric)
 
@@ -478,13 +478,28 @@ def viewPatientProfile(request, patient_id):
     patient = Patient.objects.filter(nric=patient_id).get()
     patient.date_of_birth = patient.date_of_birth.strftime('%d/%m/%Y')
     page_name = str(patient_id) + ": " + patient.first_name + " " + patient.last_name
+    teams = Teams.objects.all()
+
+    if patient.team_id:
+        try:
+            patient_team = Teams.objects.filter(id=patient.team_id).get()
+            team_name = str(patient_team.name)
+        except AttributeError:
+            team_name = ''
+    else:
+        team_name = ''
+
+    teams = Teams.objects.all()
 
     context = {
         'page_name': page_name,
         'patient_id': patient_id,
         'patient': patient,
+        'teams': teams,
+        'team_name': team_name,
         'accountid': request.user.account.nric,
     }
+
     return HttpResponse(template.render(context, request))
 
 
@@ -493,6 +508,7 @@ def viewPatientProfile(request, patient_id):
 def addPatientView(request):
     template = loader.get_template('administrator/add_patient.html')
     teams = Teams.objects.all()
+
     context = {
         'page_name': "Add Patient",
         'teams': teams,
@@ -517,8 +533,6 @@ def addPatient(request):
         zip_code = request.POST['zip_code']
         phone_no = request.POST['phone_no']
         team = request.POST['team']
-
-        print(team)
 
         converted_datetime = datetime.strptime(date_of_birth, "%d/%m/%Y")
 
@@ -559,11 +573,12 @@ def updatePatientDetail(request):
             state = request.POST['state']
             zip_code = request.POST['zip_code']
             phone_no = request.POST['phone_no']
+            team = request.POST['team']
 
             patient = Patient.objects.get(nric=nric)
 
             #Format date..
-            converted_datetime = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y")
+            converted_datetime = datetime.strptime(date_of_birth, "%d/%m/%Y")
 
             # patient.nric = nric
             patient.first_name = first_name
@@ -576,6 +591,11 @@ def updatePatientDetail(request):
             patient.state = state
             patient.zip_code = zip_code
             patient.phoneNo = phone_no
+
+            if team != 'No Allocation':
+                patient.team = Teams.objects.filter(name=team).get()
+            else:
+                patient.team_id = None
 
             patient.save()
 

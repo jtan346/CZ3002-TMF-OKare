@@ -62,7 +62,7 @@
                 'state' : document.getElementById('state').value,
                 'zip_code' : document.getElementById('zipCode').value,
                 'phone_no' : document.getElementById('phoneNo').value,
-	            'team' : document.getElementById('team').value,
+                'team' : document.getElementById('team').value,
             };
 
             var notValid = true;
@@ -241,9 +241,24 @@
                                 <input id="lastName" name="last_name" class="form-control" placeholder="" type="text" value="">
                             </div>
                         </div>
-
                         <div class="hidden-md hidden-lg"><br></div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Phone No.</span>
+                                <input id="phoneNo" name="phone_no" class="form-control" placeholder="" type="text" value="">
+                            </div>
+                            <br>
+                            <div class="input-group date" id="dateInput">
+                                <span class="input-group-addon" style="">DoB</span>
+                                <input id="dateOfBirth" name="date" class="form-control" value="" type="text"/>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
+                        </div>
+                    </div>
 
+                    <hr>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Ward</span>
@@ -254,43 +269,24 @@
                                 <span class="input-group-addon">Bed</span>
                                 <input id="bed" name="bed" class="form-control" placeholder="" type="text" value="">
                             </div>
-	                        <br>
-
-	                         <div class="input-group">
-                                <span class="input-group-addon">Team Allocation</span>
-								<div class="dropdown">
-	                                    <select class="form-control" id="team">
-	                                        <option>No Allocation</option>
-		                                    {% for n in teams %}
-	                                        <option>{{ n.name }}</option>
-	                                        {% endfor %}
-	                                    </select>
-	                                </div>
-
-	                         </div>
-
+                            <br>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Team</span>
+                                <div class="dropdown">
+                                    <select class="form-control" id="team">
+                                        <option>No Allocation</option>
+                                        {% for n in teams %}
+                                            <option>{{ n.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <hr>
-
-	                <div class="row">
-                        <div class="col-md-6">
-	                        <div class="input-group">
-                                <span class="input-group-addon">Phone No.</span>
-                                <input id="phoneNo" name="phone_no" class="form-control" placeholder="" type="text" value="">
-                            </div>
-                        </div>
-		                <div class="col-md-6">
-			                <div class="input-group date" id="dateInput">
-	                            <span class="input-group-addon" style="">DoB</span>
-	                            <input id="dateOfBirth" name="date" class="form-control" value="" type="text"/>
-	                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-	                        </div>
-		                </div>
-	                </div>
-
-	                <hr>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -323,7 +319,7 @@
                         </div>
                     </div>
 
-	                <hr>
+                    <hr>
 
 
 

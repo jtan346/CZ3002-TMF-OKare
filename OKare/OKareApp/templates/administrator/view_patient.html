@@ -18,11 +18,263 @@
 
 {% block page_javascripts %}
     <script src="/static/js/admin.js"></script>
+    <script src="/static/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
         var link = document.createElement('link');
         link.href = "/static/dist/css/admin.css";
         link.rel = "stylesheet";
         document.getElementsByTagName("head")[0].appendChild(link)
+    </script>
+    <script src="/static/js/Chart.bundle.min.js"></script>
+
+    <script>
+        var editing = false;
+
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                var csrfToken = getCookie('csrftoken');
+                xhr.setRequestHeader("X-CSRFToken", csrfToken);
+            }
+        });
+
+        function enableEditing() {
+            editing = true;
+
+            $('input').each(function() {
+                if ($(this).attr('disabled')) {
+                    $(this).removeAttr('disabled');
+                }
+                else {
+                    $(this).attr({
+                        'disabled': 'disabled'
+                    });
+                }
+            });
+
+            if ($('#team').attr('disabled')) {
+                $('#team').removeAttr('disabled');
+            }
+
+            $('#nric_displayed').attr({
+                'disabled': 'disabled'
+            });
+
+            var x = document.getElementById("SaveDiscard");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+
+            var y = document.getElementById("btnEdit");
+            if (y.style.display === "none") {
+                y.style.display = "block";
+            } else {
+                y.style.display = "none";
+            }
+        }
+
+        function discard() {
+            if (confirm('Are you sure you want to discard all changes?')) {
+                enableEditing();
+                window.location.reload();
+            } else {
+
+            }
+        }
+
+        function submit() {
+            $('#alert-success').hide(0);
+            $('#alert-failure').hide(0);
+
+            if (confirm('Are you sure you want to save changes?')) {
+                var data = {
+                    'nric': document.getElementById('nric').value,
+                    'first_name': document.getElementById('firstName').value,
+                    'last_name': document.getElementById('lastName').value,
+                    'date_of_birth': document.getElementById('dateOfBirth').value,
+                    'ward': document.getElementById('ward').value,
+                    'bed': document.getElementById('bed').value,
+                    'street': document.getElementById('street').value,
+                    'city': document.getElementById('city').value,
+                    'state': document.getElementById('state').value,
+                    'zip_code': document.getElementById('zipCode').value,
+                    'phone_no': document.getElementById('phoneNo').value,
+                    'team' : document.getElementById('team').value
+                };
+
+                var notEmpty = true;
+
+                $.each(data, function(key, value) {
+                    if(value.length === 0) {
+                        notEmpty = false;
+                    }
+
+                    if(key === 'first_name') {
+                        if (!value.match(/^[A-z]+$/)) {
+                            $("#firstName").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#firstName").parent().removeClass("has-error");
+                        }
+                    }
+
+                    if(key === 'last_name') {
+                        if (!value.match(/^[A-z]+$/)) {
+                            $("#lastName").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#lastName").parent().removeClass("has-error");
+                        }
+                    }
+
+                    if(key === 'phone_no') {
+                        if (!value.match(/^(0|[1-9][0-9]*)$/)) {
+                            $("#phoneNo").parent().addClass("has-error");
+                            notEmpty = false;
+                        }
+                        else {
+                            $("#phoneNo").parent().removeClass("has-error");
+                        }
+                    }
+                });
+
+                if(notEmpty === true) {
+                    $.ajax({
+                        url: '/Admin/update_patient/',
+                        type: 'post',
+                        data: data,
+                        success: function (msg) {
+                            if (msg == "successful") {
+                                $('#alert-success').show(500);
+                            }
+                            else {
+                                alert("An error has occurred!");
+                            }
+                        },
+                        error: function (msg, status, jqxhr) {
+                            {#console.log(msg + "\n" + status + "\n" + jqxhr)#}
+                        }
+                    });
+                }
+                else {
+                    $('#alert-failure').show(0);
+                }
+            }
+        }
+
+        $(document).ready(function() {
+            $('input').each(function() {
+                $(this).attr({
+                    'disabled': 'disabled'
+                });
+            });
+
+            $('#team').attr('disabled','disabled');
+
+            $('#dateInput').datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
+
+            $('#dateOfBirth').val('{{ patient.date_of_birth }}');
+        });
+
+        //Graphs
+
+        var data2 = {
+            labels: ["a","b","c","d","e","f","g"],
+            datasets: [
+                {
+                    label: "{{ nurse.user.first_name }}" + " " + "{{ nurse.user.last_name }}",
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255,99,132,1)',
+                    borderWidth: 1,
+                    data: [1,2,3,4,5,6,7]
+                }
+            ]
+        };
+
+        $( document ).ready(function() {
+            var ctx1 = document.getElementById("triage1").getContext('2d');
+            var myChart = new Chart(ctx1, {
+                type: 'bar',
+                data: data2,
+                options: {
+                    title: {
+                        display: true,
+                        text: "Body Temperature"
+                    },
+                    legend: {
+                        labels: {
+                            fontSize: 10,
+                        },
+                    },
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                stepSize: 2,
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var ctx2 = document.getElementById("triage2").getContext('2d');
+            var myChart = new Chart(ctx2, {
+                type: 'bar',
+                data: data2,
+                options: {
+                    title: {
+                        display: true,
+                        text: "Blood Pressure"
+                    },
+                    legend: {
+                        labels: {
+                            fontSize: 10,
+                        },
+                    },
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                stepSize: 2,
+                            }
+                        }]
+                    }
+                }
+            });
+
+            var ctx3 = document.getElementById("triage3").getContext('2d');
+            var myChart = new Chart(ctx3, {
+                type: 'bar',
+                data: data2,
+                options: {
+                    title: {
+                        display: true,
+                        text: "Blood Sugar"
+                    },
+                    legend: {
+                        labels: {
+                            fontSize: 10,
+                        },
+                    },
+                    barValueSpacing: 20,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: 0,
+                                stepSize: 2,
+                            }
+                        }]
+                    }
+                }
+            });
+        });
     </script>
 {% endblock page_javascripts %}
 
@@ -36,112 +288,182 @@
 
 <!-- Add the page hierarchy here -->
 {% block breadcrumb %}
-	<li class="breadcrumb-item"><a href="/Admin">Home</a></li>
-    <li class="breadcrumb-item"><a href="/Admin/view_patient">{{ page_name }}</a></li>
+    <li class="breadcrumb-item"><a href="/Admin">Home</a></li>
+    <li class="breadcrumb-item"><a href="/Admin/view_patient">View Patient</a></li>
     <li class="breadcrumb-item active">{{ patient_id }}: {{ patient.first_name|title }} {{ patient.last_name|title }}</li>
 {% endblock breadcrumb %}
 
 {% block content %}
-	<div class="row">
-        <div class="col-md-12">
-            <h1>Patient Name</h1>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2 hidden-xs hidden-sm">
-            <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
+    <div class="BenContainer">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Patient Name</h1>
+            </div>
         </div>
 
-        <form action="" method="post">
-            <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">First Name</span>
-                            <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ patient.first_name }}" disabled>
+        <div id="alert-success" class="row" style="display: none">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <strong>Success!</strong> Changes has been successfully saved!
+                </div>
+            </div>
+        </div>
+
+        <div id="alert-failure" class="row" style="display: none">
+            <div class="col-md-12">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <strong>Invalid Input!</strong> Please validate your inputs again!
+                </div>
+            </div>
+        </div>
+
+        <div id="input">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
+                </div>
+
+                <form id="input_form" method="post"> {% csrf_token %}
+                    <input id="nric" value="{{ patient.nric }}" type="hidden">
+
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">NRIC</span>
+                                    <input id="nric_displayed" name="nric" class="form-control" placeholder="" type="text" value="{{ patient.nric }}" disabled>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">First Name</span>
+                                    <input id="firstName" name="first_name" class="form-control" placeholder="" type="text" value="{{ patient.first_name }}" disabled>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Last Name</span>
+                                    <input id="lastName" name="last_name" class="form-control" placeholder="" type="text" value="{{ patient.last_name }}" disabled>
+                                </div>
+                            </div>
+
+                            <div class="hidden-md hidden-lg"><br></div>
+
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Phone No.</span>
+                                    <input id="phoneNo" name="phone_no" class="form-control" placeholder="" type="text" value="{{ patient.phoneNo }}" disabled>
+                                </div>
+                                <br>
+                                <div class="input-group date" id="dateInput">
+                                    <span class="input-group-addon" style="">DoB</span>
+                                    <input id="dateOfBirth" name="date" class="form-control" value="{{ patient.user.date_of_birth }}" type="text"/>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                                <br>
+                            </div>
                         </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Last Name</span>
-                            <input id="lastName" name="Last Name" class="form-control" placeholder="" type="text" value="{{ patient.last_name }}" disabled>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Ward</span>
+                                    <input id="ward" name="ward" class="form-control" placeholder="" type="text" value="{{ patient.ward }}" disabled>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Bed</span>
+                                    <input id="bed" name="bed" class="form-control" placeholder="" type="text" value="{{ patient.bed }}" disabled>
+                                </div>
+                            </div>
+                            <div class="hidden-md hidden-lg"><br></div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Team</span>
+                                    <div class="dropdown">
+                                        <select class="form-control" id="team">
+                                            <option>No Allocation</option>
+                                            {% for n in teams %}
+                                                {% if n.name != team_name %}
+                                                    <option>{{ n.name }}</option>
+                                                {% else  %}
+                                                    <option selected>{{ n.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-	                    <br>
-	                    <div class="input-group">
-                            <span class="input-group-addon">Team Allocated</span>
-                            <input id="lastName" name="Last Name" class="form-control" placeholder="" type="text" value="{{ patient.team.name }}" disabled>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Street</span>
+                                    <input id="street" name="street" class="form-control" placeholder="" type="text" value="{{ patient.street }}" disabled>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">City</span>
+                                    <input id="city" name="city" class="form-control" placeholder="" type="text" value="{{ patient.city }}" disabled>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">State</span>
+                                    <input id="state" name="state" class="form-control" placeholder="" type="text" value="{{ patient.state }}" disabled>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Zip code</span>
+                                    <input id="zipCode" name="zip_code" class="form-control" placeholder="" type="text" value="{{ patient.zip_code }}" disabled>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="hidden-md hidden-lg"><br></div>
 
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">Nric</span>
-                            <input id="nric" name="Nric" class="form-control" placeholder="" type="text" value="{{ patient.nric }}" disabled>
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Mobile no.</span>
-                            <input id="mobileNo" name="Mobile no." class="form-control" placeholder="" type="text" value="{{ patient.phoneNo }}" disabled>
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Date of Birth</span>
-                            <input id="dateOfBirth" name="Date of Birth" class="form-control" placeholder="" type="text" value="{{ patient.date_of_birth }}" disabled>
-                        </div>
+                    <div class="col-md-1">
+                        <button id="btnEdit" class="btn btn-default" type="button" onclick="enableEditing()">Edit</button>
                     </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">Street</span>
-                            <input id="street" name="Street" class="form-control" placeholder="" type="text" value="{{ patient.street }}" disabled>
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">City</span>
-                            <input id="city" name="City" class="form-control" placeholder="" type="text" value="{{ patient.city }}" disabled>
-                        </div>
-                        <br>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">State</span>
-                            <input id="state" name="State" class="form-control" placeholder="" type="text" value="{{ patient.state }}" disabled>
-                        </div>
-                        <br>
-                        <div class="input-group">
-                            <span class="input-group-addon">Zip code</span>
-                            <input id="zipCode" name="Zip code" class="form-control" placeholder="" type="text" value="{{ patient.zip_code }}" disabled>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
 
-            <div class="hidden-md hidden-lg"><br></div>
+            <br>
 
-            <div class="col-md-1">
-                <button id="btnEdit" class="btn btn-default" type="button" onclick="enableEditing()">Edit</button>
+            <div id="SaveDiscard" class="row" style="display: none;">
+                <div class="col-md-2 col-md-offset-7">
+                    <button type="button" class="btn btn-success btn-block" onclick="submit()">Save</button>
+                </div>
+                <div class="hidden-md hidden-lg"><br></div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
+                </div>
+                <div class="col-md-1">
+                </div>
             </div>
-        </form>
-    </div>
-
-    <br>
-
-    <div id="SaveDiscard" class="row" style="display: none;">
-        <div class="col-md-2 col-md-offset-7">
-            <button type="button" class="btn btn-success btn-block">Save</button>
         </div>
-        <div class="hidden-md hidden-lg"><br></div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Triage Information</h1>
+            </div>
         </div>
-        <div class="col-md-1">
+        <div class="row" style="height:300px; margin-bottom:15px;">
+            <div class="col-md-4" style="height:100%;">
+                <canvas id="triage1" style="height:100%; width:100%;"></canvas>
+            </div>
+            <div class="col-md-4" style="height:100%; border-left: 1px; border-right: 1px; border-top:0px; border-bottom: 0px; border-style:solid;">
+                <canvas id="triage2" style="height:100%; width:100%;"></canvas>
+            </div>
+            <div class="col-md-4" style="height:100%;">
+                <canvas id="triage3" style="height:100%; width:100%;"></canvas>
+            </div>
         </div>
     </div>
 
