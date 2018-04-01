@@ -2,19 +2,16 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
-from django.http import Http404
 from django.urls import reverse
 from django.views import generic
 from django.db.models import Q
 from OKareApp.models import *
 import datetime
-import time
-from datetime import timedelta, date, datetime, time
+import datetime
 import calendar
 import json
 from django.core import serializers
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic.list import ListView
 
@@ -436,7 +433,7 @@ class nurseNotifications(LoginRequiredMixin,UserPassesTestMixin, ListView):
         context = {
             'myNotifications': myNotifications,  #All notifications
             'unreadNotifications': self.request.session['unreadNotifications'],
-            'curTime': datetime.now(),
+            'curTime': datetime.datetime.now(),
             'accountid': self.request.user.account.nric
         }
 

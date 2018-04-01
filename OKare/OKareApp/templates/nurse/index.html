@@ -136,7 +136,20 @@
         }
 
         function initGraphs() {
-          var data2 = {
+            var data1 = {
+            labels: ["a", "b", "c", "d", "e", "f", "g"],
+            datasets: [
+            {
+                label: "{{ nurse.user.first_name }}" + " " + "{{ nurse.user.last_name }}",
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                data: [6, 3, 5, 8, 4, 7, 4]
+            }
+            ]
+        };
+
+        var data2 = {
             labels: ["a", "b", "c", "d", "e", "f", "g"],
             datasets: [
             {
@@ -149,12 +162,26 @@
             ]
         };
 
+        var data3 = {
+            labels: ["a", "b", "c", "d", "e", "f", "g"],
+            datasets: [
+            {
+                label: "{{ nurse.user.first_name }}" + " " + "{{ nurse.user.last_name }}",
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                data: [3, 4, 3, 4, 5, 2, 3]
+            }
+            ]
+        };
+
+
+
         var chart_1_container = document.getElementById("triage1");
         var chart_2_container = document.getElementById("triage2");
         var chart_3_container = document.getElementById("triage3");
 
-
-        if(ctx1 && ctx2 && ctx3)
+        if(chart_1_container && chart_2_container && chart_3_container)
         {
 
             var ctx1 = chart_1_container.getContext('2d');
@@ -163,7 +190,7 @@
 
             var myChart = new Chart(ctx1, {
                 type: 'bar',
-                data: data2,
+                data: data1,
                 options: {
                     title: {
                         display: true,
@@ -213,7 +240,7 @@
 
             var myChart = new Chart(ctx3, {
                 type: 'bar',
-                data: data2,
+                data: data3,
                 options: {
                     title: {
                         display: true,
