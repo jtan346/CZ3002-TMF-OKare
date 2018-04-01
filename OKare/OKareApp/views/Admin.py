@@ -611,7 +611,7 @@ def updatePatientDetail(request):
 def generateProductivityReport(request, nurse_id):
     template = loader.get_template('administrator/productivity_report.html')
 
-    nurse = Account.objects.filter(user_id=nurse_id).get()
+    nurse = Account.objects.filter(nric=nurse_id).get()
     tasks = CompletedTask.objects.filter(nurse_id=nurse.nric)
 
     allNurses = Account.objects.filter(team_id=nurse.team_id)
@@ -628,6 +628,8 @@ def generateProductivityReport(request, nurse_id):
     print(calendar.monthrange(datetime.today().year, prevMonth)[1])
 
     graphData = []
+
+    curMonth=curMonth-1
 
     cal = calendar.Calendar()
     for n in cal.itermonthdays(datetime.today().year, curMonth):

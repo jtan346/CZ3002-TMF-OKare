@@ -213,18 +213,12 @@
 
 			<div class="form-row col-md-6">
 				<div class="input-group">
-                    <span class="input-group-addon">Nurse ID</span>
-                    <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.user_id }}" disabled>
-                </div>
-		    </div>
-			<div class="form-row col-md-6">
-				<div class="input-group">
                     <span class="input-group-addon">Team ID</span>
                     <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.team_id }}" disabled>
                 </div>
 		    </div>
 
-			<div class="form-row col-md-12">
+			<div class="form-row col-md-6">
 				<div class="input-group">
                     <span class="input-group-addon">Address</span>
                     <input id="firstName" name="First Name" class="form-control" placeholder="" type="text" value="{{ nurse.street }} {{ nurse.city }} {{ nurse.state }} {{ nurse.zip_code }}" disabled>
@@ -269,7 +263,6 @@
 				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Category</th>
 				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Start Time</th>
 				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Duration</th>
-				            <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Mouseover Text Here">Assisted</th>
 			            </tr>
 			        </thead>
 
@@ -284,7 +277,6 @@
 			                <td>{{ t.task.category }}</td>
 			                <td>{{ t.task.start_time }}</td>
 			                <td>{{ t.task.duration }}</td>
-			                <td><a href = "#">Assisted??</a></td>
 		                </tr>
 		                {% endfor %}
 	                {% else %}

@@ -173,6 +173,8 @@ class CompletedTask(models.Model):
     def total_time_spent(self, nurse_search, start_date=datetime.now()-timedelta(days=7)):
         return CompletedTask.objects.filter(nurse = nurse_search,date__gte = start_date).Sum('duration')
 
+    def __str__(self):
+        return "Nurse: {}, {} | Datetime completed: {} | Task: {},{}".format(self.nurse.fullname(), self.nurse.nric, self.compldt, self.task.title, self.task.id)
 
 class HelpRequest(models.Model):
     # '+' prevents the Account from being able to access request and helper
