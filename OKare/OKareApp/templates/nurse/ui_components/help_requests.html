@@ -8,9 +8,9 @@
                 <table class="table table-striped table-bordered table-hover" id="table-team-created">
                     <thead>
                         <tr>
-                            <th>Help Request ID</th>
-                            <th>Status</th>
-                            <th>Time created</th>
+                            <th class="col-xs-2">Help Request ID</th>
+                            <th class="col-xs-6">Status</th>
+                            <th class="col-xs-4">Time created</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,7 +24,7 @@
                                     {{ help_request.status }}
                                 {% endif %}
                             </td>
-                            <td>{{ task.time_created }}</td>
+                            <td>{{ help_request.time_created }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -43,11 +43,11 @@
                 <table class="table table-striped table-bordered table-hover" id="table-team-allowed">
                     <thead>
                         <tr>
-                            <th>Help Request ID</th>
-                            <th>Request Initiator</th>
-                            <th>Task Title</th>
-                            <th>Time Requested</th>
-                            <th>Actions</th>
+                            <th class="col-xs-1">Help Request ID</th>
+                            <th class="col-xs-3">Request Initiator</th>
+                            <th class="col-xs-3">Task Title</th>
+                            <th class="col-xs-3">Time Requested</th>
+                            <th class="col-xs-1">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
