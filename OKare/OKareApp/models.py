@@ -22,7 +22,7 @@ class Account(models.Model):
     zip_code = models.CharField(max_length=10, default='Zip Code')
     phoneNo = models.DecimalField(null=True,max_digits=8,decimal_places=0)
     type = models.CharField(max_length=100, choices=TYPES)
-    team = models.ForeignKey(Teams, on_delete=models.SET_NULL, null=True)
+    team = models.ForeignKey(Teams, on_delete=models.SET_NULL, null=True, blank=True)
 
     def clean(self, *args, **kwargs):
         if self.type == "Admin" and self.team != None:

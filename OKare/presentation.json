@@ -1,0 +1,453 @@
+[
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$100000$G6AyZZmqiLEx$2t/yi6cC3MwegqYnDrGBA+5QqG47wZgb9Tc5lQhe4pU=",
+        "last_login": "2018-04-02T09:56:37.209",
+        "is_superuser": true,
+        "username": "superadmin",
+        "first_name": "",
+        "last_name": "",
+        "email": "super@example.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-04-02T09:56:29.614",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$100000$Ks10RMhNNUOt$YxJ1JJ7Lay0aA1TBTPzcYkZCoSZTmhxFnZqkx0qv7A4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nurse1",
+        "first_name": "Weasley",
+        "last_name": "Smith",
+        "email": "smith@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-04-02T09:57:01",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$100000$8n5oEiOLiTPJ$789Kuz3fRTOKxug5ZlT+qBL/18cdQqtPJmpmO9Bw9Ec=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "nurse2",
+        "first_name": "Malady",
+        "last_name": "Han",
+        "email": "han@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-04-02T09:58:00",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$100000$Unai25Jr1dM7$lvM78KgrGTqp30MvoZ/ru75bUfZidWrs5TMVgcNY7BI=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "admin",
+        "first_name": "See Kee",
+        "last_name": "Teng",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-04-02T09:58:40",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "rpkh6igvthpgly1o4sq6lbv2ipcpnjhw",
+    "fields": {
+        "session_data": "YjkzNDFjZDIzNDI4YjlmYmEyMzIzMWJhYzhkZWQyZTU3NjdiMjgzODp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJlYWM5NTJmNDZmMzJjNzFiNjRlNzgxY2MzNDhiMmY5YmQ1MWQ0YzhjIn0=",
+        "expire_date": "2018-04-16T09:56:37.321"
+    }
+},
+{
+    "model": "OKareApp.teams",
+    "pk": 1,
+    "fields": {
+        "name": "Block 1",
+        "ward": "1"
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S1111111A",
+    "fields": {
+        "user": [
+            "nurse1"
+        ],
+        "date_of_birth": "1988-04-02",
+        "street": "Street",
+        "city": "City",
+        "state": "State",
+        "zip_code": "Zip Code",
+        "phoneNo": "87654321",
+        "type": "Nurse",
+        "team": 1
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S2222222A",
+    "fields": {
+        "user": [
+            "nurse2"
+        ],
+        "date_of_birth": "1988-04-02",
+        "street": "Street",
+        "city": "City",
+        "state": "State",
+        "zip_code": "Zip Code",
+        "phoneNo": "88765432",
+        "type": "Nurse",
+        "team": 1
+    }
+},
+{
+    "model": "OKareApp.account",
+    "pk": "S3333333A",
+    "fields": {
+        "user": [
+            "admin"
+        ],
+        "date_of_birth": "1988-04-02",
+        "street": "Street",
+        "city": "City",
+        "state": "State",
+        "zip_code": "Zip Code",
+        "phoneNo": "88876543",
+        "type": "Admin",
+        "team": null
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S1212121A",
+    "fields": {
+        "first_name": "Jaden",
+        "last_name": "Smeaf",
+        "date_of_birth": "1950-04-02",
+        "street": "Street",
+        "city": "City",
+        "state": "State",
+        "zip_code": "Zip Code",
+        "phoneNo": "98765432",
+        "ward": "1",
+        "bed": 1,
+        "team": 1
+    }
+},
+{
+    "model": "OKareApp.patient",
+    "pk": "S2323232A",
+    "fields": {
+        "first_name": "Will",
+        "last_name": "Smeaf",
+        "date_of_birth": "1945-04-02",
+        "street": "Street",
+        "city": "City",
+        "state": "State",
+        "zip_code": "Zip Code",
+        "phoneNo": "99876543",
+        "ward": "1",
+        "bed": 2,
+        "team": 1
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 1,
+    "fields": {
+        "title": "Breakfast",
+        "description": "Breakfast - No Solids",
+        "patient": "S1212121A",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "08:06:27",
+        "date": "2018-04-02",
+        "duration": "00:30:00",
+        "day": "0"
+    }
+},
+{
+    "model": "OKareApp.task",
+    "pk": 2,
+    "fields": {
+        "title": "Breakfast",
+        "description": "Less Salt, Less Sugar, Less Oil",
+        "patient": "S2323232A",
+        "recur_type": "Daily",
+        "category": "Food",
+        "start_time": "08:08:13",
+        "date": "2018-04-02",
+        "duration": "00:30:00",
+        "day": "0"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2018-04-02T09:57:01.187",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "2",
+        "object_repr": "nurse1",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2018-04-02T09:57:45.931",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "2",
+        "object_repr": "nurse1",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\", \"email\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2018-04-02T09:58:00.720",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "3",
+        "object_repr": "nurse2",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2018-04-02T09:58:22.820",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "3",
+        "object_repr": "nurse2",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\", \"email\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2018-04-02T09:58:40.192",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "4",
+        "object_repr": "admin",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2018-04-02T09:59:22.153",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "4",
+        "object_repr": "admin",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2018-04-02T10:00:49.905",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "teams"
+        ],
+        "object_id": "1",
+        "object_repr": "Teams object (1)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2018-04-02T10:00:58.881",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "account"
+        ],
+        "object_id": "S1111111A",
+        "object_repr": "NRIC: S1111111A | TYPE: Nurse | TEAM: Teams object (1) | Username: nurse1",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2018-04-02T10:01:31.852",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "account"
+        ],
+        "object_id": "S2222222A",
+        "object_repr": "NRIC: S2222222A | TYPE: Nurse | TEAM: Teams object (1) | Username: nurse2",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2018-04-02T10:03:12.082",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "account"
+        ],
+        "object_id": "S3333333A",
+        "object_repr": "NRIC: S3333333A | TYPE: Admin | TEAM: None | Username: admin",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2018-04-02T10:04:55.730",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "patient"
+        ],
+        "object_id": "S1212121A",
+        "object_repr": "Jaden Smeaf",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2018-04-02T10:05:37.960",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "patient"
+        ],
+        "object_id": "S2323232A",
+        "object_repr": "Will Smeaf",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+        "action_time": "2018-04-02T10:06:47.105",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "1",
+        "object_repr": "ID : 1 | Task Title: Breakfast | Start Time: 08:06:27 | Date: 2018-04-02 | Day: 0 | patient: Jaden Smeaf | recur_type: Daily",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+        "action_time": "2018-04-02T10:08:26.459",
+        "user": [
+            "superadmin"
+        ],
+        "content_type": [
+            "OKareApp",
+            "task"
+        ],
+        "object_id": "2",
+        "object_repr": "ID : 2 | Task Title: Breakfast | Start Time: 08:08:13 | Date: 2018-04-02 | Day: 0 | patient: Will Smeaf | recur_type: Daily",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+}
+]
