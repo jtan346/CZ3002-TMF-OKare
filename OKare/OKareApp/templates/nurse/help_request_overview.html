@@ -22,10 +22,9 @@
 
     function reload_help_request_table()
     {
-        console.log("reloading");
         $.ajax({
             type: "POST",
-            url:"/Nurse/reload_help_request",
+            url:"/Nurse/reload_all_help_request",
             success:function(data, status, jqxhr)
             {
                 $("#page-wrapper").html(data);
@@ -53,7 +52,7 @@
 
 {% block breadcrumb %}
     <li class="breadcrumb-item active"><a href="/Nurse">Home</a></li>
-    <li class="breadcrumb-item active"><a href="/list_help_requests">Help Requests</a></li>
+    <li class="breadcrumb-item active"><a href="/list_all_help_requests">Help Requests</a></li>
 {% endblock breadcrumb %}
 {% block content %}
     {% include 'nurse/ui_components/help_requests.html' %}

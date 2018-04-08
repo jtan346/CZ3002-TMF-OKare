@@ -37,11 +37,9 @@ function check_assignment()
 {
     $.ajax({
         type: "POST",
-        url: "/Nurse/check_assigned_help_request/",
+        url: "/Nurse/assigned_help_request",
         success:function(data, status, jqxhr)
         {
-            console.log("HELP ME");
-            console.log(data);
             if(data.length > 0)
             {
                 for(var i = 0; i < data.length; i++)
@@ -82,8 +80,9 @@ function poll_requests(){
         {
             //console.log("Checking unread help requests");
             //console.log(data);
-            if(data.length > 0)
+            if(data.length > 0 && data.length < 50)
             {
+                console.log(data.length);
                 for(var i = 0; i < data.length; i++)
                 {
                     new PNotify({
@@ -122,7 +121,7 @@ function check_requests()
 {
     $.ajax({
         type: "Post",
-        url: "/Nurse/check_help_request",
+        url: "/Nurse/opened_help_request",
         dataType: 'json',
         success:function(data, status, jqxhr)
         {
