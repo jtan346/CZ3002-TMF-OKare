@@ -1,47 +1,9 @@
 {% extends 'base.html' %}
-<<<<<<< HEAD
+
 {% block title %}{{ page_name }}{% endblock title %}
 
-{% block page_stylesheets %}
-    <style type="text/css">
-        body {
-            background-color: #f8f8f8;
-        }
-        .input-group-addon {
-            min-width: 100px;
-        }
-        .textarea-message {
-            width: 100%;
-            resize: vertical;
-        }
-    </style>
-{% endblock page_stylesheets %}
 
-{% block page_javascripts %}
-    <script src="/static/js/admin.js"></script>
-    <script>
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                var csrfToken = getCookie('csrftoken');
-                xhr.setRequestHeader("X-CSRFToken", csrfToken);
-            }
-        });
 
-        function discard() {
-            if (confirm('Are you sure you want to discard all changes?')) {
-                window.location.reload();
-            } else {
-
-            }
-        }
-
-        function submit() {
-            console.log("LOLFUCK");
-            var data = {
-                'ward_no' : document.getElementById('ward_no').value,
-                'team_name' : document.getElementById('team_name').value
-
-=======
 {% block page_stylesheets %}
 
     <style>
@@ -64,7 +26,6 @@
             var data = {
                 'team_name' : document.getElementById('txtbox_teamName').value,
                 'ward_no' : document.getElementById('wardNumber').value
->>>>>>> T2_Admin
             };
 
             $('#alert').hide(0);
@@ -72,17 +33,11 @@
 
             $.ajax({
                 url: '/Admin/addteamtodb/',
-<<<<<<< HEAD
+
                 type: 'POST',
                 data: data,
                 success: function (msg) {
                     if (msg=="successful") {
-=======
-                type: 'post',
-                data: data,
-                success: function (msg) {
-                    if (msg=="successful") {
-
 
                         var str = ' <div class="col-md-4 col-md-offset-8">\n' +
                                   '<button type="button" class="btn btn-success btn-block" onclick="location.href=\'/Admin/manage_team/\'">Return to Manage Team</button>\n' +
@@ -91,9 +46,6 @@
 
                         $('#txtbox_teamName').prop("disabled", true);
                         $('#wardNumber').prop("disabled", true);
-
-
->>>>>>> T2_Admin
                         $('#input').show(500);
                         $('#alert').show(500);
                     }
@@ -106,23 +58,9 @@
                 }
             });
         }
-<<<<<<< HEAD
     </script>
 {% endblock page_javascripts %}
 
-=======
-
-
-        function discard(){
-
-        }
-    </script>
-
-
-{% endblock page_javascripts %}
-
-
->>>>>>> T2_Admin
 {% block sidebar %}
     {% include 'administrator/ui_components/sidebar.html' %}
 {% endblock sidebar %}
@@ -131,23 +69,20 @@
     {% include 'administrator/ui_components/top-menu.html' %}
 {% endblock topmenu %}
 
-<<<<<<< HEAD
+
 <!-- Add the page hierarchy here -->
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="/Nurse">Home</a></li>
     <li class="breadcrumb-item active">{{ page_name }}</li>
 {% endblock breadcrumb %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-md-12">
-=======
+
+
 
 {% block content %}
 
     <div class="row">
         <div id="header_addteam" class="col-md-12">
->>>>>>> T2_Admin
             <h1>Add Team</h1>
         </div>
     </div>
@@ -163,35 +98,14 @@
 
     <div id="input">
         <div class="row">
-<<<<<<< HEAD
-            <div class="col-md-2">
-                <img src="{{STATIC_URL}}img/profile_picture.svg" alt="profile_picture" class="img-square">
-            </div>
 
-=======
->>>>>>> T2_Admin
             <form id="input_form" method="post"> {% csrf_token %}
                 <div class="col-md-10">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Team Name</span>
-<<<<<<< HEAD
-                                <input id="team_name" name="Teamname" class="form-control" placeholder="" type="text" value="">
-                            </div>
-                            <br>
-                            <div class="input-group">
-                                <span class="input-group-addon">Ward</span>
-                                <input id="ward_no" name="first_name" class="form-control" placeholder="" type="text" value="">
-                            </div>
 
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-
-=======
                                 <input id="txtbox_teamName" name="teamName" class="form-control" placeholder="" type="text" value="">
                             </div>
                             <br>
@@ -215,7 +129,7 @@
         </div>
 
         <br>
->>>>>>> T2_Admin
+
 
         <div id="SaveDiscard" class="row">
             <div class="col-md-2 col-md-offset-8">
@@ -223,17 +137,10 @@
             </div>
             <div class="hidden-md hidden-lg"><br></div>
             <div class="col-md-2">
-<<<<<<< HEAD
-                <button type="button" class="btn btn-danger btn-block" onclick="discard()">Discard</button>
-            </div>
-        </div>
-    </div>
 
-{% endblock content %}
-=======
                 <button type="button" class="btn btn-danger btn-block" onclick="location.href = '/Admin/manage_team/';">Discard</button>
             </div>
         </div>
     </div>
 {% endblock content %}
->>>>>>> T2_Admin
+
