@@ -282,8 +282,13 @@ def list_all_help_requests(request):
     #allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True). \
     #    exclude(ongoing_task__in=HelpRequest.objects.filter(helper=account).values('ongoing_task'))
 
-    allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account) & ~Q(ongoing_task=None),helper__isnull=True)\
-        .exclude(Q(ongoing_task__in=[x for x in HelpRequest.objects.filter(helper=account).values('ongoing_task') if x['ongoing_task'] is not None ]))
+
+    accepted_help_requests = HelpRequest.objects.filter(Q(helper=account) & Q(ongoing_task__isnull=False))
+
+    if accepted_help_requests.count() > 0:
+        allowed_help_requests = None
+    else:
+        allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account) & ~Q(ongoing_task=None), helper__isnull=True)
 
     try:
         ongoing_task = OngoingTask.objects.get(nurse=account)
@@ -310,8 +315,12 @@ def reload_all_help_requests(request):
     #exclude help requests for tasks which he has responded to
     # allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account), helper__isnull=True). \
     #     exclude(ongoing_task__in=HelpRequest.objects.filter(helper=account).values('ongoing_task'))
-    allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account) & ~Q(ongoing_task=None),helper__isnull=True)\
-        .exclude(Q(ongoing_task__in=[x for x in HelpRequest.objects.filter(helper=account).values('ongoing_task') if x['ongoing_task'] is not None ]))
+    accepted_help_requests = HelpRequest.objects.filter(Q(helper=account) & Q(ongoing_task__isnull=False))
+
+    if accepted_help_requests.count() > 0:
+        allowed_help_requests = None
+    else:
+        allowed_help_requests = HelpRequest.objects.filter(Q(requester__team=account.team) & ~Q(requester=account) & ~Q(ongoing_task=None), helper__isnull=True)
 
     print("HELLO")
     print(account.nric)

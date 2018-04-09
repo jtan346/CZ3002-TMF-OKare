@@ -26,11 +26,13 @@ $(document).ready(function() {
 } );
 
 $(document).ready(function(){
+
  setInterval(function(){
     check_assignment();
     poll_requests();
     check_requests();
  },3000);
+
 });
 
 function check_assignment()
@@ -143,6 +145,7 @@ function check_requests()
 
 function accept_request(request_id)
 {
+ reload_help_request_table();
  $.ajax({
     type:"POST",
     url:"/Nurse/accept_help_request",
@@ -155,7 +158,6 @@ function accept_request(request_id)
             text: 'Thanks for helping!',
             type: 'success'
         });
-        reload_help_request_table();
     },
     error: function(data, status, jqxhr)
     {
